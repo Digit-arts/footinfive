@@ -1,0 +1,44 @@
+/* Copyright (C) YOOtheme GmbH, YOOtheme Proprietary Use License (http://www.yootheme.com/license) */
+
+@import url(../warp/css/base.css);
+
+
+/* New style-related Base Values
+----------------------------------------------------------------------------------------------------*/
+
+body {
+	font: normal 14px/20px Arial, Helvetica, sans-serif;
+	color: #d6dadd;
+}
+
+h1 { text-transform: uppercase; }
+
+h4 { color: #fff; }
+
+p, hr, ul, ol, dl, blockquote, pre, fieldset, figure { margin: 20px 0; }
+
+em, small { color: #8b8d8e; }
+
+strong { color: #fff; }
+
+ins, mark { border-radius: 2px; }
+mark { 
+	background: #191919;
+	background: rgba(0,0,0,0.2);
+}
+mark { color: #fff; }
+
+hr {
+	border-top-color: #333;
+	border-top-color: rgba(255,255,255,0.1);
+}
+
+pre {
+	border: 1px solid #414141;
+	border: 1px solid rgba(255,255,255,0.1);
+	border-radius: 3px;
+	background: #191919;
+	background: rgba(0,0,0,0.4);
+}
+
+select, input, textarea, button { font-size: 14px; } 

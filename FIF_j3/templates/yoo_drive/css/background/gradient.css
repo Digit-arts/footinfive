@@ -1,0 +1,12 @@
+/* Copyright (C) YOOtheme GmbH, YOOtheme Proprietary Use License (http://www.yootheme.com/license) */
+
+/* Background Style Sheet */
+@media (min-device-width: 1025px)  {
+	
+	#page-bg > div {
+		background: url(../../images/background/page_gradient_light.svg) 50% -400px fixed no-repeat,
+					url(../../images/background/page_gradient_dark.svg) 50% 0 fixed no-repeat;
+		background-size: 1200px 900px, 2560px 400%;
+	}
+
+}

@@ -1,0 +1,88 @@
+/* Copyright (C) YOOtheme GmbH, YOOtheme Proprietary Use License (http://www.yootheme.com/license) */
+
+/*
+ * Custom Style Sheet - Use this file to style your content
+ */
+
+
+/* Custom Logo
+----------------------------------------------------------------------------------------------------*/
+
+ .custom-logo {
+	display: inline-block;
+	width: 180px;
+	height: 60px;
+	background: url(../../../images/yootheme/logo.png) 50% 50% no-repeat;
+	background-size: contain;
+}
+
+/* Only Phones (Portrait) */
+@media (max-width: 380px) {
+
+	.custom-logo { width: 145px; }
+	
+}
+
+
+/* Custom Logo
+----------------------------------------------------------------------------------------------------*/
+
+#headerbar .module { font-size: 85%; }
+
+
+/* Slideshow Tabs Custom Backgrounds
+----------------------------------------------------------------------------------------------------*/
+
+.tab-custom {
+	min-height: 270px;
+	padding: 30px 460px 30px 30px;
+	background-position: 100% 50%;
+	background-repeat: no-repeat;
+}
+
+.tab1 { background-image: url(../../../images/yootheme/demo/slideshow/image1.png); }
+.tab2 { background-image: url(../../../images/yootheme/demo/slideshow/image2.png); }
+.tab3 { background-image: url(../../../images/yootheme/demo/slideshow/image3.png); }
+.tab4 { background-image: url(../../../images/yootheme/demo/slideshow/image4.png); }
+.tab5 { background-image: url(../../../images/yootheme/demo/slideshow/image5.png); }
+
+.tab-custom { background-size: 570px 420px; }
+
+.tab-custom h1,
+.tab-custom h2 { margin-top: 0; }
+.tab-custom h1 { margin-bottom: 10px; }
+.tab-custom h2 { font-size: 25px; line-height: 25px; }
+
+.tab-custom p {
+	margin: 30px 0;
+	line-height: 25px;
+	font-size: 18px;
+}
+.tab-custom p:last-child { margin-bottom: 0; }
+
+.tab-custom .button-default,
+.tab-custom .button-primary { font-size: 16px; }
+
+/* Only Phones and Tablets (Portrait) */
+@media (max-width: 768px) {
+
+	.tab-custom {
+		padding-right: 30px;
+		background: none;
+	}
+}
+
+
+/* Bottom-B Custom Module Backgrounds 
+----------------------------------------------------------------------------------------------------*/
+
+.demo-box1,
+.demo-box2 {
+	margin: -20px!important;
+	padding: 20px 120px 10px 20px;
+	background-position: 100% 0;
+	background-repeat: no-repeat;
+}
+
+.demo-box1 { background-image: url(../../../images/yootheme/demo/bg_box1.png); }
+.demo-box2 { background-image: url(../../../images/yootheme/demo/bg_box2.png); }

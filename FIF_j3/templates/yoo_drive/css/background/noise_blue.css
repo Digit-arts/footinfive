@@ -1,0 +1,8 @@
+/* Copyright (C) YOOtheme GmbH, YOOtheme Proprietary Use License (http://www.yootheme.com/license) */
+
+@import url(gradient.css);
+
+/* Background Style Sheet */
+body#page { background: #2a3337 url(../../images/background/noise/page_blue.jpg) 50% 50% fixed repeat; }
+
+#page-bg { background: url(../../images/background/noise/dots.png) 50% 50% fixed repeat; }

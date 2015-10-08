@@ -1,0 +1,15 @@
+/* Copyright (C) YOOtheme GmbH, YOOtheme Proprietary Use License (http://www.yootheme.com/license) */
+
+.menu-dropdown a.level1,
+.menu-dropdown span.level1 {
+	font-family: "Lucida Grande", "Lucida Sans Unicode", Arial, Verdana, sans-serif;
+	font-size: 14px;
+}
+
+.menu-dropdown .level2 > span > span.subtitle,
+.menu-dropdown li.level3 { font-size: 12px; }
+
+.menu-dropdown a.level1 > span,
+.menu-dropdown span.level1 > span { line-height: 41px; }
+
+.menu-dropdown .level1 > span > span.subtitle { font-size: 9px; }
