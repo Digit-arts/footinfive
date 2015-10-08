@@ -1,0 +1,382 @@
+/* Copyright (C) YOOtheme GmbH, YOOtheme Proprietary Use License (http://www.yootheme.com/license) */
+
+@import url(../warp/css/tools.css);
+
+
+/* Buttons (Needed for System Markup)
+----------------------------------------------------------------------------------------------------*/
+
+.button-default,
+.button-primary {
+	position: relative;
+	padding: 5px 13px;
+	border-radius: 2px;
+	text-transform: uppercase;
+}
+
+.button-default:before,
+.button-primary:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	right: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-position: 50% 0;
+	background-repeat: no-repeat;;
+}
+
+.button-default:focus:before,
+.button-primary:focus:before { background: none; }
+
+/* Default */
+.button-default,
+form.style button,
+form.style input[type="button"],
+form.style input[type="submit"] {
+	border-bottom: 1px solid #191919;
+	border-bottom: 1px solid rgba(0,0,0,0.6);
+	background: url(../images/tools/button_default.png) 50% 0 repeat-x;
+	box-shadow: 0 1px 1px rgba(0,0,0,0.3);
+	color: #8A8C8C;
+	text-shadow: 0 -1px 0 rgba(0,0,0,0.5);
+}
+.button-default:before { background-image: url(../images/tools/button_default_effect.png); }
+
+.mod-box-color .button-default,
+.mod-box-color form.style button,
+.mod-box-color form.style input[type="button"],
+.mod-box-color form.style input[type="submit"] {
+	border: 1px solid #191919;
+	border: 1px solid rgba(0,0,0,0.55);
+	background: #222;
+	background: -moz-linear-gradient(top, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.7) 100%);
+	background: -webkit-linear-gradient(top, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.7) 100%);
+	background: -o-linear-gradient(top, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.7) 100%);
+	background: linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.7) 100%);
+	background-clip: border-box;
+	box-shadow: inset 0 1px 0 rgba(255,255,255,0.12);
+	text-shadow: 0 -1px 0 rgba(0,0,0,0.5);
+}
+
+.mod-box-light .button-default,
+.mod-box-light form.style button,
+.mod-box-light form.style input[type="button"],
+.mod-box-light form.style input[type="submit"] {
+	border-bottom: 1px solid #292929;
+	border-bottom: 1px solid rgba(0,0,0,0.3);
+	box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+	color: #d6dadd;
+}
+
+.mod-box-color .button-default:hover,
+.mod-box-color form.style button:hover,
+.mod-box-color form.style input[type="button"]:hover,
+.mod-box-color form.style input[type="submit"]:hover {
+	color: #fff;
+	text-shadow: 0 -1px 0 rgba(0,0,0,0.6);
+}
+
+.button-default:focus,
+form.style button:focus,
+form.style input[type="button"]:focus,
+form.style input[type="submit"]:focus {
+	box-shadow: inset 0 1px 1px rgba(0,0,0,0.8),
+				inset 0 0 12px rgba(0,0,0,0.7),
+				0 1px 0 rgba(255,255,255,0.1);
+	background: #222;
+	background: -moz-linear-gradient(top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.5) 100%);
+	background: -webkit-linear-gradient(top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.5) 100%);
+	background: -o-linear-gradient(top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.5) 100%);
+	background: linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.5) 100%);
+}
+
+.mod-box-color .button-default:focus,
+.mod-box-color form.style button:focus,
+.mod-box-color form.style input[type="button"]:focus,
+.mod-box-color form.style input[type="submit"]:focus {
+	box-shadow: inset 0 1px 1px rgba(0,0,0,0.6),
+				inset 0 0 12px rgba(0,0,0,0.4),
+				0 1px 0 rgba(255,255,255,0.5);
+}
+
+/* Primary */
+.button-primary { text-shadow: 0 1px 0 rgba(255,255,255,0.5); }
+.button-primary:before { background-image: url(../images/tools/button_primary_effect.png); }
+
+
+/* Images and Objects (Needed for System Markup)
+----------------------------------------------------------------------------------------------------*/
+
+img.border-box {
+	border: 1px solid #444;
+	border: 1px solid rgba(255,255,255,0.1);
+}
+
+.mod-box .spotlight-img {
+	display: block;
+    margin: -20px -20px 20px;
+    max-width: none;
+}
+
+
+/* Lists and Tables (Needed for System Markup)
+----------------------------------------------------------------------------------------------------*/
+
+/* List Line */
+ul.line > li,
+.comments-list > article,
+.wk-twitter-list article,
+ul.zoo-list > li,
+.zoo-comments-list > article {
+	border-top: 1px solid #444;
+	border-top: 1px solid rgba(255,255,255,0.1);
+}
+ul.line > li:first-child,
+ul.zoo-list > li:first-child,
+.zoo-comments-list > article:first-child,
+.comments-list > article:first-child { border: none; }
+
+/* List Line Icon */
+ul.line-icon > li { padding-left: 17px; }
+
+#page ul.line-icon > li,
+#page ul.line-icon > li:first-child {
+	margin-top: 0;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	background-position: 0 0;
+	background-repeat: no-repeat;
+}
+
+#page .mod-box-color ul.line-icon > li,
+#page .mod-box-color ul.line-icon > li:first-child { background-image: url(../images/tools/list_line_icon_mod_color.png); }
+
+/* List Check */
+ul.check > li {
+	padding: 4px 0 0 30px;
+	background-position: 0 0;
+	background-repeat: no-repeat;;
+}
+.mod-box-color ul.check > li { background-image: url(../images/tools/list_check_mod_color.png); }
+
+/* List Check */
+ul.zebra > li { border-radius: 1px; }
+
+ul.zebra > li.odd {
+	background: #191919;
+	background: rgba(0,0,0,0.2);
+}
+ul.zebra > li:nth-of-type(odd) {
+	background: #191919;
+	background: rgba(0,0,0,0.2);
+}
+
+/* List Tag Cloud */
+ul.tag-cloud {
+	list-style: none;
+	margin: 20px 0;
+	padding: 0;
+}
+
+ul.tag-cloud > li {
+	display: inline-block;
+	margin-bottom: 2px;
+	padding: 3px 4px;
+	border-radius: 2px;
+	background: #333;
+	background: rgba(255,255,255,0.1);
+	line-height: 13px;
+	font-size: 13px;
+	text-transform: uppercase;
+}
+
+/* Zebra Table */
+table.zebra tbody td {
+	border-bottom: 1px solid #444;
+	border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+table.zebra tbody tr:first-child td {
+	border-top: 1px solid #444;
+	border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+table.zebra tbody tr.odd {
+	background: #191919;
+	background: rgba(0,0,0,0.2);
+}
+table.zebra tbody tr:nth-of-type(odd) {
+	background: #191919;
+	background: rgba(0,0,0,0.2); }
+
+table.zebra caption { color: #888; }
+
+
+/* Definition Lists
+----------------------------------------------------------------------------------------------------*/
+
+dl.separator dt {	
+	position: relative;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	text-transform: uppercase;
+}
+
+/* border code because of RTL */
+dl.separator dd {
+	padding-top: 5px;
+	padding-bottom: 5px;
+	border-width: 0 0 0 1px;
+	border-style: solid;
+	border-color: #444;
+}
+
+dl.separator dt:before {
+	content: "";
+	position: absolute;
+	top: 0;
+	right: -15px;
+	width: 30px;
+	border-top: 1px solid #444;
+}
+
+dl.separator dt:after {
+	content: "";
+	position:absolute;
+	top: -3px;
+	right: -3px;
+	width: 5px;
+	height: 5px;
+	background: #111;
+	border: 1px solid #444;
+	border-radius:6px;
+}
+
+dl.separator dt:first-child:before,
+dl.separator dt:first-child:after { display: none; }
+
+
+/* Text
+----------------------------------------------------------------------------------------------------*/
+
+/* Inline Text Box */
+em.box { border-radius: 2px; }
+
+/* Dotted Horizontal Rule */
+hr.dotted { background: url(../images/tools/line_dotted.png) 0 0 repeat-x; }
+
+/* Dark Text */
+.text-dark { color: #8b8d8e; }
+
+
+/* Boxes
+----------------------------------------------------------------------------------------------------*/
+
+.box-content,
+.box-note,
+.box-info,
+.box-warning,
+.box-hint,
+.box-download {
+	border: 1px dashed #414345;
+	border: 1px dashed rgba(255,255,255,0.25);
+	border-radius: 3px;
+	background: #191919;
+	background: rgba(0,0,0,0.4);
+	background-position: 0 0;
+	background-repeat: no-repeat;
+}
+
+.mod-box-color .box-info { background-image: url(../images/tools/box_info_mod_color.png); }
+.mod-box-color .box-warning { background-image: url(../images/tools/box_warning_mod_color.png); }
+.mod-box-color .box-hint { background-image: url(../images/tools/box_hint_mod_color.png); }
+.mod-box-color .box-download { background-image: url(../images/tools/box_download_mod_color.png); }
+
+
+/* Forms (Needed for System Markup)
+----------------------------------------------------------------------------------------------------*/
+
+form.box fieldset,
+#system .author-box {
+	border: 1px solid #444;
+	border: 1px solid rgba(255,255,255,0.1);
+}
+
+form.box fieldset legend { color: #8A8C8C; }
+
+form.style input,
+form.style select,
+form.style textarea {
+	padding: 6px;
+	border: 1px solid #444;
+	border: 1px solid rgba(255,255,255,0.1);
+	border-radius: 2px;
+	background-color: #222;
+	background-color: rgba(0,0,0,0.2);
+	box-shadow: inset 0 1px 1px rgba(0,0,0,0.2);
+	color: #8A8C8C;
+}
+
+.mod-box-light form.style input,
+.mod-box-light form.style select,
+.mod-box-light form.style textarea { border: none; }
+
+form.style input:focus,
+form.style select:focus,
+form.style textarea:focus {
+	border-color: #555;
+	border-color: rgba(255,255,255,0.2);
+	background-color: #111;
+	background-color: rgba(0,0,0,0.6);
+	box-shadow: inset 0 1px 1px rgba(0,0,0,0.5);
+	color: #d6dadd;
+}
+
+form.short input:-moz-placeholder { color: #8A8C8C; }
+form.short input::-webkit-input-placeholder { color: #8A8C8C; }
+
+form.style button,
+form.style input[type="button"],
+form.style input[type="submit"] {
+	padding: 6px 12px;
+	border: none;
+	border-radius: 2px;
+}
+
+/* Social Icons
+----------------------------------------------------------------------------------------------------*/
+
+.social-icons {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.social-icons li,
+.social-icons li a { float: left; }
+
+.social-icons li { margin-right: 10px; }
+.social-icons li:last-child { margin-right: 0; }
+
+.social-icons li a {
+	display: inline-block;
+	overflow: hidden;
+	width: 22px;
+	height: 18px;
+	background-position: 50% 0;
+	background-repeat: no-repeat;
+}
+
+.social-icons .twitter a { background-position: 50% 0; }
+.social-icons .twitter a:hover { background-position: 50% -30px; }
+
+.social-icons .facebook a { background-position: 50% -60px; }
+.social-icons .facebook a:hover { background-position: 50% -90px; }
+
+.social-icons .vimeo a { background-position: 50% -120px; }
+.social-icons .vimeo a:hover { background-position: 50% -150px; }
+
+.social-icons .rss a { background-position: 50% -180px; }
+.social-icons .rss a:hover { background-position: 50% -210px; }

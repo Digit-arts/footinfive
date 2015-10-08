@@ -1,0 +1,11 @@
+<?xml version="1.0" ?>
+<extension type="component" version="2.5.0" method="upgrade">
+<name>com_publipostage</name>
+<author>Digitarts</author>
+<version>1.0.0</version>
+<description>test<description/>
+<files folder="components/com_publipostage">
+ <filename>publipostage.php</filename>
+ <filename>index.html</filename>
+</files>
+</extension>

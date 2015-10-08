@@ -1,0 +1,249 @@
+/* Copyright (C) YOOtheme GmbH, YOOtheme Proprietary Use License (http://www.yootheme.com/license) */
+
+@media (min-device-width: 1025px)  {
+
+    /* Layout
+    ----------------------------------------------------------------------------------------------------*/
+
+    /* html { -webkit-backface-visibility: hidden; } */
+
+    /* Hyperlink Animation */
+    a,
+    .menu-dropdown span.subtitle {
+        -moz-transition: color 200ms ease-in-out;
+        -webkit-transition: color 200ms ease-in-out;
+        -o-transition: color 200ms ease-in-out;
+        transition: color 200ms ease-in-out;
+    }
+
+    /* Form Animations */
+    form.style input,
+    form.style select,
+    form.style textarea,
+    form.style button:hover,
+    form.style input.button:hover,
+    form.style input[type="button"]:hover,
+    form.style input[type="submit"]:hover,
+    .mobile-switcher {
+        -moz-transition: color 250ms ease-in-out, background 250ms ease-in-out;
+        -webkit-transition: color 250ms ease-in-out, background 250ms ease-in-out;
+        -o-transition: color 250ms ease-in-out, background 250ms ease-in-out;
+        transition: color 250ms ease-in-out, background 250ms ease-in-out;
+    }
+
+    /* Menu Animations */
+    .menu-dropdown li.level1:hover,
+    .menu-dropdown li.remain,
+    .menu-dropdown li.level2:hover,
+    .menu-sidebar li.level1 .level1:hover,
+    .menu-sidebar li.level1 > .level1:hover:before,
+    .searchbox .results li.result.selected {
+        -moz-transition: all 300ms ease-in-out;
+        -webkit-transition: all 300ms ease-in-out;
+        -o-transition: all 300ms ease-in-out;
+        transition: all 300ms ease-in-out; 
+    }
+
+    .menu-dropdown li.level1:hover .level1,
+    .menu-dropdown li.remain .level1,
+    .menu-dropdown li.level1:hover .level1 span.subtitle,
+    .menu-dropdown li.remain .level1 span.subtitle {
+        -moz-transition: color 0s ease-in;
+        -webkit-transition: color 300ms ease-in-out;
+        -o-transition: color 300ms ease-in-out;
+        transition: color 300ms ease-in-out;
+    }
+
+
+    /* Custom Animations
+    ----------------------------------------------------------------------------------------------------*/
+
+    /* Drive Scale */
+    .drive-scale:hover,
+    #system .pagination a:hover {
+        -moz-animation-fill-mode: both;
+        -moz-animation-duration: 150ms;
+        -moz-animation-name: scale;
+        -webkit-animation-fill-mode: both;
+        -webkit-animation-duration: 150ms;
+        -webkit-animation-name: scale;
+        -o-animation-fill-mode: both;
+        -o-animation-duration: 150ms;
+        -o-animation-name: scale;
+        animation-fill-mode: both;
+        animation-duration: 150ms;
+        animation-name: scale;
+    }
+
+    @-moz-keyframes scale {
+        0%, 100% { -moz-transform: scaleY(1); } 
+        50% { -moz-transform: scaleY(1.8); }
+    }
+
+    @-webkit-keyframes scale {
+        0%, 100% { -webkit-transform: scale(1); } 
+        50% { -webkit-transform: scale(1.2); }
+    }
+
+
+    @-o-keyframes scale {
+        0%, 100% { -o-transform: scale(1); } 
+        50% { -o-transform: scale(1.2); }
+    }
+
+    @keyframes scale {
+        0%, 100% { transform: scale(1); } 
+        50% { transform: scale(1.2); }
+    }
+
+    /* Drive Flash */
+    .drive-flash:hover,
+    #system .item > p.links a:hover,
+    #system .item div.reply a:hover {
+        -moz-animation-fill-mode: both;
+        -moz-animation-duration: 400ms;
+        -moz-animation-name: flash;
+        -webkit-animation-fill-mode: both;
+        -webkit-animation-duration: 400ms;
+        -webkit-animation-name: flash;
+        -o-animation-fill-mode: both;
+        -o-animation-duration: 400ms;
+        -o-animation-name: flash;
+        animation-fill-mode: both;
+        animation-duration: 400ms;
+        animation-name: flash;
+    }
+
+    @-moz-keyframes flash {
+        0%, 100% { opacity: 1; } 
+        50% { opacity: 0.3; }
+    }
+
+    @-webkit-keyframes flash {
+        0%, 100% { opacity: 1; } 
+        50% { opacity: 0.3; }
+    }
+
+
+    @-o-keyframes flash {
+        0%, 100% { opacity: 1; } 
+        50% { opacity: 0.3; }
+    }
+
+    @keyframes flash {
+        0%, 100% { opacity: 1; } 
+        50% { opacity: 0.3; }
+    }
+
+    /* Drive Transform Y and X Base Config */
+    .drive-transform:hover,
+    .menu-dropdown li.level1 > .level1:hover > span,
+    .menu-dropdown li.level2:hover a.level2,
+    .menu-sidebar li.level1 .level1:hover > span {
+        -moz-animation-duration: 300ms;
+        -moz-animation-fill-mode: both;
+        -o-animation-duration: 300ms;
+        -o-animation-fill-mode: both;
+        animation-duration: 300ms;
+        animation-fill-mode: both;
+    }
+
+    .drive-transform:hover {
+        -webkit-animation-duration: 300ms;
+        -webkit-animation-fill-mode: both;
+    }
+
+    /* Drive Transform Y */
+    .menu-dropdown li.level1 > .level1:hover > span {
+        -moz-animation-name: fadeInY;
+        -o-animation-name: fadeInY;
+        animation-name: fadeInY;
+    }
+
+    @-moz-keyframes fadeInY {
+        0% { opacity: 0; -moz-transform: translateY(20px); }
+        100% { opacity: 1; -moz-transform: translateY(0); }
+    }
+
+    @-webkit-keyframes fadeInY {
+        0% { opacity: 0; -webkit-transform: translateY(20px); }
+        100% { opacity: 1; -webkit-transform: translateY(0); }
+    }
+
+    @-o-keyframes fadeInY {
+        0% { opacity: 0; -o-transform: translateY(20px); }
+        100% { opacity: 1; -o-transform: translateY(0); }
+    }
+
+    @keyframes fadeInY {
+        0% { opacity: 0; transform: translateY(20px); }
+        100% { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Drive Transform X */
+    .drive-transform:hover,
+    .menu-dropdown li.level2:hover a.level2,
+    .menu-sidebar li.level1 .level1:hover > span {
+        -moz-animation-name: fadeInX;
+        -webkit-animation-name: fadeInX;
+        -o-animation-name: fadeInX;
+        animation-name: fadeInX;
+    }
+
+    @-moz-keyframes fadeInX {
+        0% { opacity: 0; -moz-transform: translateX(-10px); }
+        100% { opacity: 1; -moz-transform: translateX(0); }
+    }
+
+    @-webkit-keyframes fadeInX {
+        0% { opacity: 0; -webkit-transform: translateX(-10px); }
+        100% { opacity: 1; -webkit-transform: translateX(0); }
+    }
+
+    @-o-keyframes fadeInX {
+        0% { opacity: 0; -o-transform: translateX(-10px); }
+        100% { opacity: 1; -o-transform: translateX(0); }
+    }
+
+    @keyframes fadeInX {
+        0% { opacity: 0; transform: translateX(-10px); }
+        100% { opacity: 1; transform: translateX(0); }
+    }
+
+    /* Drive Bounce */
+    .drive-bounce:hover,
+    .button-default:hover,
+    .button-primary:hover,
+    form.style button:hover,
+    form.style input[type="button"]:hover,
+    form.style input[type="submit"]:hover {
+        -moz-animation-name: bounce;
+        -moz-animation-duration: 300ms;
+        -moz-animation-fill-mode: both;
+        -o-animation-name: bounce;
+        -o-animation-duration: 300ms;
+        -o-animation-fill-mode: both;
+        animation-name: bounce;
+        animation-duration: 300ms;
+        animation-fill-mode: both;
+    }
+
+    @-moz-keyframes bounce {
+        0%, 100% { -moz-transform: translateY(0); }
+        30% { -moz-transform: translateY(3px); }
+        60% { -moz-transform: translateY(-3px); }
+    }
+
+    @-o-keyframes bounce {
+        0%, 100% { -o-transform: translateY(0); }
+        30% { -o-transform: translateY(3px); }
+        60% { -o-transform: translateY(-3px); }
+    }
+
+    @keyframes bounce {
+        0%, 100% { transform: translateY(0); }
+        30% { transform: translateY(3px); }
+        60% { transform: translateY(-3px); }
+    }
+
+}

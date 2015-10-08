@@ -1,0 +1,13 @@
+/* Copyright (C) YOOtheme GmbH, YOOtheme Proprietary Use License (http://www.yootheme.com/license) */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 { font-family: "Lucida Grande", "Lucida Sans Unicode", Arial, Verdana, sans-serif; }
+
+h1 { font-size: 34px; line-height: 34px; }
+h2 { font-size: 25px; line-height: 25px; }
+h3 { font-size: 19px; line-height: 19px; }
+h4, h5, h6 { font-size: 16px; line-height: 16px; }

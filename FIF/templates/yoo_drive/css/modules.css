@@ -1,0 +1,65 @@
+/* Copyright (C) YOOtheme GmbH, YOOtheme Proprietary Use License (http://www.yootheme.com/license) */
+
+@import url(../warp/css/modules.css);
+
+
+/* Module Badges
+----------------------------------------------------------------------------------------------------*/
+
+.module .badge {
+	width: 38px;
+	height: 20px;
+	background-position: 0 0;
+	background-repeat: no-repeat;
+}
+ 
+.module .badge-hot { background-position: 0 0; }
+.module .badge-top { background-position: 0 -30px; }
+.module .badge-free { background-position: 0 -60px; }
+.module .badge-new { background-position: 0 -90px; }
+
+
+/* Module Icons
+----------------------------------------------------------------------------------------------------*/
+
+.module .module-title .icon {
+	background-position: 0 0;
+	background-repeat: no-repeat;
+}
+
+.module .module-title .icon-download { background-position: 0 0; }
+.module .module-title .icon-twitter { background-position: 0 -30px; }
+.module .module-title .icon-mail { background-position: 0 -60px; }
+.module .module-title .icon-bubble { background-position: 0 -90px; }
+.module .module-title .icon-login { background-position: 0 -120px; }
+.module .module-title .icon-cart { background-position: 0 -150px; }
+
+
+/* Module Type: Box
+----------------------------------------------------------------------------------------------------*/
+
+.mod-box .badge { top: 20px; right: 20px; }
+
+.mod-box-light {
+	background: url(../images/mod_box_color_light.png) 50% 50% repeat;
+	box-shadow: inset 0 0 30px rgba(0,0,0,0.3);
+}
+
+/* Color-Color */
+.module.mod-box-color .module-title .icon { background-image: url(../images/module_icons_mod_color.png); }
+
+.module.mod-box-color strong {
+	color: #222;
+	color: rgba(0,0,0,0.8);
+}
+
+/* Effect */
+.mod-box-effect:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: -6px;
+	right: 0;
+	left: 0;
+	height: 14px;
+}

@@ -1,0 +1,94 @@
+/* Copyright (C) YOOtheme GmbH, YOOtheme Proprietary Use License (http://www.yootheme.com/license) */
+
+/* Widgetkit
+----------------------------------------------------------------------------------------------------*/
+
+/* Widgetkit Accordion */
+.wk-accordion-default .toggler {
+	padding: 8px 12px;
+	border: none;
+	border-radius: 3px;
+	background: #111;
+	background: rgba(0,0,0,0.4);
+	box-shadow: none;
+}
+
+/* Widgetkit Twitter */
+.wk-twitter-single.image { background: url(../images/widgetkit/bird.png) 0 0 no-repeat; }
+
+.wk-twitter-bubbles .content {
+	border: none;
+	border-radius: 3px;
+	background: url(../images/widgetkit/bubble.png) 0 0 repeat;
+	box-shadow: none;
+}
+
+.wk-twitter-bubbles .content:after {
+	width: 18px;
+	background: url(../images/widgetkit/arrow.png) 0 0 no-repeat;
+}
+
+.wk-twitter .image,
+.wk-twitter-bubbles .image {
+	border-color: #333;
+	border-color: rgba(0,0,0,0.1);
+	border-radius: 2px;
+}
+
+/* Widgetkit Maps */
+.wk-map .wk-content,
+.wk-map .wk-content h3 { font-family: Arial, Helvetica, sans-serif; }
+
+.wk-map .wk-content {
+	line-height: 20px;
+	font-size: 14px;
+	color: #222;
+	text-shadow: none;
+}
+
+.wk-map .wk-content h3 {
+	font-size: 28px;
+	color: #222;
+	text-transform: none;
+	text-shadow: none;
+}
+
+.wk-map .wk-content a { color: #3faadc; }
+
+/* Spotlight */
+.spotlight .overlay-default {
+	background-image: url(../images/widgetkit/magnifier.png);
+	background-position: 50% 50%;
+	background-repeat: no-repeat;
+}
+
+.spotlight .overlay,
+.spotlight .overlay a,
+.wk-slideshow .caption,
+.wk-slideshow .caption a {
+    color: #fff;
+	text-shadow: 0 0 3px rgba(0,0,0,0.3);
+}
+
+/* Lightbox */
+#lightbox-overlay { background-color: #000!important; }
+#lightbox-outer { box-shadow: 0 0 15px rgba(0,0,0,1.0); }
+
+#lightbox-title { font-size: 15px; }
+#lightbox-title.lightbox-title-inside { color: #333; }
+
+
+/* Drive Slideshow Tabs */
+.wk-slideshow-tabs-drive .nav li { color: #8A8C8C; }
+.wk-slideshow-tabs-drive .nav li:hover { color: #d6dadd; }
+
+
+/* ZOO
+----------------------------------------------------------------------------------------------------*/
+
+#page #yoo-zoo h1,
+#page #yoo-zoo h2,
+#page #yoo-zoo h3,
+#page #yoo-zoo h4,
+#page #yoo-zoo h5,
+#page #yoo-zoo h6 { font-weight: normal;}

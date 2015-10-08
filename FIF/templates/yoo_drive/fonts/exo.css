@@ -1,0 +1,12 @@
+/* Copyright (C) YOOtheme GmbH, YOOtheme Proprietary Use License (http://www.yootheme.com/license) */
+
+@font-face {
+	font-family: 'exolight';
+	src: url('exo-light-webfont.eot');
+	src: url('exo-light-webfont.eot?#iefix') format('embedded-opentype'),
+		url('exo-light-webfont.woff') format('woff'),
+		url('exo-light-webfont.ttf') format('truetype'),
+		url('exo-light-webfont.svg#exolight') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
