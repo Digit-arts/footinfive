@@ -17,8 +17,8 @@ $warp = Warp::getInstance();
 
 // set messages
 $title   = $this->title;
-$error   = $this->error->get('code');
-$message = $this->error->get('message');
+$error   = $this->error->getCode();
+$message = $this->error->getMessage();
 
 // set 404 messages
 if ($error == '404') {

@@ -1,0 +1,54 @@
+.smallPanel {
+	border: 1px solid #ccc;
+	border-radius: 10px;
+    padding: 5px;
+    overflow: auto;
+}
+
+@media (max-width: 600px) {
+  .smallPanel {
+	width: 100%;
+  }
+}@media (min-width: 600px) {
+  .smallPanel {
+	width: 400px;
+  }
+}
+
+.panelTitle {
+	width: 40%;
+	float: left;
+}
+.panelRow {
+	width: 100%;
+	padding-top: 15px;
+    overflow: auto;
+}
+.panelHead {
+	font-weight: bold;
+    text-align: center;
+}
+
+.panelValue {
+	width: 60%;
+	float: right;
+}
+.clear {
+	clear:both;
+}
+.smallImage {
+	height: 15px;
+}
+
+.content-loading  { 
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%; 
+    opacity: 0.5;
+}
+.content-to-load  { 
+    position: relative; 
+}
+

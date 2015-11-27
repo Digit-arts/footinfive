@@ -90,8 +90,7 @@
 }
 
 #headerbar .module {
-	max-width: 800px;
-	height: 60px;
+	max-width: 300px;
 	margin-right: 0;
 	float: right;
 }

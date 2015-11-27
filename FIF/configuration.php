@@ -13,8 +13,8 @@ class JConfig {
 	public $debug_lang = '0';
 	public $dbtype = 'mysqli';
 	public $host = 'localhost';
-	public $user = 'Cyclople';
-	public $password = 'MixMax123';
+	public $user = 'root';
+	public $password = '';
 	public $db = 'MySql_FIF';
 	public $dbprefix = 's857u_';
 	public $live_site = ''; 
@@ -64,4 +64,6 @@ class JConfig {
 	public $cookie_domain = '';
 	public $cookie_path = '';
 	public $root_app_path = '/footinfive/FIF/';
+	public $site_root = 'http://localhost';
+	public $site_url = 'http://localhost/footinfive/FIF';
 }

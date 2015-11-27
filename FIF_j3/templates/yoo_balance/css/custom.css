@@ -6,7 +6,7 @@
 
 /* Logo */
 #logo .custom-logo {
-	width: 160px;
+	width: 270px;
 	height: 60px;
 	background: url(../../../images/yootheme/logo.png) 0 0 no-repeat;
 }
@@ -72,42 +72,3 @@
 .demo-box-article small { margin-left: 72px; }
 
 .demo-list ul.line > li { line-height: 30px; }
-
-.tab-custom {
-	min-height: 270px;
-	padding: 30px 460px 30px 30px;
-	background-position: 100% 50%;
-	background-repeat: no-repeat;
-}
-
-.tab1 { background-image: url(../../../images/yootheme/demo/slideshow/image1.png); }
-.tab2 { background-image: url(../../../images/yootheme/demo/slideshow/image2.png); }
-.tab3 { background-image: url(../../../images/yootheme/demo/slideshow/image3.png); }
-.tab4 { background-image: url(../../../images/yootheme/demo/slideshow/image4.png); }
-.tab5 { background-image: url(../../../images/yootheme/demo/slideshow/image5.png); }
-
-.tab-custom { background-size: 980px 420px; }
-
-.tab-custom h1,
-.tab-custom h2 { margin-top: 0; }
-.tab-custom h1 { margin-bottom: 10px; }
-.tab-custom h2 { font-size: 25px; line-height: 25px; }
-
-.tab-custom p {
-	margin: 30px 0;
-	line-height: 25px;
-	font-size: 18px;
-}
-.tab-custom p:last-child { margin-bottom: 0; }
-
-.tab-custom .button-default,
-.tab-custom .button-primary { font-size: 16px; }
-
-/* Only Phones and Tablets (Portrait) */
-@media (max-width: 768px) {
-
-	.tab-custom {
-		padding-right: 30px;
-		background: none;
-	}
-}

@@ -268,8 +268,8 @@ class WarpDOMElement extends DOMElement {
 		}
 
 		// fix selfclosing tags
-		if (false !== $html = $this->ownerDocument->saveXML($this)) {
-			$html = preg_replace('#(<(div|span)[^>]*)/>#i', '$1></$2>', $html);
+		if (false !== $html = $this->ownerDocument->saveXML($this)) {			
+			$html = preg_replace('#(<(div|span|i)(\s[^>]*)?)/>#i', '$1></$2>', $html);
 		}
 
 		return $html;

@@ -29,6 +29,7 @@ require_once ('fonctions_module_reservation.php');
 <?
 $db = & JFactory::getDBO();
 $user =& JFactory::getUser();
+$config = JFactory::getConfig();
 
 
 $etat_actuel_acces_apllication=acces_application();
@@ -113,7 +114,8 @@ if (est_min_agent($user) and test_non_vide($_GET["suppr_client"])) {
 				supprimer_1_element("#__users","id",$resultat_recup_id_user);
 				supprimer_1_element("#_user_usergroup_map","user_id",$resultat_recup_id_user);
 				
-				header("Location: index.php");
+				$rootPath= $config->get( 'root_app_path' );
+				header("Location: $rootPath");
 				
 			}
 			

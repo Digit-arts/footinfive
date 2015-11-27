@@ -6,6 +6,8 @@
 * @license   http://www.gnu.org/licenses/gpl.html GNU/GPL
 */
 
+require_once($this['path']->path('admin:/components/com_menus/helpers/menus.php'));
+
 // profile options
 $select   = array();
 $selected = array();
@@ -37,7 +39,17 @@ foreach ($profiles as $profile => $values) {
 	<a class="assign" href="#">Assign Pages</a>
 
 	<div class="items">
-		<?php echo JHTML::_('select.genericlist', JHTML::_('menu.linkoptions'), 'items', 'size="15" multiple="multiple"', 'value', 'text'); ?>
+		<select name="items" size="15" multiple="multiple">
+			<?php foreach (MenusHelper::getMenuLinks() as $menu) : ?>
+			<?php if (count($menu->links)) : ?>
+			<optgroup label="<?php echo $menu->title; ?>">
+				<?php foreach ($menu->links as $link) :	?>
+				<option value="<?php echo (int) $link->value; ?>"><?php echo $link->text; ?></option>
+				<?php endforeach; ?>
+			</optgroup>
+			<?php endif; ?>
+			<?php endforeach; ?>
+		</select>
 	</div>
 
 	<?php foreach ($config->get('profile_map', array()) as $page => $profile): ?>

@@ -10,7 +10,7 @@
 defined('_JEXEC') or die;
 
 $params = &$this->item->params;
-JHtml::addIncludePath(JPATH_COMPONENT.'/helpers/html');
+JHtml::addIncludePath(JPATH_COMPONENT.'/helpers');
 JHtml::_('behavior.tooltip');
 JHtml::_('behavior.framework');
 
@@ -120,6 +120,12 @@ $listDirn	= $this->escape($this->state->get('list.direction'));
 	
 					<?php if (($this->params->get('show_link_description')) and ($item->description !='')): ?>
 					<div><?php echo $item->description; ?></div>
+					<?php endif; ?>
+
+					<?php $tagsData = $item->tags->getItemTags('com_weblinks.weblink', $item->id); ?>
+					<?php if ($this->params->get('show_tags', 1)) : ?>
+						<?php $this->item->tagLayout = new JLayoutFile('joomla.content.tags'); ?>
+						<?php echo $this->item->tagLayout->render($tagsData); ?>
 					<?php endif; ?>
 					
 				</td>

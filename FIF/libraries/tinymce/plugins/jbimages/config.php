@@ -38,7 +38,7 @@
 | -------------------------------------------------------------------*/
 
 	
-	$config['img_path'] = '/footinfive/FIF/images'; // Relative to domain name
+	$config['img_path'] = '/footinfive/FIF/upload'; // Relative to domain name
 	$config['upload_path'] = $_SERVER['DOCUMENT_ROOT'] . $config['img_path']; // Physical path. [Usually works fine like this]
 	$config['site_path'] = 'http://localhost';
 

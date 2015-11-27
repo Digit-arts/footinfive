@@ -9,7 +9,8 @@ class PublipostageController extends JController {
 		require_once (dirname ( dirname ( dirname ( __FILE__ ) ) ) . '/libraries/ya2/fonctions_module_reservation.php');
 		require_once (dirname ( dirname ( dirname ( __FILE__ ) ) ) . '/libraries/ya2/fonctions_gestion_user.php');
 		
-		$db = & JFactory::getDBO ();
+		$db = JFactory::getDBO ();
+		$config = JFactory::getConfig();
 		
 		$page = isset ( $_POST ['page'] ) ? $_POST ['page'] : 1;
 		$rp = isset ( $_POST ['rp'] ) ? $_POST ['rp'] : 10;
@@ -71,8 +72,9 @@ class PublipostageController extends JController {
 					$subject = "<a class='fancybox' rel='group' href='#bodyPub" . $recup_publipostage->id_pub . "'>" . $recup_publipostage->objet . "</a>";
 					$sendTo = recup_dest_publipostage ( $recup_publipostage->id_pub );
 					$nbSent = $resultat_nbre_mails_envoyese;
-					
-					$status = "<img src=\"http://www.footinfive.com/FIF/images/";
+
+					$siteURL= $config->get( 'site_url' );
+					$status = "<img src=\"$siteURL/images/";
 					switch ($recup_publipostage->actif) {
 						case 0 :
 							$status .= "publipostage_non_demarrer.png\" title=\"Le publipostage n'est pas lanc&eacute;";
@@ -161,7 +163,7 @@ class PublipostageController extends JController {
 
 	function Start() {
 		$id_pub = JRequest::getVar ( 'PubId' );
-		$db = & JFactory::getDBO ();
+		$db = JFactory::getDBO ();
 		$requete_maj_demarrer_publipostage = "UPDATE `Publipostage` SET `actif`=1 WHERE `id_pub`=" . $id_pub;
 		$db->setQuery ( $requete_maj_demarrer_publipostage );
 		$db->query ();
@@ -169,7 +171,7 @@ class PublipostageController extends JController {
 	
 	function Delete() {
 		$id_pub = JRequest::getVar ( 'PubId' );
-		$db = & JFactory::getDBO ();
+		$db = JFactory::getDBO ();
 		
 		$requete_clear_publipostage_LEDG = "DELETE FROM `Publipostage_type_destinataires` WHERE `id_pub` = " . $id_pub;
 		$db->setQuery ( $requete_clear_publipostage_LEDG );
@@ -182,7 +184,7 @@ class PublipostageController extends JController {
 
 	function Stop() {
 		$id_pub = JRequest::getVar ( 'id_pub' );
-		$db = & JFactory::getDBO ();
+		$db = JFactory::getDBO ();
 		$requete_maj_arreter_publipostage = "UPDATE `Publipostage` SET `actif`=0 WHERE `id_pub`=" . $id_pub;
 		$db->setQuery ( $requete_maj_arreter_publipostage );
 		$db->query ();
@@ -198,10 +200,12 @@ class PublipostageController extends JController {
 		$joueur_champ = JRequest::getVar ( 'joueur_champ' );
 		$police = JRequest::getVar ( 'police' );
 		
-		$db = & JFactory::getDBO ();
-		$user = & JFactory::getUser ();
+		$db = JFactory::getDBO ();
+		$user = JFactory::getUser ();
+		$config = JFactory::getConfig();
+		$siteRoot= $config->get( 'site_root' );
 		
-		$corps = str_replace ( 'src="', 'src="http://localhost', $corps );
+		$corps = str_replace ( 'src="', 'src="'.$siteRoot, $corps );
 		
 		if (! isset ( $id_pub )) {
 			$requete_insert_publipostage = "INSERT INTO `Publipostage`( `objet`, `corps`, `date_creation`, `heure_creation`, `id_user`, `actif`)" . " VALUES (" . $db->quote ( $objet ) . "," . $db->quote ( $corps ) . ",\"" . date ( "Y-m-d" ) . "\",\"" . date ( "H:i" ) . "\"," . $user->id . ",0)";
@@ -233,10 +237,10 @@ class PublipostageController extends JController {
 				$db->query ();
 			}
 			$max_tab_type_regroupement = max_tab ( "Type_Regroupement" );
-			if ($max_tab_type_regroupement > 9999) {
+			/*if ($max_tab_type_regroupement > 9999) {
 				sendMail ( 1, "alerte publipostage", "L id de Type_Regroupement a depass&eacute; 9999..." );
 				exit ();
-			}
+			}*/
 			for($i = 0; $i <= $max_tab_type_regroupement; $i ++) {
 				if (test_non_vide ( $_POST ["Type_Regroupement_$i"] )) {
 					$requete_insert_publipostage_Type_Regroupement = "INSERT INTO `Publipostage_type_destinataires`(`id_pub`, `id_type_regroupement`) " . " VALUES (" . $id_pub . "," . $i . ")";

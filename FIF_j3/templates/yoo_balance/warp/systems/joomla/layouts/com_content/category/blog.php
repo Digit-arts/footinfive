@@ -36,6 +36,11 @@ JHtml::addIncludePath(JPATH_COMPONENT.'/helpers');
 	</div>
 	<?php endif; ?>
 
+	<?php if ($this->params->get('show_tags', 1) && !empty($this->category->tags->itemTags)) : ?>
+		<?php $this->category->tagLayout = new JLayoutFile('joomla.content.tags'); ?>
+		<?php echo $this->category->tagLayout->render($this->category->tags->itemTags); ?>
+	<?php endif; ?>
+
 	<?php
 	
 	// init vars

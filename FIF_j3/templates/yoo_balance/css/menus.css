@@ -109,7 +109,7 @@
 .menu-dropdown span.level2 > span { padding: 5px 10px; }
 
 /* Set Hover */
-.menu-dropdown a.level2:hover { color: #FDBF00;/*#fff;*/ }
+.menu-dropdown a.level2:hover { color: #fff; }
 
 /* Set Current */
 .menu-dropdown a.current.level2 { font-weight: bold; } 

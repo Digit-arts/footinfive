@@ -100,7 +100,7 @@ function test_non_vide($var){
 
 function pagination($requete,$lien){
 
-	$db = & JFactory::getDBO();
+	$db = JFactory::getDBO();
 	
 	$db->setQuery($requete);
 	$db->query();

@@ -9,7 +9,6 @@
 // no direct access
 defined('_JEXEC') or die;
 
-JHtml::_('behavior.mootools');
 JHtml::_('behavior.keepalive');
 JHtml::_('behavior.tooltip');
 JHtml::_('behavior.formvalidation');
@@ -21,7 +20,7 @@ JHtml::_('behavior.formvalidation');
 	<h1 class="title"><?php echo $this->escape($this->params->get('page_heading')); ?></h1>
 	<?php endif; ?>
 
-	<form class="submission small style" action="<?php echo JRoute::_('index.php?option=com_users&task=registration.register'); ?>" method="post">
+	<form class="submission small style" action="<?php echo JRoute::_('index.php?option=com_users&task=registration.register'); ?>" method="post" enctype="multipart/form-data">
 		<?php foreach ($this->form->getFieldsets() as $fieldset): ?>
 			<?php $fields = $this->form->getFieldset($fieldset->name); ?>
 			<?php if (count($fields)): ?>

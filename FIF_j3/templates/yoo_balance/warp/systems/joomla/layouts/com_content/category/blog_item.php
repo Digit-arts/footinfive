@@ -10,7 +10,7 @@
 defined('_JEXEC') or die;
 
 // Create a shortcut for params.
-$params		= &$this->item->params;
+$params		= $this->item->params;
 $images		= json_decode($this->item->images);
 $canEdit	= $this->item->params->get('access-edit');
 JHtml::addIncludePath(JPATH_COMPONENT.'/helpers/html');

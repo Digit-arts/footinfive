@@ -30,31 +30,38 @@ class WarpMenuDropdown extends WarpMenu {
 
 			if ($columns > 1) {
 
-				$children = $ul->children('li');
-				$colrows  = ceil($children->length / $columns);
-				$column   = 0;
-				$i        = 0;
+			    $i = 0;
+			    $column = -1;
+			    $children = $ul->children('li');
 
-				foreach ($children as $child) {
-					$col = intval($i / $colrows);
-					
-					if ($column != $col) {
-						$column = $col;
-					}
+			    if ($children->length > $columns) {
+			        $remainder = $children->length % $columns;
+			        $colrows = ($children->length - $remainder) / $columns;
+			    } else {
+			        $remainder = 0;
+			        $colrows = 1;
+			    }
 
-					if ($li->children('ul')->length == $column) {
-						$li->append('<ul class="level2"></ul>');
-					}
-					
-					if ($column > 0) {
-						$li->children('ul')->item($column)->append($child);
-					}
+			    foreach ($children as $child) {
 
-					$i++;
-				}
+			        if ($i-- == 0) {
+			            $i = $remainder-- > 0 ? $colrows : $colrows - 1;
+			            $column++;
+			        }
+			        
+			        if ($li->children('ul')->length == $column) {
+			            $li->append('<ul class="level2"></ul>');
+			        }
+			        
+			        if ($column > 0) {
+			           $li->children('ul')->item($column)->append($child);
+			        }
+			    }
+
+			    $columns = $column + 1;
 
 			} else {
-				$columns = 1;
+			    $columns = 1;
 			}
 
 			// get width

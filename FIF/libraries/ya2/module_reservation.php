@@ -1,21 +1,6 @@
 <?php
 
-require_once ('fonctions_module_reservation.php');
-require_once ('fonctions_gestion_user.php');
-
-
-nettoyer_resa_non_payees();
-
-$user =& JFactory::getUser();
-$db = & JFactory::getDBO();
-
-$etat_actuel_acces_apllication=acces_application();
-
-if (($etat_actuel_acces_apllication==1 and est_register($user))
-    or ($etat_actuel_acces_apllication==2 and est_agent($user))
-    or ($etat_actuel_acces_apllication==3 and est_manager($user)))
-	echo "<font color=red>Acc&egrave;s ferm&eacute; pour le moment...</font>";
-else {
+require_once ('admin_base.php');
 	
 if (est_min_agent($user)){
 	if (test_non_vide($_POST["id_client"])) $id_client=$_POST["id_client"];
@@ -115,6 +100,9 @@ if (!test_non_vide($id_client))
 	$recup_client = $db->loadObject();
 	
 	?>
+	<div>
+	
+	</div>
 	<table border="0">
 		<tr>
 			<td width="50" valign="top">Type </td>
@@ -702,5 +690,5 @@ else{
 	}
 }
 }
-}
+
 ?>

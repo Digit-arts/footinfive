@@ -14,9 +14,6 @@ foreach (array($this['path']->path('cache:'), $this['path']->path('template:'),	
 	$this['check']->checkWritable($directory);
 }
 
-// check jquery
-$this['check']->checkjQuery(array($this['path']->path('site:components'), $this['path']->path('site:media'), $this['path']->path('site:modules'), $this['path']->path('site:plugins')));
-
 // output
 $critical = $this['check']->getIssues('critical');
 $notice   = $this['check']->getIssues('notice');

@@ -13,6 +13,7 @@ JHtml::_('behavior.keepalive');
 JHtml::_('behavior.tooltip');
 JHtml::_('behavior.calendar');
 JHtml::_('behavior.formvalidation');
+JHtml::_('formbehavior.chosen', 'select');
 
 // Create shortcut to parameters.
 $params = $this->state->get('params');
@@ -154,7 +155,12 @@ endif;
 				<?php echo $this->form->getLabel('catid'); ?>
 				<?php echo $this->form->getInput('catid'); ?>
 			</div>
-			
+
+			<div class="formelm">
+				<?php echo $this->form->getLabel('tags', 'metadata'); ?>
+				<?php echo $this->form->getInput('tags', 'metadata'); ?>
+			</div>
+
 			<div class="formelm">
 				<?php echo $this->form->getLabel('created_by_alias'); ?>
 				<?php echo $this->form->getInput('created_by_alias'); ?>

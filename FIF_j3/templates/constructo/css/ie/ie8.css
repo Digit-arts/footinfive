@@ -1,0 +1,27 @@
+#nav { float: left;letter-spacing: 0;margin: 0;position: relative;z-index: 10;}
+#nav ul {margin-left: 0px; padding:0; float:left; height:24px; }
+#nav ul li {list-style:none;float:left;position:relative; padding-right:0px 20px; margin:0; margin-right:5px; line-height:0;}
+#nav ul li a {color: #fff;display: block;font-family: 'Yanone Kaffeesatz',sans-serif;font-size: 20px;font-weight: normal;padding: 0 8px;text-align: left;text-shadow: none; border-right:none; text-transform:uppercase;}
+#nav ul li a:hover { color:#c4c4c4; background:none; text-decoration:none;}
+#nav ul li ul {position:absolute;width:180px;left:-999em;border-top:0; margin:0; padding:0; }
+#nav ul li:hover ul, #menu ul li.sfHover ul {left:0;}
+#nav ul li ul li {padding: 0; height:auto; width:180px; margin:0 auto; border:0; text-align: left; }
+#nav ul li ul li:hover ul {left:180px; top:0}
+#nav ul li:hover ul li a {text-shadow:none;}
+#nav ul li:hover ul li { background:none;}
+#nav ul li:hover ul li a, #nav ul li ul li a, #nav ul li.active ul li a{margin:0; padding:0 0 0 10px;height:30px;line-height:30px; background:#555;border-bottom:1px solid #3a3a3a; border-right:0; color:#d1d1d1; font-size:12px;font-weight:normal; background:#555555; -moz-box-shadow: none; -webkit-box-shadow: none; box-shadow:none ; border: none; border-radius: 0; font-size:14px;}
+#nav ul li ul li a:hover, #nav ul li ul li.active a, #nav ul li.active ul li a:hover, #nav ul li.active ul li.active a { -moz-box-shadow: none; -webkit-box-shadow: none; box-shadow:none ;text-align: left; border-radius:0; background: #333333; background-color:#333333; border:none; color:#fff; text-shadow:none; border-radius:0;}
+#nav ul li ul ul, #nav ul li:hover ul ul, #nav ul li:hover ul ul ul, #nav ul li:hover ul ul ul ul, #nav ul li.sfHover ul ul, #nav ul li.sfHover ul ul ul, #nav ul li.sfHover ul ul ul ul {left:-999em;}
+#nav ul li ul li ul li{padding:0;height:auto;width:180px; margin:0 auto; border:none; text-align: left;}
+
+#leftbar-w {float:left;}
+#rightbar-w {float:right;}
+#sidebar .module {margin-bottom: 15px; max-width:190px;}
+.well {max-width:180px;}
+
+#centercontent_both {width: 56%; margin-left: 10px;}
+#centercontent_one {width:77%; margin-left: 10px;}
+
+#social {float: right;width: 110px; margin-top: 28px; margin-right:1px; z-index:10; display:inline-block;}
+.slicknav_menu {display:none;}
+

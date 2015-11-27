@@ -18,10 +18,12 @@ unset($head['metaTags']['standard']['language']);
 
 $this['system']->document->setHeadData($head);
 
-// load jQuery, if not loaded before
-if (!$this['system']->application->get('jquery')) {
-	$this['system']->application->set('jquery', true);
-	$this['system']->document->addScript($this['path']->url('lib:jquery/jquery.js'));
+// load jQuery
+JHtml::_('jquery.framework');
+
+// load bootstrap styles
+if ($bootstrap = $this['path']->url('css:bootstrap.css')) {
+	$this['system']->document->addStyleSheet($bootstrap);
 }
 
 // get styles and scripts

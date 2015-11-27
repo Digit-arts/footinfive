@@ -111,7 +111,7 @@ if (isset($images->image_fulltext) and !empty($images->image_fulltext)) {
 		<?php endif; ?>
 	
 		<?php
-		
+
 			if (!$params->get('show_intro')) {
 				echo $this->item->event->afterDisplayTitle;
 			}
@@ -178,6 +178,11 @@ if (isset($images->image_fulltext) and !empty($images->image_fulltext)) {
 			
 		?>
 		</div>
+
+		<?php if ($params->get('show_tags', 1) && !empty($this->item->tags)) : ?>
+			<?php $this->item->tagLayout = new JLayoutFile('joomla.content.tags'); ?>
+			<?php echo $this->item->tagLayout->render($this->item->tags->itemTags); ?>
+		<?php endif; ?>
 
 		<?php if ($canEdit) : ?>
 		<p class="edit"><?php echo JHtml::_('icon.edit', $this->item, $params); ?></p>

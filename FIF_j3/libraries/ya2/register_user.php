@@ -29,6 +29,7 @@ require_once ('fonctions_module_reservation.php');
 <?
 $db = & JFactory::getDBO();
 $user =& JFactory::getUser();
+$config = JFactory::getConfig();
 
 
 $etat_actuel_acces_apllication=acces_application();
@@ -113,7 +114,8 @@ if (est_min_agent($user) and test_non_vide($_GET["suppr_client"])) {
 				supprimer_1_element("#__users","id",$resultat_recup_id_user);
 				supprimer_1_element("#_user_usergroup_map","user_id",$resultat_recup_id_user);
 				
-				header("Location: index.php");
+				$rootPath= $config->get( 'root_app_path' );
+				header("Location: $rootPath");
 				
 			}
 			
@@ -142,8 +144,8 @@ if (test_non_vide($_POST["date_nais"])) {
 		$existe_erreur++;
 	}
 }
-if (!test_non_vide($_POST["nom"]) or !test_non_vide($_POST["prenom"]) or !test_non_vide($_POST["telmob1"]) or !test_non_vide($_POST["courriel"])) {
-	echo "<font color=red>Le nom, le prenom, le numero de mobile ainsi que l'email sont obligatoires.<br></font>";
+if (!test_non_vide($_POST["nom"]) or !test_non_vide($_POST["prenom"]) or !test_non_vide($_POST["telmob1"]) or !test_non_vide($_POST["courriel"]) or (!test_non_vide($_POST["cp"])&&!test_non_vide($_POST["code_insee"]))) {
+	echo "<font color=red>Le nom, le prenom, le numero de mobile, le code postal ainsi que l'email sont obligatoires.<br></font>";
 	$existe_erreur++;
 }
 
@@ -663,13 +665,9 @@ else {
 			else echo $Adresse;?>
 			</td>
 		</tr>
-		<tr>
-			<th>Code postal, Ville  :	</th>
-			<td><? 
+		<? 
 				input_cp_ville ($code_insee,$cp,$ville,$nbre_cp,$nbre_villes,$tab_villes,$tab_cp,$_GET["modif"]);
 			?>
-			</td>
-		</tr>
 		<tr>
 			<th>Date naissance :	</th>
 			<td>
