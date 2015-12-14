@@ -275,9 +275,4 @@
 		</field>
 		</fieldset>
 	</fields>
-	<url>
-   <param name="id" type="article" default="0" label="Select Article" description="An article" />
-   <param name="task" type="hidden" default="list" />
-   <param name="crt" type="hidden" default="all" />
-</url>
 </metadata>

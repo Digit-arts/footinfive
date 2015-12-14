@@ -9,6 +9,7 @@
 <script src="libraries/parsley.js/dist/parsley.min.js"></script>
 <?php
 require_once ('admin_base.php');
+$siteURL= $config->get( 'site_url' );
 
 nettoyer_resa_non_payees ();
 
@@ -68,10 +69,10 @@ if (isset ( $user ) and (est_register ( $user )) and ($id_client != "")) {
 	$db->setQuery ( $requete_recup_client );
 	$recup_client = $db->loadObject ();
 	if (! test_non_vide ( $recup_client->nom ))
-		header ( "Location: index.php/component/content/article?id=57&modif=1&id_client=" . $user->id . "" );
+		header ( "Location: $siteURL/index.php/component/content/article?id=57&modif=1&id_client=" . $user->id . "" );
 }
 if (! test_non_vide ( $id_client ))
-	header ( "Location: index.php?option=com_content&view=article&id=57" );
+	header ( "Location: $siteURL/index.php?option=com_content&view=article&id=57" );
 ?>
 <script type="text/javascript">
 	function valider() {
@@ -152,7 +153,7 @@ if (! test_non_vide ( $id_client ))
 ?>
 
 <FORM id="formulaire" name="date_form_0" class="submission box"
-	action="article?id=62" method="post">
+	action="<?php echo $siteURL."/index.php/component/content/";?>article?id=62" method="post">
 	<?
 	// ///////////// Modif d'une RESA
 	
@@ -227,7 +228,7 @@ if (! test_non_vide ( $id_client ))
 				value='<?php echo $recup_client->id_client; ?>'><?php echo $recup_client->nom. " " . $recup_client->prenom; ?>
 				<?php if ($ligne_commentaire_client->Commentaire != "" and (est_min_agent ( $user ))) {?>
 				<a
-				href='../../../index.php/component/content/article?id=75&art=62&id_client=<?php echo $recup_client->id_client; ?>'>
+				href='<?php echo siteURL;?>/index.php/component/content/article?id=75&art=62&id_client=<?php echo $recup_client->id_client; ?>'>
 					<img class='smallImage' src='../../../images/Comment-icon.png'
 					title='<?php echo $ligne_commentaire_client->Commentaire; ?>'>
 			</a>

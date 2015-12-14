@@ -63,5 +63,7 @@ class JConfig {
 	public $feed_email = 'author';
 	public $cookie_domain = '';
 	public $cookie_path = '';
-	public $root_app_path = '/footinfive/FIF/';
+		public $root_app_path = '/footinfive/FIF_j3/';
+	public $site_root = 'http://localhost';
+	public $site_url = 'http://localhost/footinfive/FIF_j3';
 }

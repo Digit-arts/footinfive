@@ -46,6 +46,7 @@
 
 <?
 require_once ('admin_base.php');
+$siteURL= $config->get( 'site_url' );
 
 if (!test_non_vide($_GET["id_resa"])) echo "Num&eacute;ro de r&eacute;sa inexistant...";
 else {
@@ -85,7 +86,7 @@ if (est_min_agent($user) and test_non_vide($_GET["anniv"])) {
 	if ($_GET["anniv"]==1)
 		$anniv="ANNIV";
 	else $anniv="NON-ANNIV";
-	sendMail(267,"Resa ".$anniv." : ".$id_resa." ","<br>user_modif:".$user->id."<br><br>http://www.footinfive.com/FIF/index.php/component/content/article?id=61&premiere=1&id_resa=".$id_resa."");
+	sendMail(267,"Resa ".$anniv." : ".$id_resa." ","<br>user_modif:".$user->id."<br><br>$siteURL/index.php/component/content/article?id=61&premiere=1&id_resa=".$id_resa."");
 }
 
 if (est_min_agent($user) and test_non_vide($_GET["id_regl"])) {
@@ -212,7 +213,7 @@ if (!test_non_vide($_GET["annul"])) {
 						else {
 							if (test_non_vide($clef_deja_utilisee))
 								$les_erreurs.="Cette contremarque est d&eacute;j&egrave;a utilis&eacute;e par la resa : "
-									."<a href=\"index.php/component/content/article?id=61&premiere=1&id_resa=".$clef_deja_utilisee."\" target=\"_blank\" />".$clef_deja_utilisee."</a>.<br>";
+									."<a href=\"$siteURL/index.php/component/content/article?id=61&premiere=1&id_resa=".$clef_deja_utilisee."\" target=\"_blank\" />".$clef_deja_utilisee."</a>.<br>";
 							else {
 								if (substr($_POST["Montant"],0,1)<>recup_id_tarif_d_une_resa($id_resa))
 									$les_erreurs.="Cette contremarque n'est pas utilisable sur cet horaire<br>";
@@ -371,7 +372,7 @@ if (!($nbre_resultats>0) and (($info_resa->notification<>1) or test_non_vide($_G
 		$objet="Confirmation de votre reservation (Num : ".$id_resa.")";
 		if (($info_resa->date_debut_resa<date("Y-m-d")) or sendMail($info_resa->id_client,$objet,$corps)){
 			maj_resa_notification($id_resa,1);
-			header("Location: article?id=61&id_resa=".$info_resa->id_resa."");	
+			header("Location: $siteURL/index.php/component/content/article?id=61&id_resa=".$info_resa->id_resa."");	
 		}
 		else echo "\n<p><center>D&eacute;sol&eacute;, nous avons eu un probl&egrave;me lors de l'&eacute;mission du mail</center></p>\n";
 	}
@@ -395,7 +396,7 @@ echo "<table class=\"zebra\" >";
 			echo "<img src=\"images/VIP-Empty-icon.png\" title=\"Client non-autoris&eacute; &agrave; faire des r&eacute;sa sans acompte plus de 2 fois par semaine\">";
 		else echo "<img src=\"images/VIP-icon.png\" title=\"Client autoris&eacute; &agrave; faire des r&eacute;sa sans acompte\">";
 			
-		echo "</td><td><a href=\"index.php/component/content/article?id=60&id_client=".$info_resa->id_client."\"/>".$info_resa->nom."</a> ";
+		echo "</td><td><a href=\"$siteURL/index.php/component/content/article?id=60&id_client=".$info_resa->id_client."\"/>".$info_resa->nom."</a> ";
 		$ligne_commentaire_client=recup_derniere_commentaire("id_client",$info_resa->id_client);
 		if ($ligne_commentaire_client->Commentaire<>"" and est_min_agent($user))
 			echo "<img src=\"images/Comment-icon.png\" title=\"".$ligne_commentaire_client->Commentaire."\">";
@@ -428,12 +429,12 @@ echo "</table><hr><br>";
 		echo "</th></tr><tr>";
 		echo "<td>".$info_resa->id_resa;
 		if (!($nbre_resultats>0) and ($info_resa->email<>"agent@footinfive.com") and ($les_versements>0 or ($info_resa->cautionnable==1 or recup_accompte_necessaire($info_resa->id_client)==1))){
-			echo " <a href=\"index.php/component/content/article?id=61&premiere=1&id_resa=".$info_resa->id_resa."&renvoyer=1\" />";
+			echo " <a href=\"$siteURL/index.php/component/content/article?id=61&premiere=1&id_resa=".$info_resa->id_resa."&renvoyer=1\" />";
 			echo "<img src=\"images/renvoyer-notification-email-icon.png\" title=\"Renvoyer la confirmation par email au client\"></a>";
 		}
 		echo "</td><td nowrap>";
 		if (est_min_agent($user) and ($info_resa->indic_annul==1)){
-			echo "<a href=\"index.php/component/content/article?id=61&reactiver=1&id_resa=".$info_resa->id_resa."\" />reactiver</a>";
+			echo "<a href=\"$siteURL/index.php/component/content/article?id=61&reactiver=1&id_resa=".$info_resa->id_resa."\" />reactiver</a>";
 			if ($_GET["reactiver"]==1){
 				$les_terrains_dispo=trouve_dispo($info_resa->type_terrain,$info_resa->date_debut_resa,$info_resa->heure_debut_resa, $info_resa->heure_fin_resa,$info_resa->id_resa);
 				foreach ($les_terrains_dispo as $le_terrain) $liste_id_terrains[]=$le_terrain[3];
@@ -449,7 +450,7 @@ echo "</table><hr><br>";
 					$credit_negatif=(-1*versements_sans_remise_et_avec_validation($info_resa->id_resa));
 					if ($credit_negatif<0 and avoir_deja_attribuer($info_resa->id_resa) and diff_dates_en_minutes($info_resa->date_debut_resa, $info_resa->heure_debut_resa,$info_resa->date_valid,$info_resa->heure_valid)<-2880)
 						ajout_credit($info_resa->id_client,$credit_negatif,1,"Reactiv-".$info_resa->id_resa,2); 
-					header("Location: article?id=61&id_resa=".$info_resa->id_resa."");
+					header("Location: $siteURL/index.php/component/content/article?id=61&id_resa=".$info_resa->id_resa."");
 				}
 				else echo "<br>Terrain indispo !";
 				 
@@ -457,11 +458,11 @@ echo "</table><hr><br>";
 		}
 		if  ($info_resa->indic_annul<>1){
 			if ($info_resa->id_client<>3586 and diff_dates_en_minutes($info_resa->date_debut_resa,$info_resa->heure_debut_resa)<0 and (($info_resa->indic_venue==1) or ($info_resa->indic_venue==4))){
-				echo " <a href=\"index.php/component/content/article?id=61&annul=1&id_resa=".$info_resa->id_resa."\" />";
+				echo " <a href=\"$siteURL/index.php/component/content/article?id=61&annul=1&id_resa=".$info_resa->id_resa."\" />";
 				echo "<img src=\"images/annuler-resa.png\" title=\"annuler cette réservation\"></a> ";
 			}
 			if (diff_dates_en_minutes($info_resa->date_debut_resa,$info_resa->heure_debut_resa)<-2880 or (est_min_agent($user) and diff_dates_en_minutes($info_resa->date_debut_resa,$info_resa->heure_debut_resa)<120) or (est_min_manager($user)) ) {// plus de modif avant 48h
-				echo " <a href=\"index.php/component/content/article?id=62";
+				echo " <a href=\"$siteURL/index.php/component/content/article?id=62";
 				echo "&id_client=".$info_resa->id_client;
 				echo "&modif=1&num_resa=".$info_resa->id_resa."&type_terrain=".$info_resa->type_terrain."&date_debut_resa=".$info_resa->date_debut_resa."&mode_resa=".$info_resa->id_mode_reservation."&heure_fin_resa=".$info_resa->heure_fin_resa."&heure_debut_resa=".$info_resa->heure_debut_resa."\" />";
 				echo "<img src=\"images/modifier-resa.png\" title=\"modifier cette réservation\"></a> ";
@@ -477,24 +478,24 @@ echo "</table><hr><br>";
 			
 			$ligne_commentaire=recup_derniere_commentaire("id_resa",$info_resa->id_resa);
 			if ($ligne_commentaire->Commentaire<>"" )
-				echo " <a href=\"index.php/component/content/article?id=61".$hist_com."&id_resa=".$info_resa->id_resa."\">"
+				echo " <a href=\"$siteURL/index.php/component/content/article?id=61".$hist_com."&id_resa=".$info_resa->id_resa."\">"
 					."<img src=\"images/Comment-icon.png\" title=\"".$ligne_commentaire->Commentaire."\">";
-			else echo " <a href=\"index.php/component/content/article?id=75&art=61&id_resa=".$info_resa->id_resa."\">"
+			else echo " <a href=\"$siteURL/index.php/component/content/article?id=75&art=61&id_resa=".$info_resa->id_resa."\">"
 					."<img src=\"images/Comment-add-icon.png\" title=\"Ajouter un commentaire\">"; 
 			echo "</a>";
 
 			if ($info_resa->anniv==0) {
-				echo " <a href=\"index.php/component/content/article?id=61&premiere=1&id_resa=".$info_resa->id_resa."&anniv=1\">";
+				echo " <a href=\"$siteURL/index.php/component/content/article?id=61&premiere=1&id_resa=".$info_resa->id_resa."&anniv=1\">";
 				echo "<img src=\"images/no-anniv-icon.png\" title=\"Cliquez ici pour indiquer que cette resa est un anniversaire\"></a>";
 			}
 			else {
-				echo " <a href=\"index.php/component/content/article?id=61&premiere=1&id_resa=".$info_resa->id_resa."&anniv=0\">";
+				echo " <a href=\"$siteURL/index.php/component/content/article?id=61&premiere=1&id_resa=".$info_resa->id_resa."&anniv=0\">";
 				echo "<img src=\"images/anniv-icon.png\" title=\"Cliquez ici pour indiquer que cette resa n'est pas un anniversaire\"></a>";
 			}
 		}
 		$bloquer_optimisation=recup_1_element("bloquer_optimisation","Reservation","id_resa",$id_resa);
 		if (est_min_manager($user))
-			echo " <a href=\"index.php/component/content/article?id=61&premiere=1&id_resa=".$info_resa->id_resa."&bloquer_optimisation=".$bloquer_optimisation."\">";
+			echo " <a href=\"$siteURL/index.php/component/content/article?id=61&premiere=1&id_resa=".$info_resa->id_resa."&bloquer_optimisation=".$bloquer_optimisation."\">";
 			
 		if ($bloquer_optimisation==0)
 			echo "<img src=\"images/bloquer_optimisation_0.png\" title=\"Resa déplaçable\" id='img-optim'>";
@@ -510,7 +511,7 @@ echo "</table><hr><br>";
 		if (($info_resa->indic_annul<>1) and (est_min_agent($user) and $bloquer_optimisation==0) or est_min_manager($user)){
 			$infos_terrain=trouve_dispo($info_resa->type_terrain,$info_resa->date_debut_resa,$info_resa->heure_debut_resa,$info_resa->heure_fin_resa,$info_resa->id_resa,$rubiksCube);
 			if (is_array($infos_terrain) and sizeof($infos_terrain)>1){
-				echo "<FORM name=\"form_maj_terrain\" class=\"submission box\" method=\"post\" action=\"".JRoute::_('article?id=61&id_resa='.$info_resa->id_resa.'')."\" >";
+				echo "<FORM name=\"form_maj_terrain\" class=\"submission box\" method=\"post\" action=\"$siteURL/index.php/component/content/article?id=61&id_resa=$info_resa->id_resa\" >";
 				echo "<select name=\"terrains_dispo\" onChange=\"maj_terrain()\">";
 				foreach ($infos_terrain as $terrain) {
 					if ($info_resa->le_terrain==$terrain[2])
@@ -552,7 +553,7 @@ echo "</table><hr><br>";
 				<table class="zebra" border="0"  >
 				<tr>
 					<th>Effectu&eacute; par</th><th>date</th><th>heure</th><th>Commentaire <?
-						echo " <a href=\"index.php/component/content/article?id=75&art=61&id_resa=".$info_resa->id_resa."\">";
+						echo " <a href=\"$siteURL/index.php/component/content/article?id=75&art=61&id_resa=".$info_resa->id_resa."\">";
 						echo "<img src=\"images/Comment-add-icon.png\" title=\"Ajouter un commentaire\"></a>";
 					?></th>
 				</tr>
@@ -577,7 +578,7 @@ echo "</table><hr><br>";
 				<td colspan="10" align="center" >
 					<?
 					$form="<FORM id=\"formulaire\" name=\"suppr\" class=\"submission box\" ";
-					$form.="action=\"article?id=59&ttes=1&id_client=".$info_resa->id_client."&id_resa=".$info_resa->id_resa;
+					$form.="action=\"$siteURL/index.php/component/content/article?id=59&ttes=1&id_client=".$info_resa->id_client."&id_resa=".$info_resa->id_resa;
 					$form.="&suppr=".$info_resa->id_resa;
 					
 					if (diff_dates_en_minutes($info_resa->date_debut_resa,$info_resa->heure_debut_resa)>-2880 and ((recup_caution_total_client($info_resa->id_client)<>"" and recup_caution_total_client($info_resa->id_client)>0 and $les_versements<=0) or est_register($user))) {
@@ -642,11 +643,11 @@ echo "</table><hr><br>";
 			echo "<td  nowrap align=\"center\" width=110 bgcolor=".$fond_regl.">".$gras_regl_deb."Reglements (".$nbre_regl.")".$gras_regl_fin."<br>";
 			
 			if ($nbre_regl>0){
-				echo "<a href=\"index.php/component/content/article?id=61&premiere=1&id_resa=".$info_resa->id_resa."\" />";
+				echo "<a href=\"$siteURL/index.php/component/content/article?id=61&premiere=1&id_resa=".$info_resa->id_resa."\" />";
 				echo "<img src=\"images/coins-icon.png\" title=\"Reglements de cette r&eacute;sa\"></a> </td>";
 			}
 			else {
-				echo "<a href=\"index.php/component/content/article?id=61&premiere=1&id_resa=".$info_resa->id_resa."\" />";
+				echo "<a href=\"$siteURL/index.php/component/content/article?id=61&premiere=1&id_resa=".$info_resa->id_resa."\" />";
 				echo "<img src=\"images/coin-add-icon.png\" title=\"Ajouter un reglement &agrave; cette r&eacute;sa\"></a> </td>";
 			}
 			
@@ -654,12 +655,12 @@ echo "</table><hr><br>";
 				echo "<td nowrap align=\"center\" width=110 bgcolor=".$fond_presta.">".$gras_presta_deb."Prestations (".$nbre_presta.")".$gras_presta_fin."<br>";
 			
 			if ($nbre_presta>0){
-				echo "<a href=\"index.php/component/content/article?id=61&ajout_presta=1&premiere=1&id_resa=".$info_resa->id_resa."\" />";
+				echo "<a href=\"$siteURL/index.php/component/content/article?id=61&ajout_presta=1&premiere=1&id_resa=".$info_resa->id_resa."\" />";
 				echo "<img src=\"images/prestations-icon.png\" title=\"Prestations li&eacute;es &agrave; cette r&eacute;sa\"></a> </td>";
 			}
 			else {
 				if (est_min_agent($user)){
-					echo "<a href=\"index.php/component/content/article?id=61&ajout_presta=1&premiere=1&id_resa=".$info_resa->id_resa."\" />";
+					echo "<a href=\"$siteURL/index.php/component/content/article?id=61&ajout_presta=1&premiere=1&id_resa=".$info_resa->id_resa."\" />";
 					echo "<img src=\"images/ajout-prestations-icon.png\" title=\"Ajouter des prestations &agrave; cette r&eacute;sa\"></a> </td>";
 				}
 			}
@@ -717,7 +718,7 @@ echo "</table><hr><br>";
 			if ($_POST["type"]==4) echo "<th >Vers</th>";
 			echo "<th>Montant</th>";
 			echo "</tr><tr>";
-				?><form name="register" class="submission box" action="article?id=61&id_resa=<?echo $id_resa;?>" method="post"  >
+				?><form name="register" class="submission box" action="<?php echo $siteURL."/index.php/component/content/";?>article?id=61&id_resa=<?php echo $id_resa;?>" method="post"  >
 				<?
 				echo "<td>";
 				if (est_min_agent($user)){
@@ -800,7 +801,7 @@ echo "</table><hr><br>";
 					echo "<table class=\"zebra\" >";
 					echo "<tr><th>Type prestation</th><th>TVA</th><th>Montant</th>";
 					echo "</tr><tr>";
-						?><form name="register" class="submission box" action="article?id=61&ajout_presta=1&id_resa=<?echo $id_resa;?>" method="post"  >
+						?><form name="register" class="submission box" action="<?php echo $siteURL."/index.php/component/content/";?>article?id=61&ajout_presta=1&id_resa=<?echo $id_resa;?>" method="post"  >
 						<?
 						echo "<td>";
 						echo "<input type=\"text\" name=\"Type_presta\" maxlength=\"20\" size=\"8\" value=\"";
@@ -866,17 +867,17 @@ echo "</table><hr><br>";
 								if (test_non_vide($_GET["reactiver_presta"]) and ($_GET["reactiver_presta"]==$liste_prest->id_prestation)){
 									
 									$resultat_reactiver_presta= maj_validation_prestation(1,$_GET["reactiver_presta"]);
-									header("Location: article?id=61&ajout_presta=1&id_resa=".$info_resa->id_resa."");
+									header("Location: $siteURL/index.php/component/content/article?id=61&ajout_presta=1&id_resa=".$info_resa->id_resa."");
 								}
 								else {
 									if (est_min_agent($user))
-										echo "<a href=\"index.php/component/content/article?id=61&ajout_presta=1&reactiver_presta=".$liste_prest->id_prestation."&id_resa=".$info_resa->id_resa."\" />reactiver</a>";
+										echo "<a href=\"$siteURL/index.php/component/content/article?id=61&ajout_presta=1&reactiver_presta=".$liste_prest->id_prestation."&id_resa=".$info_resa->id_resa."\" />reactiver</a>";
 								}
 							}
 							else {
 								if (est_min_agent($user))	{
 									echo " <a onClick=\"recharger('Voulez-vous supprimer cette prestation ?'";
-									echo ",'".JRoute::_('article?id=61')."&ajout_presta=1";
+									echo ",'$siteURL/index.php/component/content/article?id=61&ajout_presta=1";
 									echo "&id_resa=".$info_resa->id_resa."&id_presta=".$liste_prest->id_prestation."')\">";
 									echo "<img src=\"images/prestations-suppr-icon.png\" title=\"supprimer cette presta\">";
 								}
@@ -945,14 +946,14 @@ echo "</table><hr><br>";
 						if (test_non_vide($liste_reg->moy_paie)) {
 							if (!test_non_vide($_GET["modif_op"]) or $_GET["modif_op"]<>$liste_reg->id_reglement ){
 								if (est_manager($user))
-									echo "<a href=\"index.php/component/content/article?id=61&modif_op=".$liste_reg->id_reglement."&id_resa=".$info_resa->id_resa."\" />";
+									echo "<a href=\"$siteURL/index.php/component/content/article?id=61&modif_op=".$liste_reg->id_reglement."&id_resa=".$info_resa->id_resa."\" />";
 								
 								echo $liste_reg->moy_paie;
 								
 								echo"</a>";
 							}
 							else{
-								?><form name="register_modif_op" class="submission box" action="article?id=61&id_resa=<? echo $id_resa; ?>" method="post"  >
+								?><form name="register_modif_op" class="submission box" action="<<?php echo $siteURL."/index.php/component/content/";?>article?id=61&id_resa=<? echo $id_resa; ?>" method="post"  >
 								<?
 								menu_deroulant("Moyen_paiement","","enregistrer2()",1);
 								?>
@@ -983,18 +984,17 @@ echo "</table><hr><br>";
 										$db->setQuery($requete_maj_resa_a_supprimer);	
 										$resultat_maj_resa_a_supprimer = $db->query();
 									}
-									header("Location: article?id=61&id_resa=".$info_resa->id_resa."");
+									header("Location: $siteURL/index.php/component/content/article?id=61&id_resa=".$info_resa->id_resa."");
 								}
 								
 								else {
 									if (est_min_agent($user) and $liste_reg->id_moyen_paiement<7 )
-										echo "<a href=\"index.php/component/content/article?id=61&reactiver_regl=".$liste_reg->id_reglement."&id_resa=".$info_resa->id_resa."\" />reactiver</a>";
+										echo "<a href=\"$siteURL/index.php/component/content/article?id=61&reactiver_regl=".$liste_reg->id_reglement."&id_resa=".$info_resa->id_resa."\" />reactiver</a>";
 								}
 							}
 							else {
 								if (est_min_agent($user) and $liste_reg->id_moyen_paiement<7 and $info_resa->indic_annul<>1)	{
-									echo " <a onClick=\"recharger('Voulez-vous supprimer cette ligne de reglement ?','".JRoute::_('article?id=61')
-										."&id_resa=".$info_resa->id_resa."&id_regl=".$liste_reg->id_reglement."')\">"
+									echo " <a onClick=\"recharger('Voulez-vous supprimer cette ligne de reglement ?','$siteURL/index.php/component/content/article?id=61&id_resa=".$info_resa->id_resa."&id_regl=".$liste_reg->id_reglement."')\">"
 										."<img src=\"images/coin-delete-icon.png\" title=\"supprimer ce reglement\">";
 								}
 							}

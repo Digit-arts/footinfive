@@ -1,6 +1,6 @@
 <?php
-require_once ('fonctions_gestion_user.php');
-require_once ('fonctions_module_reservation.php');
+require_once ('admin_base.php');
+$siteURL= $config->get( 'site_url' );
 ?>
 <script type="text/javascript">
 	
@@ -27,18 +27,7 @@ require_once ('fonctions_module_reservation.php');
 </script>
 
 <?
-$db = & JFactory::getDBO();
-$user =& JFactory::getUser();
-$config = JFactory::getConfig();
 
-
-$etat_actuel_acces_apllication=acces_application();
-
-if (($etat_actuel_acces_apllication==1 and est_register($user))
-    or ($etat_actuel_acces_apllication==2 and est_agent($user))
-    or ($etat_actuel_acces_apllication==3 and est_manager($user)))
-	echo "<font color=red>Acc&egrave;s ferm&eacute; pour le moment...</font>";
-else {
 	
 
 if (est_min_agent($user)){
@@ -46,6 +35,7 @@ if (est_min_agent($user)){
 	else $id_client=$_GET["id_client"];
 } else $id_client=idclient_du_user();
 
+if(!isset($id_client)) $_GET["modif"]=1;
 
 if (est_min_manager($user) and test_non_vide($_GET["accompte_necessaire"])) {
 	$requete_maj_accompte_necessaire="UPDATE Client SET accompte_necessaire=".$_GET["accompte_necessaire"]." where id_client=".$id_client;
@@ -55,7 +45,7 @@ if (est_min_manager($user) and test_non_vide($_GET["accompte_necessaire"])) {
 	if ($_GET["accompte_necessaire"]==1)
 		$vip="VIP";
 	else $vip="NON-VIP";
-	sendMail(267,"Client ".$vip." : ".$id_client." ","<br>user_modif:".$user->id."<br><br>http://www.footinfive.com/FIF/index.php/component/content/article?id=60&id_client=".$id_client."");
+	sendMail(267,"Client ".$vip." : ".$id_client." ","<br>user_modif:".$user->id."<br><br>$siteURL/index.php/client/creer?id=60&id_client=".$id_client."");
 }
 
 if (est_min_agent($user) and test_non_vide($_GET["police"])) {
@@ -66,7 +56,7 @@ if (est_min_agent($user) and test_non_vide($_GET["police"])) {
 	if ($_GET["police"]==1)
 		$police="POLICE";
 	else $police="NON-POLICE";
-	sendMail(267,"Client ".$police." : ".$id_client." ","<br>user_modif:".$user->id."<br><br>http://www.footinfive.com/FIF/index.php/component/content/article?id=60&id_client=".$id_client."");
+	sendMail(267,"Client ".$police." : ".$id_client." ","<br>user_modif:".$user->id."<br><br>$siteURL/index.php/client/creer?id=60&id_client=".$id_client."");
 }
 
 
@@ -83,7 +73,7 @@ if (est_min_agent($user) and test_non_vide($_GET["suppr_client"])) {
 	if ($nbre_resultats_resa>0)
 		echo "Ce client ne peut pas etre supprim&eacute; car il a des r&eacute;sas.";
 	else {
-		$requete_verif_credit_client="Select id_credit from `Credit_client`  where id_client=".$_GET["suppr_client"]." and validation_credit=1";
+		$requete_verif_credit_client="Select id_credit_client from `Credit_client`  where id_client=".$_GET["suppr_client"]." and validation_credit=1";
 		//echo "<br>reqsuppr: ".$requete_verif_credit_client;
 		$db->setQuery($requete_verif_credit_client);	
 		$db->query();
@@ -295,7 +285,7 @@ if ($existe_erreur==0 and (isset($_GET["modif"]))  and test_non_vide($_POST["con
 		
 		// le client a été modifié avec succes...
 		if ($res)
-			header("Location: index.php/component/content/article?id=60&id_client=".$_POST["id_client"]."");
+			header("Location: $siteURL/index.php/client/creer?id=60&id_client=".$_POST["id_client"]."");
 		else echo "pb resa bdd update";
 	}
 		
@@ -332,8 +322,8 @@ if ($existe_erreur==0 and (isset($_GET["modif"]))  and test_non_vide($_POST["con
 		maj_commentaire("id_client",$id_new_client,$_POST["commentaire"]);
 		if ($res){
 			if (est_register($user))
-				echo "Pour finaliser votre enregistrement <a href=\"".JRoute::_( 'index.php?option=com_user&view=reset')."\">cliquez-ici pour confirmer que vous &ecirc;tes le propri&eacutetaire de l'adresse email</a>.";
-			else header("Location: index.php/component/content/article?id=60&id_client=".$id_new_client."");
+				echo "Pour finaliser votre enregistrement <a href=\"$siteURL/index.php?option=com_user&view=reset\">cliquez-ici pour confirmer que vous &ecirc;tes le propri&eacutetaire de l'adresse email</a>.";
+			else header("Location: $siteURL/index.php/client/creer?id=60&id_client=".$id_new_client."");
 		}
 		else echo "pb resa bdd insert";
 	}
@@ -413,7 +403,7 @@ else {
 	}
 ?>
 		
-		<form name="register_user" class="submission box" action="<?php echo JRoute::_( 'index.php/component/content/article?id=60&modif=1'); ?>" method="post"  >
+		<form name="register_user" class="submission box" action="<?php echo $siteURL;?>/index.php/client/creer?id=60&modif=1" method="post"  >
 		<br>
 		<table class="zebra" border="0"  >
 <?
@@ -427,7 +417,7 @@ else {
 			$db->setQuery($requete_id_client_precedent);	
 			$client_precedent=$db->LoadResult();
 			if (test_non_vide($client_precedent)){
-				echo " <a href=\"index.php/component/content/article?id=60&id_client=".$client_precedent."\">";
+				echo " <a href=\"$siteURL/index.php/client/creer?id=60&id_client=".$client_precedent."\">";
 				echo "<img src=\"images/prec-icon.png\" title=\"Fiche client precedente\"></a>";
 			}
 			?></td>
@@ -439,7 +429,7 @@ else {
 			$client_suivant=$db->LoadResult();
 			
 			if (test_non_vide($client_suivant)){
-				echo " <a href=\"index.php/component/content/article?id=60&id_client=".$client_suivant."\">";
+				echo " <a href=\"$siteURL/index.php/client/creer?id=60&id_client=".$client_suivant."\">";
 				echo "<img src=\"images/suiv-icon.png\" title=\"Fiche client suivante\"></a>";
 			}
 			?></td>
@@ -450,32 +440,32 @@ else {
 				<?php echo $id_client;
 				
 				if (!test_non_vide($_GET["modif"])){ 
-					echo " <a href=\"index.php/component/content/article?id=60&modif=1&id_client=".$id_client."\">";
+					echo " <a href=\"$siteURL/index.php/client/creer?id=60&modif=1&id_client=".$id_client."\">";
 					echo "<img src=\"images/modif-client-icon.png\" title=\"Modifier la fiche client\"></a>";
 					if (est_min_manager($user) and !test_non_vide($info_ledg)) {
 						echo " <a onClick=\"recharger('Voulez-vous supprimer definitivement ce client ?'";
-						echo ",'article?id=60&suppr_client=".$id_client."&id_client=".$id_client."')\">";
+						echo ",'$siteURL/index.php/client/creer?id=60&suppr_client=".$id_client."&id_client=".$id_client."')\">";
 						echo "<img src=\"images/del-client.png\" title=\"Supprimer le client\"></a>";
 						
 					}
 					if (est_min_manager($user)) {	
 						
 						if (recup_accompte_necessaire($id_client)==0) {
-							echo " <a href=\"index.php/component/content/article?id=60&accompte_necessaire=1&id_client=".$id_client."\">";
+							echo " <a href=\"$siteURL/index.php/client/creer?id=60&accompte_necessaire=1&id_client=".$id_client."\">";
 							echo "<img src=\"images/VIP-Empty-icon.png\" title=\"Cliquez ici pour autoriser le client &agrave; faire des r&eacute;sa sans acompte\"></a>";
 						}
 						else {
-							echo " <a href=\"index.php/component/content/article?id=60&accompte_necessaire=0&id_client=".$id_client."\">";
+							echo " <a href=\"$siteURL/index.php/client/creer?id=60&accompte_necessaire=0&id_client=".$id_client."\">";
 							echo "<img src=\"images/VIP-icon.png\" title=\"Cliquez ici pour interdire le client &agrave; faire des r&eacute;sa sans acompte\"></a>";
 						}
 					}
 					if (est_min_agent($user)) {	
 						if (recup_1_element("police","Client","id_client",$id_client)==0) {
-							echo " <a href=\"index.php/component/content/article?id=60&police=1&id_client=".$id_client."\">";
+							echo " <a href=\"$siteURL/index.php/client/creer?id=60&police=1&id_client=".$id_client."\">";
 							echo "<img src=\"images/no-police-icon.png\" title=\"Cliquez ici pour indiquer que ce client est policier\"></a>";
 						}
 						else {
-							echo " <a href=\"index.php/component/content/article?id=60&police=0&id_client=".$id_client."\">";
+							echo " <a href=\"$siteURL/index.php/client/creer?id=60&police=0&id_client=".$id_client."\">";
 							echo "<img src=\"images/police-icon.png\" title=\"Cliquez ici pour indiquer que ce client n'est pas policier\"></a>";
 						}
 					
@@ -682,7 +672,7 @@ else {
 		<tr>
 			<th>Commentaire <?
 			if (test_non_vide($id_client))
-				echo " <a href=\"index.php/component/content/article?id=75&art=57&id_client=".$id_client."\">"
+				echo " <a href=\"$siteURL/index.php/component/content/article?id=75&art=57&id_client=".$id_client."\">"
 					."<img src=\"images/Comment-icon.png\" title=\"hsitorique du commentaire\"></a>";
 			?></th>
 			<td colspan="5">
@@ -789,4 +779,4 @@ else {
 
 
 }
-}?>
+?>

@@ -1,9 +1,4 @@
-<?php
 
-require_once ('fonctions_gestion_user.php');
-require_once ('fonctions_module_reservation.php');
-nettoyer_resa_non_payees();
-?>
 
 <script type="text/javascript">
 	
@@ -13,23 +8,16 @@ nettoyer_resa_non_payees();
 </script>
 <?php
 
-$user =& JFactory::getUser();
-$db = & JFactory::getDBO();
+require_once ('admin_base.php');
+$siteURL= $config->get( 'site_url' );
 
-
-$etat_actuel_acces_apllication=acces_application();
-
-if (($etat_actuel_acces_apllication==1 and est_register($user))
-    or ($etat_actuel_acces_apllication==2 and est_agent($user))
-    or ($etat_actuel_acces_apllication==3 and est_manager($user)))
-	echo "<font color=red>Acc&egrave;s ferm&eacute; pour le moment...</font>";
-else {
+nettoyer_resa_non_payees();
 
 
 maj_connect($user,$_SERVER["REMOTE_ADDR"]);
 
 if (est_register($user)) 
-	header("Location: index.php/component/content/article?id=62");
+	header("Location: $siteURL/index.php/component/content/article?id=62");
 
 else {
 
@@ -83,7 +71,7 @@ else $id_type_regroupement=$_GET["Type_Regroupement"];
 menu_acces_rapide("","Liste des clients");
 
 ?>
-<FORM id="formulaire" name="filtre" class="submission box" action="index.php?option=com_content&view=article&id=57&Itemid=247" method="post" >
+<FORM id="formulaire" name="filtre" class="submission box" action="<?php echo $siteURL;?>/index.php?option=com_content&view=article&id=57&Itemid=247" method="post" >
 <center><table width="100%" border="0">
 	<tr>
 		<td><input name="id_client" type="text"  value="<? echo $id_client;?>" size="10" placeholder="Num client"></td>
@@ -150,7 +138,7 @@ else $requete_recup_client.=" order by date_modif desc, heure_modif desc";
 						
 
 	
-$lien="<a href=\"index.php?vip=".$vip."&joueur_champ=".$joueur_champ."&police=".$police."&contremarque=".$contremarque
+$lien="<a href=\"$siteURL/index.php?vip=".$vip."&joueur_champ=".$joueur_champ."&police=".$police."&contremarque=".$contremarque
 	."&nom=".$nom."&nom_entite=".$nom_entite."&prenom=".$prenom."&email=".$email."&code_postal=".$code_postal."&ville=".$ville."&Siret=".$Siret
 	."&equipe=".$equipe."&Type_Regroupement=".$id_type_regroupement;
 $requete_recup_client.=pagination($requete_recup_client,$lien."&tri_par=".$_GET["tri_par"]);
@@ -216,7 +204,7 @@ $resultat_recup_client = $db->loadObjectList();
 						echo "<img src=\"images/capitaine-icon.png\" title=\"".$info_ledg."\">";
 					else echo "<img src=\"images/joueur-icon.png\" title=\"".$info_ledg."\">";
 				}
-				echo "<a href=\"index.php/component/content/article?id=60";
+				echo "<a href=\"index.php/client/creer?id=60";
 				echo "&id_client=".$recup_client->id_client."\"/>".$recup_client->prenom." ";
 				echo $recup_client->nom."</a>";
 				$ligne_commentaire=recup_derniere_commentaire("id_client",$recup_client->id_client);
@@ -260,5 +248,5 @@ $resultat_recup_client = $db->loadObjectList();
 </table>	
 <?
 }
-}
+
 ?>	

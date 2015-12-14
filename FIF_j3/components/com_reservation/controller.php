@@ -1,7 +1,7 @@
 <?php
 defined ( '_JEXEC' ) or die ( 'Access Deny' );
 jimport ( 'joomla.application.component.controller' );
-class ReservationController extends JController {
+class ReservationController extends JControllerLegacy {
 
 	function LoadResaTable() {
 		require_once (dirname ( dirname ( dirname ( __FILE__ ) ) ) . '/libraries/ya2/fonctions_module_reservation.php');

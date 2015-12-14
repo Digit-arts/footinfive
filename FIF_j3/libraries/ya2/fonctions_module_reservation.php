@@ -1195,7 +1195,7 @@ function maj_cautionnement_des_resas($id_client, $cautionnable, $id_resa = "", $
 	}
 }
 
-function save_resa($num_resa, $new_date_debut_resa = "", $new_date_fin_resa = "", $new_heure_debut_resa = "", $new_heure_fin_resa = "", $new_montant_total = "") {
+function save_resa($num_resa, $new_date_debut_resa = "", $new_date_fin_resa = "", $new_heure_debut_resa = "", $new_heure_fin_resa = "", $new_montant_total = 0) {
 	$user = JFactory::getUser ();
 	$db = JFactory::getDBO ();
 	

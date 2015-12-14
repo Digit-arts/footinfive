@@ -1,7 +1,7 @@
 <?php
 defined ( '_JEXEC' ) or die ( 'Access Deny' );
 jimport ( 'joomla.application.component.controller' );
-class PublipostageController extends JController {
+class PublipostageController extends JControllerLegacy {
 
 	function Load() {
 		session_start ();

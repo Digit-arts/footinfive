@@ -5,7 +5,7 @@ jimport('joomla.application.component.controller');
 /**
 * Creating instance
 */
-$controller=JController::getInstance('Publipostage');
+$controller=JControllerLegacy::getInstance('Publipostage');
 
 /**
 * Execute task

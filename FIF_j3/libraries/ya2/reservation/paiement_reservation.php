@@ -1,9 +1,7 @@
 <?php
-require_once ('fonctions_module_reservation.php');
-require_once ('fonctions_gestion_user.php');
+require_once ('admin_base.php');
+$siteURL= $config->get( 'site_url' );
 
-$user = JFactory::getUser ();
-$db = JFactory::getDBO ();
 
 $duree = $_POST ["duree_resa"];
 
@@ -65,7 +63,7 @@ else {
 		// /////
 	
 	if (! (is_array ( trouve_dispo ( $_POST ["type_terrain"], $date_Min, $_POST ["heure_debut_resa"], $_POST ["heure_fin_resa"], $_POST ["num_resa"], "1", false ) )))
-		header ( "Location: index.php/component/content/article?id=79&id_client=" . $_POST ["id_client"] . "&date_debut_resa=" . $date_Min . "&heure_fin_resa=" . $_POST ["heure_fin_resa"] . "&heure_debut_resa=" . $_POST ["heure_debut_resa"] . $complement_lien . "" );
+		header ( "Location: $siteURL/index.php/component/content/article?id=79&id_client=" . $_POST ["id_client"] . "&date_debut_resa=" . $date_Min . "&heure_fin_resa=" . $_POST ["heure_fin_resa"] . "&heure_debut_resa=" . $_POST ["heure_debut_resa"] . $complement_lien . "" );
 	else {
 		
 		// ///////
@@ -144,7 +142,7 @@ else {
 					$objet = "Confirmation de votre reservation (Num : " . $id_resa_new . ")";
 					if (($_POST ["date_debut_resa"] < date ( "Y-m-d" )) or sendMail ( $info_resa->id_client, $objet, $corps )) {
 						maj_resa_notification ( $id_resa_new, 1 );
-						header ( "Location: article?id=61&id_resa=" . $id_resa_new . "" );
+						header ( "Location: $siteURL/index.php/component/content/article?id=61&id_resa=" . $id_resa_new . "" );
 					}
 				}
 			}
@@ -167,9 +165,9 @@ else {
 			}
 			
 			if (est_min_manager ( $user ) and $_POST ["nbre_de_jours_a_tester"] > 1 and ! test_non_vide ( $id_resa ))
-				header ( "Location: index.php?option=com_content&view=article&id=59&ttes=1&id_client=" . $id_client . "" );
+				header ( "Location: $siteURL/index.php?option=com_content&view=article&id=59&ttes=1&id_client=" . $id_client . "" );
 			else
-				header ( "Location: index.php?option=com_content&view=article&id=61&premiere=1&id_resa=" . $id_resa_new . "" );
+				header ( "Location: $siteURL/index.php?option=com_content&view=article&id=61&premiere=1&id_resa=" . $id_resa_new . "" );
 		}
 	}
 }

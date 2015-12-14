@@ -32,6 +32,7 @@
 	src="libraries/fancybox/source/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
 <?
 require_once ('admin_base.php');
+$siteURL= $config->get( 'site_url' );
 	
 	?>
 <script type="text/javascript">
@@ -92,7 +93,7 @@ require_once ('admin_base.php');
 
 <form name="envoyer_email" enctype="multipart/form-data"
 	class="submission box"
-	action="<?php echo JRoute::_( '../../../index.php?option=com_publipostage&task=Save'); ?>"
+	action="<?php echo $siteURL;?>/index.php?option=com_publipostage&task=Save"
 	method="post">
 		<?
 		echo "<input name=\"limit\" type=\"hidden\"  value=\"" . $limit . "\">";
@@ -101,7 +102,7 @@ require_once ('admin_base.php');
 		$police = 0;
 		
 		// recup de tous les types de destinataires
-		$type_destinataires = "SELECT * FROM  `type_regroupement`";
+		$type_destinataires = "SELECT * FROM  `Type_Regroupement`";
 		$db->setQuery ( $type_destinataires );
 		$db->query ();
 		$resultat_type_destinataires = $db->loadObjectList ();
@@ -112,7 +113,7 @@ require_once ('admin_base.php');
 			echo "<input name=\"id_pub\" type=\"hidden\"  value=\"" . $id_pub . "\">";
 			
 			// recup types destinataires selectionnes
-			$type_destinataires = "SELECT p.*,t.nom FROM  `Publipostage_type_destinataires` as p, `type_regroupement` as t WHERE p.id_type_regroupement=t.id AND p.id_pub=" . $id_pub;
+			$type_destinataires = "SELECT p.*,t.nom FROM  `Publipostage_type_destinataires` as p, `Type_Regroupement` as t WHERE p.id_type_regroupement=t.id AND p.id_pub=" . $id_pub;
 			$db->setQuery ( $type_destinataires );
 			$db->query ();
 			$resultat_type_destinataires_select = $db->loadObjectList ();
@@ -195,7 +196,7 @@ require_once ('admin_base.php');
 	
 	
 			$(".flexme4").flexigrid({
-				url : 'index.php?option=com_publipostage&task=Load&format=raw',
+				url : '<?php echo $siteURL;?>/index.php?option=com_publipostage&task=Load&format=raw',
 				dataType : 'json',
 				colModel : [ {
 					display : 'Numero',
@@ -216,8 +217,8 @@ require_once ('admin_base.php');
 				}, {
 					display : 'Objet',
 					name : 'subject',
-					width : 120,
 					sortable : true,
+					width : 275,
 					align : 'left'
 				}, {
                     display : 'Contenu',
@@ -228,17 +229,19 @@ require_once ('admin_base.php');
 					display : 'Destinataires',
 					name : 'sendTo',
 					sortable : true,
-					align : 'left',
-						width : 120
+					width : 200,
+					align : 'left'
 				}, {
 					display : 'Mails envoy&eacute;s',
 					name : 'nbSent',
 					sortable : true,
+					width : 70,
 					align : 'left'
 				}, {
 					display : 'Etat',
 					name : 'status',
 					sortable : true,
+					width : 50,
 					align : 'left'
 				}],
 				buttons : [ {
@@ -306,7 +309,7 @@ require_once ('admin_base.php');
 	                    if(conf){
 	                        $.each($('.trSelected', grid),
 	                        		function(key, value){
-                                $.get('../../../index.php?option=com_publipostage&task=Delete&format=raw', { PubId: value.children[0].textContent}
+                                $.get('<?php echo $siteURL;?>/index.php?option=com_publipostage&task=Delete&format=raw', { PubId: value.children[0].textContent}
                                     , function(){
                                         // when ajax returns (callback), update the grid to refresh the data
                                         $(".flexme4").flexReload();
@@ -319,7 +322,7 @@ require_once ('admin_base.php');
 						if(conf){
 							$.each($('.trSelected', grid),
 		                            function(key, value){
-		                                $.get('../../../index.php?option=com_publipostage&task=Start&format=raw', { PubId: value.children[0].textContent}
+		                                $.get('<?php echo $siteURL;?>/index.php?option=com_publipostage&task=Start&format=raw', { PubId: value.children[0].textContent}
 		                                    , function(){
 		                                        // when ajax returns (callback), update the grid to refresh the data
 		                                        $(".flexme4").flexReload();
@@ -329,10 +332,10 @@ require_once ('admin_base.php');
 					}
 					else if (com == 'Modifier la s&eacute;lection') {
 						var id_pub = $('.trSelected')[0].children[0].textContent;
-						window.location.href = 'article?id=65&update=1&id_pub=' + id_pub;
+						window.location.href = '<?php echo $siteURL;?>/index.php/article?id=65&update=1&id_pub=' + id_pub;
 					}
 					else if (com == 'Cr&eacute;er un publipostage') {
-						window.location.href = 'article?id=65&new=1';
+						window.location.href = '<?php echo $siteURL;?>/index.php/article?id=65&new=1';
 						
 					}
 				}
