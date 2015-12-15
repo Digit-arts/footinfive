@@ -236,9 +236,11 @@ function ajout_user($prenom, $courriel, $password) {
 	$user = JFactory::getUser ();
 	$db = JFactory::getDBO ();
 	
-	$requete_insert_user = "INSERT INTO #__users(name, username, email, password, usertype, block, sendEmail, registerDate, params, `resetCount`) ";
+	//$requete_insert_user = "INSERT INTO #__users(name, username, email, password, usertype, block, sendEmail, registerDate, params, `resetCount`) ";
+	$requete_insert_user = "INSERT INTO #__users(name, username, email, password, block, sendEmail, registerDate, params, `resetCount`) ";
 	$requete_insert_user .= "VALUES (\"" . premiere_lettre_maj ( $prenom ) . "\",Trim(\"" . Trim ( $courriel ) . "\"),";
-	$requete_insert_user .= "Trim(\"" . Trim ( $courriel ) . "\"),MD5(\"" . $password . "\"),\"\",\"0\",\"0\",";
+	//$requete_insert_user .= "Trim(\"" . Trim ( $courriel ) . "\"),MD5(\"" . $password . "\"),\"\",\"0\",\"0\",";
+	$requete_insert_user .= "Trim(\"" . Trim ( $courriel ) . "\"),MD5(\"" . $password . "\"),\"0\",\"0\",";
 	$requete_insert_user .= "\"" . date ( "Y-m-d" ) . " " . date ( "H:i" ) . ":00\",\"\",0);";
 	// echo "<br>".$requete_insert_user;
 	$db->setQuery ( $requete_insert_user );

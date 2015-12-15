@@ -1,0 +1,314 @@
+/* Copyright (C) YOOtheme GmbH, YOOtheme Proprietary Use License (http://www.yootheme.com/license) */
+
+/*
+ * Style Style Sheet - Defines the main look like colors and backgrounds
+ * Not all style related CSS is included, only colors and backgrounds which may change for different theme styles
+ */
+
+
+/* Base
+----------------------------------------------------------------------------------------------------*/
+
+/* Full Turquoise */
+a { color: #9DFFFF; }
+
+h2,
+h4,
+ins,
+code,
+.menu-dropdown .level2 a.current,
+.menu-dropdown .level2 a.current span.subtitle,
+.menu-dropdown .level3 a.current,
+.menu-sidebar li.level1 > .level1 > span,
+.menu-sidebar .level2 a.current,
+.menu-line a,
+em.box,
+#system .title a:hover,
+.searchbox .results li.more-results,
+#system span.highlight {
+	color: #9DFFFF;
+	text-shadow: 0 0 6px rgba(157,255,255,0.5);
+}
+
+/* Light Turquoise */
+h1,
+h3,
+a:hover,
+blockquote,
+.menu-dropdown li.active .level1,
+.menu-dropdown li.active .level1 span.subtitle,
+.menu-dropdown a.level2:hover,
+.menu-dropdown a.level2:hover span.subtitle,
+.menu-dropdown a.level3:hover,
+.menu.menu-sidebar li.level1.active > .level1,
+.menu.menu-sidebar li.level1.active > .level1:hover > span,
+.menu-sidebar .level2 a:hover,
+.mod-box-color .button-default,
+.mod-box-color form.style button,
+.mod-box-color form.style input[type="button"],
+.mod-box-color form.style input[type="submit"],
+form.style button:hover,
+form.style input[type="button"]:hover,
+form.style input[type="submit"]:hover,
+#system .title a,
+.searchbox .results li.more-results:hover,
+.searchbox .results li.result.selected,
+.wk-slideshow-tabs-drive .nav li.active {
+	color: #E5FFF8;
+	text-shadow: 0 0 6px rgba(157,255,255,0.5);
+}
+
+/* Dark Turquoise */
+.menu-dropdown li.level1:hover .level1,
+.menu-dropdown li.remain .level1,
+.menu-dropdown li.level1:hover .level1 span.subtitle,
+.menu-dropdown li.remain .level1 span.subtitle,
+.menu-sidebar li.level1 .level1:hover > span,
+.mod-box-color .menu.menu-sidebar li.level1 > .level1:hover > span,
+.mod-box-color .menu-sidebar .level2 a:hover,
+.mod-box-color,
+.mod-box-color h1,
+.mod-box-color h3,
+.mod-box-color a:hover,
+.mod-box-color em.box,
+.button-primary,
+.mod-box-color form.style input,
+.mod-box-color form.style select,
+.mod-box-color form.style textarea,
+#system .pagination strong { color: #2D4A47; }
+
+
+/* Light Dark Turquoise */
+.mod-box-color .menu-sidebar li.level1 > .level1 > span,
+.mod-box-color .menu-sidebar .level2 a,
+.mod-box-color h4,
+.mod-box-color h6,
+.mod-box-color small { color: #5D9696; }
+
+/* Module Color Link Color */
+.mod-box-color h2,
+.mod-box-color h5,
+.mod-box-color a,
+.mod-box-color em,
+.mod-box-color code,
+.mod-box-color .menu-sidebar .level2 a.current,
+.button-primary:hover,
+.mod-box-color .text-dark { color: #05CDCD; }
+
+/* Selection */
+::-moz-selection { background: rgba(157,255,255,0.3); color: #E5FFF8; }
+::selection { background: rgba(157,255,255,0.3); color: #E5FFF8; }
+
+
+/* Layout
+----------------------------------------------------------------------------------------------------*/
+
+/* System  White */
+.system-white #content a { color: #5D9696; }
+.system-white #content a:hover { color: #2D4A47; }
+
+
+/* Menus
+----------------------------------------------------------------------------------------------------*/
+
+/* Menu-Dropdown */
+.menu-dropdown li.level1:hover,
+.menu-dropdown li.level1.remain,
+.menu-dropdown li.level1.remain:first-child,
+.menu-sidebar li.level1 .level1:hover {
+	background-color: #B0FFEC;
+	box-shadow: inset 0 0 12px rgba(36,140,140,0.6),
+				inset 0 0 8px rgba(0,0,0,0.3);
+}
+
+.menu-dropdown li.active .level1:before { background-image: url(../images/menu_dropdown_level1_active_color.png); }
+
+.menu-dropdown li.level2.current:before { background-image: url(../images/menu_dropdown_level2_active.png); }
+
+.menu-dropdown a.level3 { background-image: url(../images/menu_dropdown_level3.png); }
+
+/* Menu-Sidebar */
+.menu.menu-sidebar li.level1.active > .level1,
+.mod-box-color .menu.menu-sidebar li.level1.active > .level1 {
+	background-color: #7ab5ab;
+	background-color: rgba(45,74,71,0.3);
+}
+
+.menu-sidebar li.level1.active > .level1:before { background-image: url(../images/menu_sidebar_level1_active.png); }
+.mod-box-color .menu-sidebar li.level1.active > .level1:before { background-image: url(../images/menu_sidebar_level1_active_mod_color.png); }
+
+.menu-sidebar .level2 a { background-image: url(../images/menu_sidebar_level2.png); }
+
+
+/* Modules
+----------------------------------------------------------------------------------------------------*/
+
+/* Module Badges */
+.module .badge { background-image: url(../images/module_badges.png); }
+
+/* Module Icons */
+.module .module-title .icon { background-image: url(../images/module_icons.png); }
+
+/* Module Box Title */
+.mod-box-color .module-title { text-shadow: none; }
+
+/* Module Box */
+.mod-box-color,
+.wk-slideset-drive li > article {
+	background: #B0FFF5;
+	background: -moz-radial-gradient(50% 50%, #E1FFFC 0%, #B0FFF5 90%);
+	background: -webkit-radial-gradient(50% 50%, #E1FFFC 0%, #B0FFF5 90%);
+	background: -o-radial-gradient(50% 50%, #E1FFFC 0%, #B0FFF5 90%);
+	background: radial-gradient(at 50% 50%, #E1FFFC 50%, #B0FFF5 90%);
+	box-shadow: inset 0 0 30px rgba(22,105,105,0.3);
+}
+
+.mod-box-color code { text-shadow: none; }
+
+#footer:before,
+.mod-box-effect:before { background: url(../images/mod_box_effect.png) 0 0 repeat-x; }
+
+
+/* Tools
+----------------------------------------------------------------------------------------------------*/
+
+/* Buttons */
+.button-primary {
+	background-color: #B0FFEC;
+	box-shadow: inset 0 0 12px rgba(36,140,140,0.8),
+				inset 0 0 8px rgba(0,0,0,0.3),
+				0 1px 1px rgba(0,0,0,0.3);
+}
+
+.button-primary:focus {
+	box-shadow: inset 0 1px 1px rgba(0,0,0,0.3),
+				inset 0 0 12px rgba(36,140,140,1),
+				inset 0 0 8px rgba(0,0,0,0.5);
+}
+
+.mod-box-color .button-primary {
+	border: 1px solid #48b6ad;
+	border: 1px solid rgba(0,0,0,0.25);
+	box-shadow: inset 0 0 12px rgba(36,140,140,0.2),
+				inset 0 0 8px rgba(0,0,0,0.07),
+				0 1px 0 rgba(0,0,0,0.07);
+}
+
+.mod-box-color .button-primary:focus {
+	box-shadow: inset 0 1px 1px rgba(0,0,0,0.15),
+				inset 0 0 12px rgba(36,140,140,0.4),
+				inset 0 0 8px rgba(0,0,0,0.07);
+}
+
+/* List Line */
+.mod-box-color ul.line > li,
+.mod-box-color .comments-list > article,
+.mod-box-color .wk-twitter-list article,
+.mod-box-color ul.zoo-list > li,
+.mod-box-color .zoo-comments-list > article {
+	border-top: 1px solid #9ee5dc;
+	border-top: 1px solid rgba(45,74,71,0.1);
+}
+
+.mod-box-color ul.line > li:first-child,
+.mod-box-color .comments-list > article:first-child,
+.mod-box-color .wk-twitter-list article:first-child,
+.mod-box-color ul.zoo-list > li:first-child,
+.mod-box-color .zoo-comments-list > article:first-child { border: none; }
+
+/* List Line Icon */
+#page ul.line-icon > li,
+#page ul.line-icon > li:first-child { background-image: url(../images/tools/list_line_icon.png); }
+
+/* List Check */
+ul.check > li { background-image: url(../images/tools/list_check.png); }
+
+/* List Zebra */
+.mod-box-color ul.zebra > li.odd,
+.mod-box-color ul.tag-cloud > li {
+	background: #9ee5dc;
+	background: rgba(45,74,71,0.1);
+}
+
+.mod-box-color ul.zebra > li:nth-of-type(odd) {
+	background: #9ee5dc;
+	background: rgba(45,74,71,0.1);
+}
+
+/* Inline Text Box */
+ins,
+em.box,
+#system span.highlight,
+p.links > a,
+div.reply > a {
+	background: #374244;
+	background: rgba(157,255,255,0.1);
+}
+
+.mod-box-color ins,
+.mod-box-color em.box {
+	background: #9ee5dc;
+	background: rgba(45,74,71,0.1);
+}
+
+
+/* Boxes */
+.box-info { background-image: url(../images/tools/box_info.png); }
+.box-warning { background-image: url(../images/tools/box_warning.png); }
+.box-hint { background-image: url(../images/tools/box_hint.png); }
+.box-download { background-image: url(../images/tools/box_download.png); }
+
+/* Form Elements */
+.mod-box-color form.style input,
+.mod-box-color form.style select,
+.mod-box-color form.style textarea {
+	border: none;
+	background-color: #7ab5ab;
+	background-color: rgba(45,74,71,0.1);
+	box-shadow: inset 0 1px 0 rgba(0,0,0,0.2);
+}
+
+.mod-box-color form.style input:focus,
+.mod-box-color form.style select:focus,
+.mod-box-color form.style textarea:focus {
+	background-color: #6e5872;
+	background-color: rgba(45,74,71,0.6);
+	box-shadow: inset 0 1px 1px rgba(0,0,0,0.4);
+	color: #fff;
+}
+
+/* Social Icons */
+.social-icons li a { background-image: url(../images/tools/icons_social.png); }
+
+
+/* System
+----------------------------------------------------------------------------------------------------*/
+
+/* Searchbox */
+.searchbox { background-image: url(../images/searchbox_magnifier.png); }
+
+/* Pagination */
+#system .pagination strong {
+	background-color: #B0FFEC;
+	box-shadow: inset 0 0 8px rgba(36,140,140,0.8),
+				inset 0 0 3px rgba(0,0,0,0.3);
+}
+
+/* Latest Comments */
+#system #comments .comment-byadmin .comment-head { border-color: #B0FFEC; }
+
+
+/* Extensions
+----------------------------------------------------------------------------------------------------*/
+
+/* Widgetkit Spotlight */
+.spotlight .overlay-default { background-color: rgba(157,255,255,0.5); }
+
+/* Widgetkit Slideset : Drive */
+.wk-slideset-drive .nav.icon span { background-image: url(../images/widgetkit/nav.png); }
+
+.wk-slideset-drive > div .next,
+.wk-slideset-drive > div .prev { background-image: url(../images/widgetkit/buttons.png); }
+
+/* Widgetkit Slideshow Tabs : Drive */
+.wk-slideshow-tabs-drive .nav li.active:before { background-image: url(../images/widgetkit/color_line.png); }

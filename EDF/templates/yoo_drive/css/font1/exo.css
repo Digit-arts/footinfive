@@ -1,0 +1,33 @@
+/* Copyright (C) YOOtheme GmbH, YOOtheme Proprietary Use License (http://www.yootheme.com/license) */
+
+body,
+form.box input,
+form.box select,
+form.box textarea,
+form.box button,
+form.short input,
+form.short select,
+form.short textarea,
+form.short button,
+.searchbox input {
+	font-family: "exolight", Arial, Helvetica, sans-serif;
+	font-size: 14px;
+}
+
+body { line-height: 20px; }
+
+small { font-size: 12px; }
+
+#toolbar,
+#footer,
+.menu-sidebar li.level2 a > span,
+#system .item > header .meta,
+.breadcrumbs,
+.searchbox .results li.result div { font-size: 12px; }
+
+.menu-sidebar a.level1 > span,
+.menu-sidebar span.level1 > span { font-size: 18px; }
+
+code,
+table.zebra tbody,
+table.zebra tfoot { font-size: 14px; }

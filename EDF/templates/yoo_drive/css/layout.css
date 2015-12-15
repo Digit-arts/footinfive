@@ -1,0 +1,131 @@
+/* Copyright (C) YOOtheme GmbH, YOOtheme Proprietary Use License (http://www.yootheme.com/license) */
+
+@import url(../warp/css/layout.css);
+
+
+/* Spacing
+----------------------------------------------------------------------------------------------------*/
+
+.wrapper { padding: 5px 0; }
+
+.module,
+#toolbar,
+#header,
+#breadcrumbs,
+#content,
+#footer { margin: 5px; }
+
+#menu .module { margin: 10px 5px; }
+
+#footer .module { margin: 0; }
+
+#headerbar { margin-bottom: 20px; }
+
+#headerbar .module { max-width: 700px; }
+
+
+/* Layout
+----------------------------------------------------------------------------------------------------*/
+
+#toolbar,
+#header,
+#footer,
+#content,
+.mod-box {
+	padding: 20px;
+	background: url(../images/section.png) 50% 50% repeat;
+	box-shadow: inset 0 0 30px rgba(0,0,0,0.1);
+}
+
+#toolbar {
+	padding: 5px 10px;
+	font-size: 11px;
+}
+
+#menubar {
+	padding: 4px;
+	border-top: 1px solid #000;
+	border-top: 1px solid rgba(0,0,0,0.3);
+	border-bottom: 1px solid #343434;
+	border-bottom: 1px solid rgba(255,255,255,0.08);
+	border-radius: 3px;
+	background: #242424;
+	background: rgba(0,0,0,0.08);
+	box-shadow: inset 0 0 3px rgba(0,0,0,0.3);
+}
+
+.breadcrumbs { margin-bottom: 10px; }
+
+#footer {
+	color: #8b8d8e;
+	font-size: 12px;
+	text-align: left;
+}
+
+#footer:before {
+	bottom: -6px;
+	right: 0;
+	left: 0;
+	height: 14px;
+}
+
+#totop-scroller {
+	display: block;
+	position: absolute;
+	top: 20px;
+	right: 20px;
+	z-index: 1;
+	width: 21px;
+	height: 21px;
+	background: url(../images/totop_scroller.png) 0 0 no-repeat;
+	text-decoration: none;
+}
+#totop-scroller:hover { background-position: 0 -50px; }
+
+
+/* Section Line Style */
+.top-a-line #top-a,
+.top-b-line #top-b,
+.main-line #main,
+.bottom-a-line #bottom-a,
+.bottom-b-line #bottom-b,
+.footer-line #footer {
+	margin-top: 20px;
+	position: relative;
+}
+
+.top-a-line #top-a:before,
+.top-b-line #top-b:before,
+.main-line #main:before,
+.bottom-a-line #bottom-a:before,
+.bottom-b-line #bottom-b:before,
+.footer-line #footer:before {
+	top: -15px;
+	right: 5px;
+	left: 5px;
+	height: 10px;
+	background: url(../images/section_before.png) 0 0 repeat-x;
+}
+
+.top-a-line #top-a,
+.main-line #header + #main,
+.footer-line #footer { margin-top: 25px; }
+
+.footer-line #footer:before {
+	top: -20px;
+	right: 0;
+	left: 0;
+}
+
+/* :Before Elements */
+#footer:before,
+.top-a-line #top-a:before,
+.top-b-line #top-b:before,
+.main-line #main:before,
+.bottom-a-line #bottom-a:before,
+.bottom-b-line #bottom-b:before,
+.footer-line #footer:before {
+	content: "";
+	display: block;
+	position: absolute;
+}

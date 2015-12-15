@@ -1,0 +1,15 @@
+/* Copyright (C) YOOtheme GmbH, YOOtheme Proprietary Use License (http://www.yootheme.com/license) */
+
+.menu-dropdown a.level1,
+.menu-dropdown span.level1 { 
+	font-family: "marvelregular", Arial, Helvetica, sans-serif;
+	font-size: 17px;
+}
+
+.menu-dropdown .level2 > span > span.subtitle,
+.menu-dropdown li.level3 { font-size: 13px; }
+
+.menu-dropdown .level1 > span > span.subtitle {
+	margin-top: -6px;
+	font-size: 11px;
+}
