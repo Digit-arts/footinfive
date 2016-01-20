@@ -1396,8 +1396,12 @@ function menu_acces_rapide($id_client = "", $titre = "") {
 		// header("Location: ".$_SERVER['REQUEST_URI']."");
 	}
 	$etat_actuel_acces_apllication = acces_application ();
+	
+	$mess="?acces_application=";
+	if (strpos($_SERVER ['REQUEST_URI'], "?") !== false) $mess="&acces_application=";
+	
 	if (est_min_manager ( $user ))
-		echo " <a href=\"" . $_SERVER ['REQUEST_URI'] . "&acces_application=" . $etat_actuel_acces_apllication . "\">";
+		echo " <a href=\"" . $_SERVER ['REQUEST_URI'] . $mess . $etat_actuel_acces_apllication . "\">";
 	echo " <img src=\"images/acces_application_" . $etat_actuel_acces_apllication . ".png\" title=\"Etat acces application : " . $etat_actuel_acces_apllication . "\" width=\"24\" height=\"24\">";
 	if (est_min_manager ( $user ))
 		echo "</a>";
@@ -1415,8 +1419,11 @@ function menu_acces_rapide($id_client = "", $titre = "") {
 	else
 		$image = "ko";
 	
+	$mess="?mess=";
+		if (strpos($_SERVER ['REQUEST_URI'], "?") !== false) $mess="&mess=";
+		
 	if (est_min_manager ( $user ))
-		echo " <a href=\"" . $_SERVER ['REQUEST_URI'] . "&mess=" . $image . "\">";
+		echo " <a href=\"" . $_SERVER ['REQUEST_URI'] . $mess . $image . "\">";
 	echo " <img src=\"images/email-" . $image . "-icon.png\" title=\"Etat messagerie: " . $image . "\" width=\"24\" height=\"24\">";
 	if (est_min_manager ( $user ))
 		echo "</a>";
@@ -1570,7 +1577,8 @@ function menu_deroulant($Table, $old_select, $fonction = "", $type = "", $is_det
 		 }
 		 else {
 		 
-		 if ($recup_liste->id<>5){ 
+		 //if (($recup_liste->id<>5) && ($Table!="Remise" || (($Table=="Remise")&& (($recup_liste->id==2)||est_min_manager($user))))) { 
+		 	if ($recup_liste->id<>5) {
 		if ($old_select == $recup_liste->id)
 			$select = " selected ";
 		else
@@ -1687,7 +1695,8 @@ function requete_resas_a_supprimer($id_resa = "") {
 	else
 		$comp_req = "";
 	
-	$requete_recup_resa = "Select r.adresse_resa_google, r.id_resa, r.id_client, r.indic_venue, r.cautionnable, r.indic_annul from `Reservation` as r " . " where ((SELECT c.`accompte_necessaire` FROM `Client` as c WHERE c.`id_client`=r.`id_client`)=0) " . " and (r.indic_annul<>1) " . $comp_req . " and ((r.a_supprimer=1 " . " and (TIMESTAMPDIFF(MINUTE,CAST(concat(r.date_valid,\" \",r.heure_valid) AS CHAR(22)),NOW())>5)" . " and r.accompte_necessaire=0" . " and r.cautionnable=0 ) " . " or (r.indic_venue=3 and r.cautionnable in (1,2))" . " or ((TIMESTAMPDIFF(MINUTE,CAST(concat(r.date_suppr_caution,\" \",r.heure_suppr_caution) AS CHAR(22)),NOW())>1440) " . " and r.cautionnable=2 and (r.montant_total>(select sum(reg1.montant_reglement) from Reglement as reg1 " . " where reg1.id_reservation=r.id_resa and reg1.validation_reglement=1))))";
+	$requete_recup_resa = "Select r.adresse_resa_google, r.id_resa, r.id_client, r.indic_venue, r.cautionnable, r.indic_annul from `Reservation` as r " . " where ((SELECT c.`accompte_necessaire` FROM `Client` as c WHERE c.`id_client`=r.`id_client`)=0) " . " and (r.indic_annul<>1) " . $comp_req . " and ((r.a_supprimer=1 " . " and (TIMESTAMPDIFF(MINUTE,CAST(concat(r.date_valid,\" \",r.heure_valid) AS CHAR(22)),NOW())>5)" . " and r.accompte_necessaire=0" . " and r.cautionnable=0 ) " . " or (r.indic_venue=3 and r.cautionnable in (1,2))" . " or ((TIMESTAMPDIFF(MINUTE,CAST(concat(r.date_suppr_caution,\" \",r.heure_suppr_caution) AS CHAR(22)),NOW())>1440) " . " and r.cautionnable=2 and (((select sum(reg1.montant_reglement) 
+ from Reglement as reg1 where reg1.id_reservation=r.id_resa and reg1.validation_reglement=1) IS NULL) or r.montant_total>(select sum(reg1.montant_reglement) from Reglement as reg1 " . " where reg1.id_reservation=r.id_resa and reg1.validation_reglement=1))))";
 	// si la resa a plus de 24h = 1440 mins
 	// echo $requete_recup_resa;
 	// echo $requete_recup_resa."<br>";
@@ -2624,6 +2633,12 @@ function maj_resa($id_resa, $date_debut_resa, $date_fin_resa, $heure_debut_resa,
 	// echo "req4: ".$requete_maj_resa;
 	$db->setQuery ( $requete_maj_resa );
 	$resultat_maj_resa = $db->query ();
+	
+	if($mode_resa==3) {
+		$requete_maj_resa_a_supprimer="UPDATE Reservation SET a_supprimer=0 where id_resa=".$id_resa;
+		$db->setQuery($requete_maj_resa_a_supprimer);
+		$resultat_maj_resa_a_supprimer = $db->query();
+	}
 	
 	if ($id_client == 3586) {
 		$id_match = recup_id_match_de_resa ( $id_resa );

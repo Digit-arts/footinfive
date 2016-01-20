@@ -28,6 +28,11 @@ if (test_non_vide ( $_POST ["num_resa"] ))
 else
 	$num_resa = $_GET ["num_resa"];
 
+$force_valider=0;
+if(test_non_vide ($_GET["force_valider"])) {
+	$force_valider = $_GET["force_valider"];
+}
+
 $date_debut_resa="";
 if(test_non_vide ($_GET["date_debut_resa"])) {
 	$date = DateTime::createFromFormat ( "Y-m-d", $_GET["date_debut_resa"] );
@@ -391,7 +396,7 @@ if (! test_non_vide ( $id_client ))
 <div class='clear'></div>
 <div id='table_resa' class='content-to-load'>
 <?php 
-	if(is_numeric($num_resa)) {
+	if(is_numeric($num_resa) || $force_valider==1) {
 		?>
 		<script type="text/javascript">
 	valider();

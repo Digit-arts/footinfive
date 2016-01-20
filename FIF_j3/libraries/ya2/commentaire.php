@@ -30,6 +30,14 @@ if (test_non_vide($_GET["id_client"])) {
 	$var="&id_client=".$_GET["id_client"];
 }
 
+if(!isset($champ) &&isset($_POST["champ"])) {
+	$table=$_POST["table"];
+	$champ=$_POST["champ"];
+	$valeur_champ=$_POST["valeur_champ"];
+	$art=$_POST["art"];
+	$var=$_POST["var"];
+}
+
 if (test_non_vide($table) and test_non_vide($champ) and test_non_vide($valeur_champ)){
 	$requete_recup_infos="select *, t.* from Commentaires as c, ".$table." as t where  c.".$champ."=t.".$champ." and "
 		."c.".$champ."=".$valeur_champ." order by date desc, heure desc LIMIT 0,1 ";

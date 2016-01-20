@@ -569,7 +569,7 @@ class ReservationController extends JControllerLegacy {
 									if (is_array ( trouve_dispo ( $type_terrain, $date_saisie_Min, decaler_heure ( $heure_saisie_Min, 30 * $i ), decaler_heure ( $heure_saisie_Max, 30 * $i ), $num_resa ) )) {
 										echo "<li>" . $lien;
 										echo "&duree_resa=" . $duree_resa . "&date_debut_resa=" . $annee . "-" . $mois . "-" . $jour . "&heure_debut_resa=";
-										echo decaler_heure ( $heure_saisie_Min, 30 * $i ) . "#deb_form\" />" . decaler_heure ( $heure_saisie_Min, 30 * $i );
+										echo decaler_heure ( $heure_saisie_Min, 30 * $i ) . "&force_valider=1#deb_form\" >" . decaler_heure ( $heure_saisie_Min, 30 * $i );
 										echo " &agrave; " . decaler_heure ( $heure_saisie_Max, 30 * $i );
 										echo " </a></li>";
 									}

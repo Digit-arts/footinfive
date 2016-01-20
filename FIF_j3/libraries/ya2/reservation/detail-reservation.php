@@ -285,7 +285,7 @@ if (!test_non_vide($_GET["annul"])) {
 
 
 	if (!test_non_vide($les_erreurs) and $_POST["Moyen_paiement"]<>10){
-		if (test_non_vide($ajout_presta)){
+		if (test_non_vide($ajout_presta) && test_non_vide($_POST["Type_presta"])&& test_non_vide($_POST["Montant"])&& test_non_vide($_POST["TVA"])){
 			ajout_presta($id_resa,$_POST["Type_presta"],$_POST["Montant"],$_POST["TVA"]);
 		}
 		else {
@@ -428,7 +428,7 @@ echo "</table><hr><br>";
 		
 		echo "</th></tr><tr>";
 		echo "<td>".$info_resa->id_resa;
-		if (!($nbre_resultats>0) and ($info_resa->email<>"agent@footinfive.com") and ($les_versements>0 or ($info_resa->cautionnable==1 or recup_accompte_necessaire($info_resa->id_client)==1))){
+		if (!($nbre_resultats>0) and ($info_resa->email<>"agent@footinfive.com") and (($les_versements>0 || $info_resa->id_mode_reservation==3) or ($info_resa->cautionnable==1 or recup_accompte_necessaire($info_resa->id_client)==1))){
 			echo " <a href=\"$siteURL/index.php/component/content/article?id=61&premiere=1&id_resa=".$info_resa->id_resa."&renvoyer=1\" />";
 			echo "<img src=\"images/renvoyer-notification-email-icon.png\" title=\"Renvoyer la confirmation par email au client\"></a>";
 		}
