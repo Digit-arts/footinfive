@@ -28,3 +28,5 @@
 2013-05-13	18:44:49	INFO	82.229.96.239	Joomla FAILURE: 	Mot de passe invalide
 2013-05-14	11:21:45	INFO	82.229.96.239	Joomla FAILURE: 	Mot de passe invalide
 2013-05-15	04:24:10	INFO	82.229.96.239	Joomla FAILURE: 	Vous devez indiquer un mot de passe!
+2016-01-31T06:46:01+00:00	INFO ::1	ldapfailure	Impossible de se connecter au serveur LDAP
+2016-01-31T06:46:33+00:00	INFO ::1	ldapfailure	Impossible de se connecter au serveur LDAP

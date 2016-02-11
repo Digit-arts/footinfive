@@ -384,7 +384,7 @@ if (! test_non_vide ( $id_client ))
 				<select name="mode_resa" onChange="valider()">
 					<option value="1" <?= $resaAcompte?>>Avec acompte (-10&euro;/h)</option>
 					<option value="2" <?= $resaCaution?>>Avec caution (-10&euro;/h)</option>
-					<?php if(!in_array ( $recup_client->id_type_regroupement, array (1,2,10000) )){?>
+					<?php if(!in_array ( $recup_client->id_type_regroupement, array (1,2,10000) ) && $select_type_loge==''){?>
 					<option value="3" <?= $resaSans?>>Sans acompte ni caution</option>
 					<?php }?>
 			</select>

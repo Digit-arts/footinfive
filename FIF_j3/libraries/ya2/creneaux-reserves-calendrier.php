@@ -43,12 +43,12 @@ else {
 	<FORM id="formulaire" name="filtrer" class="submission box" action="<?php echo JRoute::_('?resa/cal');?>" method="post" >
 <center>
 	<table border="0" width="100%">
-		<tr>	<td align="left"  width="20%"><a href="index.php/resa/cal?date_deb=<? echo decaler_jour($date_deb,-1); ?>"><img src="images/prec-icon.png" title="Jour precedent"></a></td>
+		<tr>	<td align="left"  width="10%"><a href="index.php/resa/cal?date_deb=<? echo decaler_jour($date_deb,-1); ?>"><img src="images/prec-icon.png" title="Jour precedent"></a></td>
 			<td align="center"  width="20%"><a href="index.php/resa/cal?date_deb=<? echo date("Y-m-d"); ?>">Aujourd'hui</a></td>
 			<td nowrap align="center"  width="20%"><input type="date" name="date_deb" value="<? echo $date_deb;?>" onChange="valider()">
 			<td align="center"  width="20%"><a href="index.php/resa/cal?date_deb=<? echo $date_deb; ?>">Rafraichir</a></td>
 			<td align="center"  width="20%"><a href="index.php/component/content/article?id=59&date_deb=<? echo $date_deb; ?>">Retour</a></td>
-			<td align="right" width="20%"><a href="index.php/resa/cal?date_deb=<? echo decaler_jour($date_deb,1); ?>"><img src="images/suiv-icon.png" title="Jour suivant"></a></td>
+			<td align="right" width="10%"><a href="index.php/resa/cal?date_deb=<? echo decaler_jour($date_deb,1); ?>"><img src="images/suiv-icon.png" title="Jour suivant"></a></td>
 		</tr>
 	</table>
 	</FORM>

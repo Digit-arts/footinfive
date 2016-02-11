@@ -1577,8 +1577,8 @@ function menu_deroulant($Table, $old_select, $fonction = "", $type = "", $is_det
 		 }
 		 else {
 		 
-		 //if (($recup_liste->id<>5) && ($Table!="Remise" || (($Table=="Remise")&& (($recup_liste->id==2)||est_min_manager($user))))) { 
-		 	if ($recup_liste->id<>5) {
+		 if (($recup_liste->id<>5) && ($Table!="Remise" || (($Table=="Remise")&& (($recup_liste->id==2)||est_min_manager($user))))) { 
+		 	//if ($recup_liste->id<>5) {
 		if ($old_select == $recup_liste->id)
 			$select = " selected ";
 		else
@@ -2044,7 +2044,7 @@ function recup_date_tarif($date, $type_retour = 0, $type_terrain) {
 		return ($numero_jour_de_la_semaine);
 }
 
-function tarif($date, $horaire_debut, $horaire_fin, $id_type_regroupement, $police, $type_terrain, $mode_resa) {
+function tarif($date, $horaire_debut, $horaire_fin, $id_type_regroupement, $police, $type_terrain, $mode_resa, $tarif_special=-1,$type_terrain_texte='') {
 	$db = JFactory::getDBO ();
 	
 	$resultat_recup_tarif = recup_date_tarif ( $date, 0, $type_terrain );
@@ -2056,8 +2056,13 @@ function tarif($date, $horaire_debut, $horaire_fin, $id_type_regroupement, $poli
 		$tab_tarif [$j] ["heure_debut"] = $recup_tarif->heure_debut;
 		$tab_tarif [$j] ["heure_fin"] = $recup_tarif->heure_fin;
 		$tab_tarif [$j] ["montant_horaire"] = $recup_tarif->montant_horaire;
+		
+		// Si heures creuse et tarif special
+		if($tab_tarif [$j] ["id_tarif"]==1 && $tarif_special!=-1)
+			$tab_tarif [$j] ["montant_horaire"] = $tarif_special;
+		
 		if ($mode_resa < 3)
-			$tab_tarif [$j] ["montant_avec_remise"] = $recup_tarif->montant_horaire - 10;
+			$tab_tarif [$j] ["montant_avec_remise"] = $tab_tarif [$j] ["montant_horaire"] - 10;
 		$tab_tarif [$j] ["taux_TVA"] = $recup_tarif->taux_TVA;
 		$j ++;
 	}
@@ -2120,7 +2125,8 @@ function tarif($date, $horaire_debut, $horaire_fin, $id_type_regroupement, $poli
 		if (($diff_bornes_fin_fin < 0) and ($diff_bornes_debut_debut > 0))
 			$tarif = $tarif + (($tab_tarif [$i] ["montant_horaire"] / 60) * diff_dates_en_minutes ( $date_Tab_deb, $tab_tarif [$i] ["heure_debut"], $date_Tab_fin, $tab_tarif [$i] ["heure_fin"] ));
 		
-		if ($mode_resa < 3 and ! in_array ( $id_type_regroupement, array (1,2) ) and $police != 1) {
+		//if ($mode_resa < 3 and ((! in_array ( $id_type_regroupement, array (1,2) ) and $police != 1)|| (in_array ( $id_type_regroupement, array (1,2) ) or $police == 1 && $tab_tarif [$i] ["id_plage_tarif"] != 1))) {
+		if ($mode_resa < 3 and ((! in_array ( $id_type_regroupement, array (1,2) ) and $police != 1)) || ((in_array ( $id_type_regroupement, array (1,2) ) or $police == 1)) && ($tab_tarif [$i] ["id_plage_tarif"] != 1)) {
 			
 			if (($diff_bornes_fin_fin >= 0) and ($diff_bornes_debut_debut <= 0))
 				$tarif_avec_remise = ($tab_tarif [$i] ["montant_avec_remise"] / 60) * diff_dates_en_minutes ( $date_deb, $horaire_debut, $date_fin, $horaire_fin );
@@ -2134,7 +2140,7 @@ function tarif($date, $horaire_debut, $horaire_fin, $id_type_regroupement, $poli
 			if (($diff_bornes_fin_fin < 0) and ($diff_bornes_debut_debut > 0))
 				$tarif_avec_remise = $tarif_avec_remise + (($tab_tarif [$i] ["montant_avec_remise"] / 60) * diff_dates_en_minutes ( $date_Tab_deb, $tab_tarif [$i] ["heure_debut"], $date_Tab_fin, $tab_tarif [$i] ["heure_fin"] ));
 		}
-		if(in_array ( $id_type_regroupement, array (1,2) ) or $police == 1) {
+		if((in_array ( $id_type_regroupement, array (1,2) ) or $police == 1) && $tab_tarif [$i] ["id_plage_tarif"] == 1) {
 			if (($diff_bornes_fin_fin >= 0) and ($diff_bornes_debut_debut <= 0))
 			$tarif_avec_remise = (($tab_tarif [$i] ["montant_horaire"] / 60) * diff_dates_en_minutes ( $date_deb, $horaire_debut, $date_fin, $horaire_fin ))/$remise;
 		
@@ -2150,9 +2156,11 @@ function tarif($date, $horaire_debut, $horaire_fin, $id_type_regroupement, $poli
 	}
 	
 	
-	if($mode_resa == 3)
+	if($mode_resa == 3  and $police != 1)
 		$tarif_avec_remise = $tarif;
 	
+	if($type_terrain_texte=='Loge VIP')
+		$tarif_avec_remise = $tarif;
 
 	
 	$tarifs = array(

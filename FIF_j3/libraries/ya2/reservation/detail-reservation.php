@@ -953,7 +953,7 @@ echo "</table><hr><br>";
 								echo"</a>";
 							}
 							else{
-								?><form name="register_modif_op" class="submission box" action="<<?php echo $siteURL."/index.php/component/content/";?>article?id=61&id_resa=<? echo $id_resa; ?>" method="post"  >
+								?><form name="register_modif_op" class="submission box" action="<?php echo $siteURL."/index.php/component/content/";?>article?id=61&id_resa=<? echo $id_resa; ?>" method="post"  >
 								<?
 								menu_deroulant("Moyen_paiement","","enregistrer2()",1);
 								?>

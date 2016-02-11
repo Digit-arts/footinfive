@@ -176,10 +176,10 @@ if ((!test_non_vide($les_erreurs)) and test_non_vide($id_client) and test_non_vi
 
 if (test_non_vide($id_client)) $complement_req=" and c.`id_client`=".$id_client;
 
-$requete_liste_cred="select (select ugm.group_id from #__user_usergroup_map as ugm where ugm.user_id=cc.id_user_creation) as gid_crediteur,";
-$requete_liste_cred.=" (select name from #__users where id=cc.id_user_creation) as crediteur, cc.*,c.*, m.nom as moy_paie, ";
-$requete_liste_cred.=" (select nom from Type_credit where id=cc.type_credit) as nom_type_credit from  Client as c, ";
-$requete_liste_cred.=" Credit_client as cc left join Moyen_paiement as m on cc.id_moyen_paiement=m.id  where cc.id_client=c.id_client";
+$requete_liste_cred="select ugm.group_id as gid_crediteur,";
+$requete_liste_cred.=" u.name  as crediteur, cc.*,c.*, m.nom as moy_paie, ";
+$requete_liste_cred.=" tc.nom as nom_type_credit from Type_credit as tc, #__user_usergroup_map as ugm, #__users as u , Client as c, ";
+$requete_liste_cred.=" Credit_client as cc left join Moyen_paiement as m on cc.id_moyen_paiement=m.id  where ugm.user_id=cc.id_user_creation and tc.id=cc.type_credit and u.id=cc.id_user_creation and cc.id_client=c.id_client";
 $requete_liste_cred.=$complement_req;
 
 if (test_non_vide($date_deb)) {
@@ -413,9 +413,10 @@ else {
 		</form><br>
 	<?
 	}
-	if (test_non_vide($_GET["detail"]) or test_non_vide($equipe))
+	echo $details;
+	/*if (test_non_vide($_GET["detail"]) or test_non_vide($equipe))
 		echo $details;
-	else echo "<a href=\"".$_SERVER['REQUEST_URI']."&id_client=".$id_client."&detail=1\" />Afficher le détail</a><br>"; 	
+	else echo "<a href=\"".$_SERVER['REQUEST_URI']."&id_client=".$id_client."&detail=1\" />Afficher le détail</a><br>";*/ 	
 	if (test_non_vide($_GET["hist"])){
 		if (test_non_vide($id_client) or test_non_vide($date_deb) ){
 			

@@ -6,12 +6,15 @@ class ReservationController extends JControllerLegacy {
 	function LoadResaTable() {
 		require_once (dirname ( dirname ( dirname ( __FILE__ ) ) ) . '/libraries/ya2/fonctions_module_reservation.php');
 		require_once (dirname ( dirname ( dirname ( __FILE__ ) ) ) . '/libraries/ya2/fonctions_gestion_user.php');
-
+		require_once (dirname ( dirname ( dirname ( __FILE__ ) ) ) . '/libraries/ya2/tarif_speciale/clienttarificationspeciale_controller.class.php');
+		require_once (dirname ( dirname ( dirname ( __FILE__ ) ) ) . '/libraries/ya2/tarif_speciale/groupetarificationspeciale_controller.class.php');
+		
 		$user = JFactory::getUser ();
 		$db = JFactory::getDBO ();
 		$config = JFactory::getConfig ();
 		
-		
+		$ctsController = new ClientTarificationSpecialeController ();
+		$gtsController = new GroupeTarificationSpecialeController ();
 		
 		if (est_min_agent ( $user )) {
 			if (test_non_vide ( $_POST ["id_client"] ))
@@ -37,13 +40,11 @@ class ReservationController extends JControllerLegacy {
 		
 		$typeClient = $recup_client->type_reg . " " . $recup_client->nom_entite;
 		
-		
 		$type_terrain = $_GET ["type_terrain"] . $_POST ["type_terrain"];
 		$type_terrain_texte = '';
 		
 		$mode_resa = $_POST ["mode_resa"];
-
-
+		
 		$total_caution_actuel = recup_caution_total_client ( $id_client );
 		
 		if (test_non_vide ( $_POST ["nbre_terrains_a_reserver"] ))
@@ -61,13 +62,13 @@ class ReservationController extends JControllerLegacy {
 				$duree_resa = $_GET ["duree_resa"];
 		}
 		
-		if (test_non_vide($_POST["num_resa"])) {
-			$num_resa = $_POST["num_resa"];		
-			proprietaire_resa($num_resa);
+		if (test_non_vide ( $_POST ["num_resa"] )) {
+			$num_resa = $_POST ["num_resa"];
+			proprietaire_resa ( $num_resa );
 		}
 		
-		$disable_submit_caution="";
-		$caution_insuffisante=false;
+		$disable_submit_caution = "";
+		$caution_insuffisante = false;
 		
 		$type_terain_disabled = '';
 		switch ($type_terrain) {
@@ -100,21 +101,22 @@ class ReservationController extends JControllerLegacy {
 			$jour = $date->format ( "d" );
 			$mois = $date->format ( "m" );
 			$annee = $date->format ( "Y" );
-			if($mode_resa!=3) $is_cautionable=test_limite_nbre_resa_par_caution($date->format("Y-m-d"),$id_client);
+			if ($mode_resa != 3)
+				$is_cautionable = test_limite_nbre_resa_par_caution ( $date->format ( "Y-m-d" ), $id_client );
 		} else {
 			$date = DateTime::createFromFormat ( "d/m/Y", $_GET ["date_debut_resa"] );
 			$jour = $date->format ( "d" );
 			$mois = $date->format ( "m" );
 			$annee = $date->format ( "Y" );
-			if($mode_resa!=3) $is_cautionable=test_limite_nbre_resa_par_caution($date->format("Y-m-d"),$id_client);
+			if ($mode_resa != 3)
+				$is_cautionable = test_limite_nbre_resa_par_caution ( $date->format ( "Y-m-d" ), $id_client );
 		}
 		
 		$is_max_sans_acompte_ni_caution = false;
-		if (isset ( $_POST ["date_input_0"] ) && $mode_resa==3) {
-			$date->sub(new DateInterval('P7D'));
-			$is_max_sans_acompte_ni_caution=test_limite_nbre_resa_sans_caution_ni_acompte($date->format("Y-m-d"),$id_client,$num_resa);
+		if (isset ( $_POST ["date_input_0"] ) && $mode_resa == 3) {
+			$date->sub ( new DateInterval ( 'P7D' ) );
+			$is_max_sans_acompte_ni_caution = test_limite_nbre_resa_sans_caution_ni_acompte ( $date->format ( "Y-m-d" ), $id_client, $num_resa );
 		}
-		
 		
 		if (! isset ( $_GET ["modif"] )) {
 			if (isset ( $_POST ["id_client"] ) and ($_POST ["id_client"] == "") and (est_min_agent ( $user ))) {
@@ -202,57 +204,68 @@ class ReservationController extends JControllerLegacy {
 							?>
 <FORM id="formulaire_resa" name="formulaire_resa" class="submission box"
 	action="article?id=63" method="post" data-parsley-validate>
-<div id="list_de_trucs" class="table-responsive">
-	<table class="zebra">
-		<tr>
-			<th>Date</th>
-			<th>Heure</th>
-			<th>Terrain</th>
-			<th>Tarif</th>
+	<div id="list_de_trucs" class="table-responsive">
+		<table class="zebra">
+			<tr>
+				<th>Date</th>
+				<th>Heure</th>
+				<th>Terrain</th>
+				<th>Tarif</th>
 			<?php if($mode_resa==1) { ?>
 			<th>Tarif avec remise</th>
-			<th>Acompte</th>
+				<th>Acompte</th>
 			<?php } elseif($mode_resa==2) { ?>
 			<th>Tarif avec remise</th>
-			<th>Caution</th>
+				<th>Caution</th>
 			<?php } ?>
+			<?php if($mode_resa==3 && $recup_client->police==1) { ?>
+			<th>Tarif avec remise</th>
+				<th>Acompte</th>
+			<?php }?>
 			<th>Terrain</th>
-		</tr>
-		<tr>
-			<td nowrap><?
+			</tr>
+			<tr>
+				<td nowrap><?
 							
 							echo date_longue ( $date_Min );
 							?></td>
-			<td>de <? echo  $heure_saisie_Min." &agrave; ".$heure_saisie_Max; ?></td>
-			<td><?=$type_terrain_texte ?></td>
-			<td>
+				<td>de <? echo  $heure_saisie_Min." &agrave; ".$heure_saisie_Max; ?></td>
+				<td><?=$type_terrain_texte ?></td>
+				<td>
 								<?
-							$tarif = tarif ( $date_Min, $heure_saisie_Min, $heure_saisie_Max, $recup_client->id_type_regroupement, $recup_client->police, $type_terrain, $mode_resa );
-							$montant_total = $tarif['tarif'];
-							$montant_total_avec_remise = $tarif['tarif_avec_remise'];
+							$tarif_special = - 1;
+							$cts = $ctsController->GetClientTarificationSpecialeByClientId ( $id_client );
+							if ($cts != null) {
+								$gts = $gtsController->GetGroupeTarificationSpecialeById ( $cts->Getgtsid () );
+								$tarif_special = $gts->Gettarifhc ();
+							}
+							$tarif = tarif ( $date_Min, $heure_saisie_Min, $heure_saisie_Max, $recup_client->id_type_regroupement, $recup_client->police, $type_terrain, $mode_resa, $tarif_special,$type_terrain_texte );
+							$montant_total = $tarif ['tarif'];
+							$montant_total_avec_remise = $tarif ['tarif_avec_remise'];
 							echo $montant_total . "€";
 							echo "<input name=\"montant_total" . coller_jma ( $date_Min ) . "\" type=\"hidden\"  value=\"" . $montant_total . "\">";
 							echo "<input name=\"montant_total_avec_remise" . coller_jma ( $date_Min ) . "\" type=\"hidden\"  value=\"" . $montant_total_avec_remise . "\">";
 							?>
 								</td>
-								<?php if($mode_resa<3) { 								
-								echo "<td>".$montant_total_avec_remise . "€</td>";			
+								<?php
 							
-								 } 
-								 $redInit="";
-								 $redEnd="";
-								 if($mode_resa!=3){
-								 	$acompte = calcul_acompte  ( $date_Min, $heure_saisie_Min, $montant_total );
-									echo "<input name=\"acompte\" type=\"hidden\"  value=\"" . $acompte . "\">";
-								 	if($acompte>$total_caution_actuel && $mode_resa==2) {
-								 		$redInit="<font color=red>";
-								 		$redEnd="</font>";
-								 		$disable_submit_caution=" disabled";
-								 		$caution_insuffisante=true;
-								 	}
-								 	echo "<td>".$redInit.$acompte . "€$redEnd</td>";
-								 }
-								 ?>
+if ($mode_resa < 3 || ($mode_resa==3 && $recup_client->police==1)) {
+								echo "<td>" . $montant_total_avec_remise . "€</td>";
+							}
+							$redInit = "";
+							$redEnd = "";
+							if ($mode_resa < 3 || ($mode_resa==3 && $recup_client->police==1)) {
+								$acompte = calcul_acompte ( $date_Min, $heure_saisie_Min, $montant_total );
+								echo "<input name=\"acompte\" type=\"hidden\"  value=\"" . $acompte . "\">";
+								if ($acompte > $total_caution_actuel && $mode_resa == 2) {
+									$redInit = "<font color=red>";
+									$redEnd = "</font>";
+									$disable_submit_caution = " disabled";
+									$caution_insuffisante = true;
+								}
+								echo "<td>" . $redInit . $acompte . "€$redEnd</td>";
+							}
+							?>
 			<td>
 								<?
 							if (est_min_manager ( $user ) and ! test_non_vide ( $num_resa ) and $resa_mult == "1") {
@@ -270,17 +283,20 @@ class ReservationController extends JControllerLegacy {
 									echo "<option value=\"" . $terrain [3] . "\">" . $terrain [2] . "</option>";
 								?>
 									</select>
-								<?}
-								if($type_terrain==3) {
+								<?
+							
+}
+							if ($type_terrain == 3) {
 								?>
-									<input type="hidden" name ="terrain_choisit" value="<?= $infos_terrain[0][3]; ?>"/>
-									<?php 
-								}
-								
-								?>
+									<input type="hidden" name="terrain_choisit"
+					value="<?= $infos_terrain[0][3]; ?>" />
+									<?php
+							}
+							
+							?>
 								
 								</td>
-		</tr>
+			</tr>
 							<?
 							if (est_min_manager ( $user ) and $nbre_de_jours_a_tester > 1 and ! test_non_vide ( $num_resa )) {
 								$les_jours_a_tester = $date_Min;
@@ -290,40 +306,49 @@ class ReservationController extends JControllerLegacy {
 									?>
 									
 									<tr>
-			<td nowrap><?
+				<td nowrap><?
 									
 									echo date_longue ( $les_jours_a_tester );
 									?></td>
-			<td>de <? echo  $heure_saisie_Min." &agrave; ".$heure_saisie_Max; ?></td>
-			<td><?=$type_terrain_texte ?></td>
-			<td>
+				<td>de <? echo  $heure_saisie_Min." &agrave; ".$heure_saisie_Max; ?></td>
+				<td><?=$type_terrain_texte ?></td>
+				<td>
 									<?
-									$tarif = tarif ( $les_jours_a_tester, $heure_saisie_Min, $heure_saisie_Max, $recup_client->id_type_regroupement, $recup_client->police, $type_terrain, $mode_resa );
-									$montant_total = $tarif['tarif'];
-									$montant_total_avec_remise = $tarif['tarif_avec_remise'];
+									$tarif_special = - 1;
+									$cts = $ctsController->GetClientTarificationSpecialeByClientId ( $id_client );
+									if ($cts != null) {
+										$gts = $gtsController->GetGroupeTarificationSpecialeById ( $cts->Getgtsid () );
+										$tarif_special = $gts->Gettarifhc ();
+									}
+									$tarif = tarif ( $les_jours_a_tester, $heure_saisie_Min, $heure_saisie_Max, $recup_client->id_type_regroupement, $recup_client->police, $type_terrain, $mode_resa, $tarif_special,$type_terrain_texte );
+									$montant_total = $tarif ['tarif'];
+									$montant_total_avec_remise = $tarif ['tarif_avec_remise'];
 									echo $montant_total . "€";
 									echo "<input name=\"montant_total" . coller_jma ( $les_jours_a_tester ) . "\" type=\"hidden\"  value=\"" . $montant_total . "\">";
 									echo "<input name=\"montant_total_avec_remise" . coller_jma ( $les_jours_a_tester ) . "\" type=\"hidden\"  value=\"" . $montant_total_avec_remise . "\">";
 									?>
 									</td>
-									<?php if($mode_resa<3 and !in_array ( $recup_client->id_type_regroupement, array (1,2) ) and $recup_client->police != 1) { 								
-								echo "<td>".$montant_total_avec_remise . "€</td>";
-								
-							
-								 } 
-
-								 $redInit="";
-								 $redEnd="";
-								 if($mode_resa!=3){									
-									$acompte = calcul_acompte ( $les_jours_a_tester, $heure_saisie_Min, $montant_total );
-									if($acompte>$total_caution_actuel && $mode_resa==2) {
-										$redInit="<font color=red>";
-										$redEnd="</font>";
-										$disable_submit_caution=" disabled";
-										$caution_insuffisante=true;
+									<?php
+									
+if ($mode_resa < 3 and ! in_array ( $recup_client->id_type_regroupement, array (
+											1,
+											2 
+									) ) and $recup_client->police != 1) {
+										echo "<td>" . $montant_total_avec_remise . "€</td>";
 									}
-									echo "<td>".$redInit.$acompte . "€$redEnd</td>";
-								 }
+									
+									$redInit = "";
+									$redEnd = "";
+									if ($mode_resa < 3 || ($mode_resa==3 && $recup_client->police==1)) {
+										$acompte = calcul_acompte ( $les_jours_a_tester, $heure_saisie_Min, $montant_total );
+										if ($acompte > $total_caution_actuel && $mode_resa == 2) {
+											$redInit = "<font color=red>";
+											$redEnd = "</font>";
+											$disable_submit_caution = " disabled";
+											$caution_insuffisante = true;
+										}
+										echo "<td>" . $redInit . $acompte . "€$redEnd</td>";
+									}
 									?>
 			<td>
 									<?
@@ -343,107 +368,117 @@ class ReservationController extends JControllerLegacy {
 											echo "<option value=\"" . $terrain [3] . "\">" . $terrain [2] . "</option>";
 										?>
 										</select>
-									<?}
-								if($type_terrain==3) {
-								?>
-									<input type="hidden" name ="terrain_choisit" value="<?= $infos_terrain[0][3]; ?>"/>
-									<?php 
-								}
-								
-								?>
+									<?
+									
+}
+									if ($type_terrain == 3) {
+										?>
+									<input type="hidden" name="terrain_choisit"
+					value="<?= $infos_terrain[0][3]; ?>" />
+									<?php
+									}
+									
+									?>
 									
 									</td>
-		</tr>
+			</tr>
 							<?
 								}
 							}
 							if (est_min_agent ( $user )) {
 								?>
 							<tr>
-			<th>Commentaire <br>(15 caract&egrave;res min.)</th>
-			<?php if($mode_resa<3 and !in_array ( $recup_client->id_type_regroupement, array (1,2) ) and $recup_client->police != 1) {
-			echo "<td colspan='6'>";
-			}
-			else {
-				echo "<td colspan='5'>";
-			}
-			
-
-			if($mode_resa==2 && !$is_cautionable) {
-				$disable_submit_caution = " disabled";
-			}
-			if($mode_resa==3 && $is_max_sans_acompte_ni_caution) {
-				$disable_submit_caution = " disabled";
-			}
-			?>
-			<textarea<?= $disable_submit_caution ?>  required data-parsley-required-message="Le commentaire est obligatoire" rows="4" cols="90" name="commentaire" data-parsley-trigger="keyup" data-parsley-minlength="15" data-parsley-minlength-message = "Veuillez saisir 15 caract&egrave;res minimum"><?
-								if($caution_insuffisante) {
+				<th>Commentaire <br>(15 caract&egrave;res min.)
+				</th>
+			<?php
+								
+if ($mode_resa < 3 and ! in_array ( $recup_client->id_type_regroupement, array (
+										1,
+										2 
+								) ) and $recup_client->police != 1) {
+									echo "<td colspan='6'>";
+								} else {
+									echo "<td colspan='5'>";
+								}
+								
+								if ($mode_resa == 2 && ! $is_cautionable) {
+									$disable_submit_caution = " disabled";
+								}
+								if ($mode_resa == 3 && $is_max_sans_acompte_ni_caution) {
+									$disable_submit_caution = " disabled";
+								}
+								?>
+			<textarea <?= $disable_submit_caution ?> required
+					data-parsley-required-message="Le commentaire est obligatoire"
+					rows="4" cols="90" name="commentaire" data-parsley-trigger="keyup"
+					data-parsley-minlength="15"
+					data-parsley-minlength-message="Veuillez saisir 15 caract&egrave;res minimum"><?
+								if ($caution_insuffisante) {
 									echo "Le client ne dispose pas d'assez de caution pour effectuer cette r&eacute;servation. Veuillez changer de mode de r&eacute;servation.";
-								}
-								elseif($mode_resa==2 && !$is_cautionable) {
-								 echo "Le client n'est pas cautionable. Il a d&eacute;pass&eacute; les quota de r&eacute;servations avec caution sur la p&eacute;riode.";								 
-								}elseif($is_max_sans_acompte_ni_caution) {
-								 echo "Le client ne peut plus effectuer de r&eacute;servation sans caution ni acompte. La limite est de 2 tous les 7 jours glissants.";								 
-								}
-								elseif (test_non_vide ( $num_resa )) {
+								} elseif ($mode_resa == 2 && ! $is_cautionable) {
+									echo "Le client n'est pas cautionable. Il a d&eacute;pass&eacute; les quota de r&eacute;servations avec caution sur la p&eacute;riode.";
+								} elseif ($is_max_sans_acompte_ni_caution) {
+									echo "Le client ne peut plus effectuer de r&eacute;servation sans caution ni acompte. La limite est de 2 tous les 7 jours glissants.";
+								} elseif (test_non_vide ( $num_resa )) {
 									$ligne_commentaire_resa = recup_derniere_commentaire ( "id_resa", $num_resa );
 									if ($ligne_commentaire_resa->Commentaire != "")
 										echo $ligne_commentaire_resa->Commentaire;
 								}
-								?></textarea></td>
-		</tr>
+								?></textarea>
+				</td>
+			</tr>
 							<?
 							} else {
 								?>
 								<tr>
-			<th>Infos g&eacute;n&eacute;rales</th>
-			<td colspan="5"><br>Il est obligatoire de r&eacute;gler l’acompte
-				minimum pour chaque r&eacute;servations <br>Une r&eacute;servation
-				peut- être d&eacute;plac&eacute; jusqu'&agrave; 48h avant la
-				r&eacute;servation <br>En cas d’annulation, l’acompte sera
-				plac&eacute; sous la forme d’un avoir jusqu'&agrave; 48h avant la
-				r&eacute;servation. Au-del&agrave; de ce d&eacute;lai votre acompte
-				sera perdu. <br>Les r&eacute;servations ne peuvent pas être
-				d&eacute;plac&eacute;es en ligne moins de 48h avant la
-				r&eacute;servation. <br>Pour toutes infos et demandes
-				suppl&eacute;mentaires merci de contacter l’accueil de votre
-				centre au 01 49 51 27 04</td>
-		</tr>
+				<th>Infos g&eacute;n&eacute;rales</th>
+				<td colspan="5"><br>Il est obligatoire de r&eacute;gler l’acompte
+					minimum pour chaque r&eacute;servations <br>Une r&eacute;servation
+					peut- être d&eacute;plac&eacute; jusqu'&agrave; 48h avant la
+					r&eacute;servation <br>En cas d’annulation, l’acompte sera
+					plac&eacute; sous la forme d’un avoir jusqu'&agrave; 48h avant la
+					r&eacute;servation. Au-del&agrave; de ce d&eacute;lai votre acompte
+					sera perdu. <br>Les r&eacute;servations ne peuvent pas être
+					d&eacute;plac&eacute;es en ligne moins de 48h avant la
+					r&eacute;servation. <br>Pour toutes infos et demandes
+					suppl&eacute;mentaires merci de contacter l’accueil de votre
+					centre au 01 49 51 27 04</td>
+			</tr>
 								
 							<?
 							}
 							?>
 						</table>
-	<!--	Le créneau <font color="red"><? echo  $heure_saisie_Min."-".$heure_saisie_Max; ?></font> du <font color="red">
+		<!--	Le créneau <font color="red"><? echo  $heure_saisie_Min."-".$heure_saisie_Max; ?></font> du <font color="red">
 						<? echo  date_longue($date_Min); ?>
 						</font> est disponible, vous devez cliquez ci-dessous sur le mode paiement de votre choix.<br /-->
 
 
-	<input name="nbre_de_jours_a_tester" type="hidden"
-		value="<? echo  $nbre_de_jours_a_tester; ?>"> <input
-		name="la_Frequence" type="hidden"
-		value="<? echo  $_POST["Frequence"]; ?>"> <input name="type_terrain"
-		type="hidden" value="<? echo  $type_terrain; ?>"> <input
-		name="date_debut_resa" type="hidden" value="<? echo  $date_Min; ?>"> <input
-		name="date_fin_resa" type="hidden" value="<? echo  $date_Max; ?>"> <input
-		name="heure_debut_resa" type="hidden"
-		value="<? echo  $heure_saisie_Min;?>"> <input name="heure_fin_resa"
-		type="hidden" value="<? echo  $heure_saisie_Max;?>"> <input
-		name="duree_resa" type="hidden" value="<? echo  $duree_resa;?>"> <input
-		name="id_client" type="hidden" value="<? echo  $id_client;?>"> <input
-		name="infos_client" type="hidden"
-		value="<? echo  $tab_client[$id_client];?>"> <input name="mois_resa"
-		type="hidden" value="<? echo  $mois_fr[date("n", $date_longue)-1];?>">
-	<input name="date_debut_resa_longue" type="hidden"
-		value="<? echo  date_longue($date_Min)." de ".$heure_saisie_Min."-".($heure_saisie_Max);?>">
-		<input name="mode_resa" type="hidden"
-		value="<? echo  $mode_resa; ?>">
+		<input name="nbre_de_jours_a_tester" type="hidden"
+			value="<? echo  $nbre_de_jours_a_tester; ?>"> <input
+			name="la_Frequence" type="hidden"
+			value="<? echo  $_POST["Frequence"]; ?>"> <input name="type_terrain"
+			type="hidden" value="<? echo  $type_terrain; ?>"> <input
+			name="date_debut_resa" type="hidden" value="<? echo  $date_Min; ?>">
+		<input name="date_fin_resa" type="hidden"
+			value="<? echo  $date_Max; ?>"> <input name="heure_debut_resa"
+			type="hidden" value="<? echo  $heure_saisie_Min;?>"> <input
+			name="heure_fin_resa" type="hidden"
+			value="<? echo  $heure_saisie_Max;?>"> <input name="duree_resa"
+			type="hidden" value="<? echo  $duree_resa;?>"> <input
+			name="id_client" type="hidden" value="<? echo  $id_client;?>"> <input
+			name="infos_client" type="hidden"
+			value="<? echo  $tab_client[$id_client];?>"> <input name="mois_resa"
+			type="hidden" value="<? echo  $mois_fr[date("n", $date_longue)-1];?>">
+		<input name="date_debut_resa_longue" type="hidden"
+			value="<? echo  date_longue($date_Min)." de ".$heure_saisie_Min."-".($heure_saisie_Max);?>">
+		<input name="mode_resa" type="hidden" value="<? echo  $mode_resa; ?>">
 
-	<br /> <br />
-	<center>
-		<table width="100%">
-			<tr>
-				<td align="center">
+		<br /> <br />
+		<center>
+			<table width="100%">
+				<tr>
+					<td align="center">
 				<?
 							
 							if (test_non_vide ( $num_resa ))
@@ -461,9 +496,10 @@ class ReservationController extends JControllerLegacy {
 							}
 							?>
 						</td>
-			</tr>
-		</table>
-		</div>
+				</tr>
+			</table>
+	
+	</div>
 
 </form>
 
