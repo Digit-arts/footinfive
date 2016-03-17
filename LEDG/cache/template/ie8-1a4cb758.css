@@ -1,0 +1,14 @@
+.wrapper{min-width:900px}.size-auto{width:auto}#block-toolbar,
+#content,
+.content-whitebg #content,
+.content-whitebg #content > div,
+.mod-box,
+.mod-color,
+.mod-metal,
+.mod-metal > div,
+.mod-metal ul.zebra>li.odd,.box-content,.box-note,.box-info,.box-warning,.box-hint,.box-download{behavior:url("/templates/yoo_catalyst/warp/js/css3pie.htc")}#content,
+.content-whitebg #content,
+.content-whitebg #content > div,
+.mod-metal > div,
+.mod-metal ul.zebra>li.odd,.box-content,.box-note,.box-info,.box-warning,.box-hint,.box-download{position:relative}.searchbox
+input{line-height:35px}

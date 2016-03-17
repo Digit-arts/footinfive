@@ -1,0 +1,19 @@
+#block-toolbar{-pie-background:url("/templates/yoo_catalyst/images/toolbar_bg.png") 0 100% repeat-x,
+url("/templates/yoo_catalyst/images/toolbar.png") 0 0 repeat}#content{border:1px
+solid #000;-pie-background:url("/templates/yoo_catalyst/images/system_tl.png") 0 0 no-repeat,
+url("/templates/yoo_catalyst/images/system_tr.png") 100% 0 no-repeat,
+url("/templates/yoo_catalyst/images/system_bl.png") 0 100% no-repeat,
+url("/templates/yoo_catalyst/images/system_br.png") 100% 100% no-repeat,
+url("/templates/yoo_catalyst/images/system.png") 0 0 repeat;box-shadow:none}.content-whitebg
+#content{border:1px
+solid #000;-pie-background:#f9f9f9 url("/templates/yoo_catalyst/images/header/grunge/module_metal.png") 0 0 repeat;box-shadow:none}.content-whitebg #content>div{box-shadow:none}.menu-dropdown .dropdown-bg > div,
+.searchbox
+.results{border:1px
+solid #2d2d2f}.mod-box{border:1px
+solid #000;box-shadow:none}.mod-color{box-shadow:none;border-top-color:inherit}.mod-metal > div,
+.content-whitebg #content>div{-pie-background:url("/templates/yoo_catalyst/images/module_metal_tl.png") 0 0 no-repeat,
+url("/templates/yoo_catalyst/images/module_metal_tr.png") 100% 0 no-repeat,
+url("/templates/yoo_catalyst/images/module_metal_bl.png") 0 100% no-repeat,
+url("/templates/yoo_catalyst/images/module_metal_br.png") 100% 100% no-repeat,
+url("/templates/yoo_catalyst/images/header/grunge/module_metal_b.png") 0 100% repeat-x}ul.line-icon>li{padding-left:0}.mod-metal ul.zebra>li.odd{-pie-background:rgba(0,0,0,0.1);box-shadow:none}.mod-metal ul.zebra>li:nth-of-type(odd){-pie-background:rgba(0,0,0,0.1);box-shadow:none}.box-content,.box-note,.box-info,.box-warning,.box-hint,.box-download{border:1px
+solid #5f5e5e;-pie-background:rgba(255,255,255,0.08)}div.box-info{border-color:#375575;-pie-background:rgba(0,87,132,0.2) url("/templates/yoo_catalyst/images/tools/box_info.png") 0 0 no-repeat}div.box-warning{border-color:#772929;-pie-background:rgba(145,0,0,0.2) url("/templates/yoo_catalyst/images/tools/box_warning.png") 0 0 no-repeat}div.box-hint{border-color:#6a4f15;-pie-background:rgba(142,98,0,0.2) url("/templates/yoo_catalyst/images/tools/box_hint.png") 0 0 no-repeat}div.box-download{border-color:#4b6415;-pie-background:rgba(90,132,0,0.2) url("/templates/yoo_catalyst/images/tools/box_download.png") 0 0 no-repeat}

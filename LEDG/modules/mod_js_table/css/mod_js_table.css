@@ -1,0 +1,28 @@
+.tblro0{
+	background-color:#EEE;
+}
+.tblview{
+	border:1px solid #EEE;
+	border-collapse:collapse;
+}
+.tblview td, .tblview th{
+	border:1px solid #DDD;
+	padding:3px 5px;
+	text-align:center;
+	}
+.tblview  .blteamname{
+	text-align:left;
+	padding-left:15px;
+}
+.tblview th{
+	font-size:80%;
+	
+}
+.tblview .clear{
+	border:0px;
+	padding:5px;
+
+}
+.embl_in_tblmod{
+	height:25px;
+}

@@ -1,0 +1,14 @@
+td.match_date{}
+td.team_thome{}
+td.match_result{}
+td.team_taway{}
+.jsm_nextmtable td{
+	border:0px;
+	padding:3px;
+}
+table.jsm_nextmtable{
+	width:100%;
+}
+.jsm_nextmtable tr{
+	border:0px;
+}

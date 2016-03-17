@@ -1,0 +1,32 @@
+/* Copyright (C) YOOtheme GmbH, YOOtheme Proprietary Use License (http://www.yootheme.com/license) */
+
+@import url(../warp/css/system.css);
+@import url(../warp/systems/joomla/css/system.css);
+@import url(system-all.css);
+
+
+/* Items (Addition)
+----------------------------------------------------------------------------------------------------*/
+ 
+#system .items .leading .item {
+	padding-bottom: 12px;
+	margin-bottom: 18px;
+	background: url(../images/article.png) 0 100% repeat-x;
+}
+
+.content-whitebg #system .items .leading .item { background: url(../images/article_metal.png) 0 100% repeat-x; }
+
+
+/* Item List
+----------------------------------------------------------------------------------------------------*/
+
+#system .item-list { border-top: 1px solid #1b1b1d; }
+
+
+/* Search
+----------------------------------------------------------------------------------------------------*/
+
+#system span.highlight { 
+	padding: 2px 3px;
+	border-radius: 2px;
+}

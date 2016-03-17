@@ -1,0 +1,16 @@
+td.match_date{text-align:center; font-weight:bold}
+td.emblem_thome{text-align:right}
+td.emblem_taway{text-align:left}
+td.team_thome{text-align:right}
+td.match_result{text-align:center}
+td.team_taway{text-align:left}
+.jsm_restable td{
+	border:0px;
+	padding:3px;
+}
+table.jsm_restable{
+	width:100%;
+}
+.jsm_restable tr{
+	border:0px;
+}

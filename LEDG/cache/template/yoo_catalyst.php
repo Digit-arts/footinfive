@@ -1,0 +1,1 @@
+{"tmpl_check":"035675dcaef280e9cd547a91d8fc7629","tmpl_data":"{\"status\":\"up-to-date\",\"message\":\"You're up to date!. Joomla 2.5 Template 1.0.7 is currently the newest version available.\"}","warp_check":"7473cd18f5fa06979f210a8b439a9c5b","warp_data":"{\"status\":\"error\",\"message\":\"Sorry dude, this application is unknown.\"}"}

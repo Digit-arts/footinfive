@@ -13,6 +13,8 @@ class JConfig {
 	public $debug_lang = '0';
 	public $dbtype = 'mysqli';
 	public $host = 'localhost';
+	public $hostNoPort = 'localhost';
+	public $dbPort = '';
 	public $user = 'Cyclople';
 	public $password = 'MixMax123';
 	public $db = 'MySql_FIF_j3';

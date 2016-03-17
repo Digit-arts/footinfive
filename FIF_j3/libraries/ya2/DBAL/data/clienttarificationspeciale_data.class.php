@@ -37,7 +37,7 @@ class ClientTarificationSpecialeData extends Data {
 	}
 	
 	protected function GetClientTarificationSpecialeByClientIdData($clientId) {
-		$query = "SELECT * FROM client_tarification_speciale WHERE cts_client_id = :clientId ;";
+		$query = "SELECT * FROM client_tarification_speciale WHERE cts_client_id = :clientId AND cts_gts_id!=-1;";
 		$paramId = array();
 		$paramId[0] = ':clientId';
 		$paramId[1] = $clientId;

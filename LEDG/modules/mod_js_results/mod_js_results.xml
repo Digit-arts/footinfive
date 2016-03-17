@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<install
+	type="module"
+	version="1.8.0"
+	client="site"
+	method="upgrade">
+	<name>JoomSport match results</name>
+	<author>BearDev</author>
+	<creationDate>February 2012</creationDate>
+	<copyright>Copyright (C)2009-2012 BearDev. All rights reserved.</copyright>
+	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
+	<authorEmail>beardev@beardev.com</authorEmail>
+	<authorUrl>www.beardev.com</authorUrl>
+	<version>1.8</version>
+	<description>Match Results</description>
+	<languages folder="language">
+		<language tag="en-GB">en-GB/en-GB.mod_js_results.ini</language>
+		 <language tag="en-GB">en-GB/en-GB.mod_js_results.sys.ini</language>
+        <language tag="fr-FR">fr-FR/fr-FR.mod_js_results.ini</language>
+		 <language tag="fr-FR">fr-FR/fr-FR.mod_js_results.sys.ini</language>
+		<language tag="sv-SE">sv-SE/sv-SE.mod_js_results.ini</language>
+		<language tag="sv-SE">sv-SE/sv-SE.mod_js_results.sys.ini</language>
+		<language tag="ru-RU">ru-RU/ru-RU.mod_js_results.ini</language>
+		<language tag="ru-RU">ru-RU/ru-RU.mod_js_results.sys.ini</language>
+		<language tag="pt-PT">pt-PT/pt-PT.mod_js_results.ini</language>
+		<language tag="pt-PT">pt-PT/pt-PT.mod_js_results.sys.ini</language>
+		<language tag="pl-PL">pl-PL/pl-PL.mod_js_results.ini</language>
+		<language tag="pl-PL">pl-PL/pl-PL.mod_js_results.sys.ini</language>
+		<language tag="nl-NL">nl-NL/nl-NL.mod_js_results.ini</language>
+		<language tag="nl-NL">nl-NL/nl-NL.mod_js_results.sys.ini</language>
+		<language tag="de-DE">de-DE/de-DE.mod_js_results.ini</language>
+		<language tag="de-DE">de-DE/de-DE.mod_js_results.sys.ini</language>
+		<language tag="it-IT">it-IT/it-IT.mod_js_results.ini</language>
+		<language tag="it-IT">it-IT/it-IT.mod_js_results.sys.ini</language>
+		<language tag="hu-HU">hu-HU/hu-HU.mod_js_results.ini</language>
+		<language tag="hu-HU">hu-HU/hu-HU.mod_js_results.sys.ini</language>
+		<language tag="es-ES">es-ES/es-ES.mod_js_results.ini</language>
+		<language tag="es-ES">es-ES/es-ES.mod_js_results.sys.ini</language>
+		<language tag="el-GR">el-GR/el-GR.mod_js_results.ini</language>
+		<language tag="el-GR">el-GR/el-GR.mod_js_results.sys.ini</language>
+	</languages>
+	<files>
+		<filename module="mod_js_results">mod_js_results.php</filename>
+		<filename module="mod_js_results">helper.php</filename>
+		<filename module="mod_js_results">tmpl/default.php</filename>
+		<filename module="mod_js_results">css/mod_js_results.css</filename>
+		<folder>language</folder>
+	</files>
+	<config>
+		<fields name="params">
+		<fieldset name="basic" addfieldpath="/administrator/components/com_joomsport/fields">
+			<field name="sidgid" type="modseas" default="0" label="MOD_JS_SELSEASON" description="MOD_JS_SELSEASON" required="true" />
+				<field name="team_id" type="modteam" default="0" label="MOD_JS_SELPARC" description="MOD_JS_TT_SELPARC" />
+			<field name="match_count" type="text" default="5" label="MOD_JS_DISPLCOUNT" description="MOD_JS_DISPLCOUNT" />
+			
+			<field name="embl_is" type="radio" default="0" label="MOD_JS_TT_DISPHOTO" description="MOD_JS_TT_DISPHOTO">
+				<option value="0">MOD_JS_NO</option>
+				<option value="1">MOD_JS_YES</option>
+			</field>
+			<field name="customitemid" type="text" default="0" label="MOD_JS_SETITEMID" description="MOD_JS_TT_SETITEMID" />
+			<field name="moduleclass_sfx" type="text" default="" label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL" description="COM_MODULES_FIELD_MODULECLASS_SFX_DESC" />
+		</fieldset>
+		</fields>
+	</config>
+	<params addpath="/administrator/components/com_joomsport/elements">
+		<param name="sidgid" type="modseas" default="0" label="MOD_JS_SELSEASON" description="MOD_JS_SELSEASON" />
+		<param name="team_id" type="modteam" default="0" label="MOD_JS_SELPARC" description="MOD_JS_TT_SELPARC" />
+	
+		<param name="match_count" type="text" default="5" label="MOD_JS_DISPLCOUNT" description="MOD_JS_DISPLCOUNT" />
+		
+		<param name="embl_is" type="radio" default="0" label="MOD_JS_TT_DISPHOTO" description="MOD_JS_TT_DISPHOTO">
+			<option value="0">MOD_JS_NO</option>
+			<option value="1">MOD_JS_YES</option>
+		</param>
+		<param name="customitemid" type="text" default="0" label="MOD_JS_SETITEMID" description="MOD_JS_TT_SETITEMID" />
+		<param name="moduleclass_sfx" type="text" default="" label="Module Class Suffix" description="PARAMMODULECLASSSUFFIX" />
+	</params>
+	
+</install>

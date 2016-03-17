@@ -1,9 +1,10 @@
 <?php
 defined('_JEXEC') or die( 'Restricted access' );
 
-require_once ('fonctions_module_reservation.php');
-require_once ('fonctions_gestion_user.php');
+require_once ('admin_base.php');
+$siteURL= $config->get( 'site_url' );
 
+	
 $user =& JFactory::getUser();
 $db = & JFactory::getDBO();
 
@@ -27,7 +28,7 @@ if (is_array($_FILES['FM'])){
 			move_uploaded_file($tmp_name, $uploaddir."$name");
 	    }
 	}
-	header("Location: article/?id=59&ttes=1");
+	header("Location: $siteURL/index.php/component/content/article?id=59&ttes=1");
 }
 menu_acces_rapide($id_client);
 ?>

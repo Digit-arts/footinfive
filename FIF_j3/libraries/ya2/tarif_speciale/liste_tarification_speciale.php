@@ -61,7 +61,7 @@ $liste_gts = $groupeController->GetAllGroupeTarificationSpeciale();
                     align : 'left',
     				width : 275
                 }, {
-					display : 'Tarif heure creuse',
+					display : 'Tarif heure pleine',
 					name : 'gts_tarif_hc',
 					sortable : true,
 					align : 'left'

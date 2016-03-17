@@ -236,10 +236,10 @@ function ajout_user($prenom, $courriel, $password) {
 	$user = JFactory::getUser ();
 	$db = JFactory::getDBO ();
 	
-	//$requete_insert_user = "INSERT INTO #__users(name, username, email, password, usertype, block, sendEmail, registerDate, params, `resetCount`) ";
+	// $requete_insert_user = "INSERT INTO #__users(name, username, email, password, usertype, block, sendEmail, registerDate, params, `resetCount`) ";
 	$requete_insert_user = "INSERT INTO #__users(name, username, email, password, block, sendEmail, registerDate, params, `resetCount`) ";
 	$requete_insert_user .= "VALUES (\"" . premiere_lettre_maj ( $prenom ) . "\",Trim(\"" . Trim ( $courriel ) . "\"),";
-	//$requete_insert_user .= "Trim(\"" . Trim ( $courriel ) . "\"),MD5(\"" . $password . "\"),\"\",\"0\",\"0\",";
+	// $requete_insert_user .= "Trim(\"" . Trim ( $courriel ) . "\"),MD5(\"" . $password . "\"),\"\",\"0\",\"0\",";
 	$requete_insert_user .= "Trim(\"" . Trim ( $courriel ) . "\"),MD5(\"" . $password . "\"),\"0\",\"0\",";
 	$requete_insert_user .= "\"" . date ( "Y-m-d" ) . " " . date ( "H:i" ) . ":00\",\"\",0);";
 	// echo "<br>".$requete_insert_user;
@@ -1397,8 +1397,9 @@ function menu_acces_rapide($id_client = "", $titre = "") {
 	}
 	$etat_actuel_acces_apllication = acces_application ();
 	
-	$mess="?acces_application=";
-	if (strpos($_SERVER ['REQUEST_URI'], "?") !== false) $mess="&acces_application=";
+	$mess = "?acces_application=";
+	if (strpos ( $_SERVER ['REQUEST_URI'], "?" ) !== false)
+		$mess = "&acces_application=";
 	
 	if (est_min_manager ( $user ))
 		echo " <a href=\"" . $_SERVER ['REQUEST_URI'] . $mess . $etat_actuel_acces_apllication . "\">";
@@ -1419,9 +1420,10 @@ function menu_acces_rapide($id_client = "", $titre = "") {
 	else
 		$image = "ko";
 	
-	$mess="?mess=";
-		if (strpos($_SERVER ['REQUEST_URI'], "?") !== false) $mess="&mess=";
-		
+	$mess = "?mess=";
+	if (strpos ( $_SERVER ['REQUEST_URI'], "?" ) !== false)
+		$mess = "&mess=";
+	
 	if (est_min_manager ( $user ))
 		echo " <a href=\"" . $_SERVER ['REQUEST_URI'] . $mess . $image . "\">";
 	echo " <img src=\"images/email-" . $image . "-icon.png\" title=\"Etat messagerie: " . $image . "\" width=\"24\" height=\"24\">";
@@ -1495,10 +1497,11 @@ function menu_acces_rapide($id_client = "", $titre = "") {
 	else
 		echo "&nbsp;";
 	echo "</td><td align=\"right\" nowrap width=\"50%\">";
-	if(test_non_vide ( $id_client )) {
-	echo prenom_du_client ( $id_client ) . " " . nom_du_client ( $id_client );
-	if (test_non_vide ( entite_du_client ( $id_client ) ))
-		echo "<br>" . entite_du_client ( $id_client ) . ""; }
+	if (test_non_vide ( $id_client )) {
+		echo prenom_du_client ( $id_client ) . " " . nom_du_client ( $id_client );
+		if (test_non_vide ( entite_du_client ( $id_client ) ))
+			echo "<br>" . entite_du_client ( $id_client ) . "";
+	}
 	echo "</td></tr>";
 	echo "</table><hr><br>";
 }
@@ -1572,33 +1575,30 @@ function menu_deroulant($Table, $old_select, $fonction = "", $type = "", $is_det
 	echo "<option value=\"\" ></option>";
 	foreach ( $resultat_recup_liste as $recup_liste ) {
 		
-		 if (est_min_manager($user) and $recup_liste->id==5){
-		 echo "<option value=\"".$recup_liste->id."\" \"".$select."\">".$recup_liste->nom."</option>";
-		 }
-		 else {
-		 
-		 if (($recup_liste->id<>5) && ($Table!="Remise" || (($Table=="Remise")&& (($recup_liste->id==2)||est_min_manager($user))))) { 
-		 	//if ($recup_liste->id<>5) {
-		if ($old_select == $recup_liste->id)
-			$select = " selected ";
-		else
-			$select = "";
-			// $type_credit==2 c'est caution, // $type==3 c'est remboursement
-		if (! ((test_non_vide ( $type ) and $type == 3 and $recup_liste->id > 3)))
-			if (! (est_register ( $user ) and ($recup_liste->id != 2 and $recup_liste->id != 8) and $Table != "Terrain"))
-				if ($recup_liste->is_active == 1 or ($type == 1 and $recup_liste->id != 7))
-					if ($is_detail_credit_client == 0 or ($is_detail_credit_client == 1 and ($type != 1 or ($recup_liste->id != 10 and $recup_liste->id != 2))))
-						if (($Table == "Remise" and $recup_liste->id == 2 and (recup_date_tarif ( $date_deb_resa, 1, 0 ) < 6) and $id_type_regroupement == 0 and diff_dates_en_minutes ( $date_deb_resa, $heure_fin_resa, $date_fin_resa, recup_fin_heure_remise () ) >= 0 and diff_dates_en_minutes ( $date_deb_resa, $heure_fin_resa, $date_fin_resa, recup_fin_heure_remise () ) < 720) or $recup_liste->id != 2 or $Table != "Remise" or est_min_manager ( $user ))
-							if (($Table == "Remise" and in_array ( $recup_liste->id, array (
-									3,
-									7,
-									10 
-							) ) and ($id_type_regroupement == 3 or $id_type_regroupement == 0)) or $recup_liste->id == 2 or $Table != "Remise" or est_min_manager ( $user ))
-								echo "<option value=\"" . $recup_liste->id . "\" \"" . $select . "\">" . $recup_liste->nom . "</option>";
-		
-		 }
-		 }
-		 
+		if (est_min_manager ( $user ) and $recup_liste->id == 5) {
+			echo "<option value=\"" . $recup_liste->id . "\" \"" . $select . "\">" . $recup_liste->nom . "</option>";
+		} else {
+			
+			if (($recup_liste->id != 5) && ($Table != "Remise" || (($Table == "Remise") && (($recup_liste->id == 2) || est_min_manager ( $user ))))) {
+				// if ($recup_liste->id<>5) {
+				if ($old_select == $recup_liste->id)
+					$select = " selected ";
+				else
+					$select = "";
+					// $type_credit==2 c'est caution, // $type==3 c'est remboursement
+				if (! ((test_non_vide ( $type ) and $type == 3 and $recup_liste->id > 3)))
+					if (! (est_register ( $user ) and ($recup_liste->id != 2 and $recup_liste->id != 8) and $Table != "Terrain"))
+						if ($recup_liste->is_active == 1 or ($type == 1 and $recup_liste->id != 7))
+							if ($is_detail_credit_client == 0 or ($is_detail_credit_client == 1 and ($type != 1 or ($recup_liste->id != 10 and $recup_liste->id != 2))))
+								if (($Table == "Remise" and $recup_liste->id == 2 and (recup_date_tarif ( $date_deb_resa, 1, 0 ) < 6) and $id_type_regroupement == 0 and diff_dates_en_minutes ( $date_deb_resa, $heure_fin_resa, $date_fin_resa, recup_fin_heure_remise () ) >= 0 and diff_dates_en_minutes ( $date_deb_resa, $heure_fin_resa, $date_fin_resa, recup_fin_heure_remise () ) < 720) or $recup_liste->id != 2 or $Table != "Remise" or est_min_manager ( $user ))
+									if (($Table == "Remise" and in_array ( $recup_liste->id, array (
+											3,
+											7,
+											10 
+									) ) and ($id_type_regroupement == 3 or $id_type_regroupement == 0)) or $recup_liste->id == 2 or $Table != "Remise" or est_min_manager ( $user ))
+										echo "<option value=\"" . $recup_liste->id . "\" \"" . $select . "\">" . $recup_liste->nom . "</option>";
+			}
+		}
 	}
 	echo "</select>";
 }
@@ -2044,7 +2044,7 @@ function recup_date_tarif($date, $type_retour = 0, $type_terrain) {
 		return ($numero_jour_de_la_semaine);
 }
 
-function tarif($date, $horaire_debut, $horaire_fin, $id_type_regroupement, $police, $type_terrain, $mode_resa, $tarif_special=-1,$type_terrain_texte='') {
+function tarif($date, $horaire_debut, $horaire_fin, $id_type_regroupement, $police, $type_terrain, $mode_resa, $tarif_special = -1, $type_terrain_texte = '') {
 	$db = JFactory::getDBO ();
 	
 	$resultat_recup_tarif = recup_date_tarif ( $date, 0, $type_terrain );
@@ -2057,12 +2057,16 @@ function tarif($date, $horaire_debut, $horaire_fin, $id_type_regroupement, $poli
 		$tab_tarif [$j] ["heure_fin"] = $recup_tarif->heure_fin;
 		$tab_tarif [$j] ["montant_horaire"] = $recup_tarif->montant_horaire;
 		
-		// Si heures creuse et tarif special
-		if($tab_tarif [$j] ["id_tarif"]==1 && $tarif_special!=-1)
+		// Si heures pleine et tarif special
+		if ($tab_tarif [$j] ["id_plage_tarif"] != 1 && $tarif_special != - 1) {
 			$tab_tarif [$j] ["montant_horaire"] = $tarif_special;
+		}
 		
-		if ($mode_resa < 3)
+		if ($mode_resa < 3) {
 			$tab_tarif [$j] ["montant_avec_remise"] = $tab_tarif [$j] ["montant_horaire"] - 10;
+			if ($tab_tarif [$j] ["id_plage_tarif"] != 1 && $tarif_special != - 1)
+				$tab_tarif [$j] ["montant_avec_remise"] = $tarif_special;
+		}
 		$tab_tarif [$j] ["taux_TVA"] = $recup_tarif->taux_TVA;
 		$j ++;
 	}
@@ -2106,13 +2110,15 @@ function tarif($date, $horaire_debut, $horaire_fin, $id_type_regroupement, $poli
 		 * echo "<br>borne fin : ".$diff_bornes_fin_fin." test : ".$date_fin."--".$horaire_fin."--".$date_Tab_fin."--".$tab_tarif[$i]["heure_fin"];
 		 * echo "<br>debut_fin : ".$diff_bornes_debut_fin." fin_debut : ".$diff_bornes_fin_debut."<br>";
 		 */
-
-
-		if ($tab_tarif [$i] ["id_plage_tarif"] == 1 and (in_array ( $id_type_regroupement, array (1,2) ) or $police == 1))
+		
+		if ($tab_tarif [$i] ["id_plage_tarif"] == 1 and (in_array ( $id_type_regroupement, array (
+				1,
+				2 
+		) ) or $police == 1))
 			$remise = 2;
 		else
 			$remise = 1;
-				
+		
 		if (($diff_bornes_fin_fin >= 0) and ($diff_bornes_debut_debut <= 0))
 			$tarif = (($tab_tarif [$i] ["montant_horaire"] / 60) * diff_dates_en_minutes ( $date_deb, $horaire_debut, $date_fin, $horaire_fin ));
 		
@@ -2124,9 +2130,15 @@ function tarif($date, $horaire_debut, $horaire_fin, $id_type_regroupement, $poli
 		
 		if (($diff_bornes_fin_fin < 0) and ($diff_bornes_debut_debut > 0))
 			$tarif = $tarif + (($tab_tarif [$i] ["montant_horaire"] / 60) * diff_dates_en_minutes ( $date_Tab_deb, $tab_tarif [$i] ["heure_debut"], $date_Tab_fin, $tab_tarif [$i] ["heure_fin"] ));
-		
-		//if ($mode_resa < 3 and ((! in_array ( $id_type_regroupement, array (1,2) ) and $police != 1)|| (in_array ( $id_type_regroupement, array (1,2) ) or $police == 1 && $tab_tarif [$i] ["id_plage_tarif"] != 1))) {
-		if ($mode_resa < 3 and ((! in_array ( $id_type_regroupement, array (1,2) ) and $police != 1)) || ((in_array ( $id_type_regroupement, array (1,2) ) or $police == 1)) && ($tab_tarif [$i] ["id_plage_tarif"] != 1)) {
+			
+			// if ($mode_resa < 3 and ((! in_array ( $id_type_regroupement, array (1,2) ) and $police != 1)|| (in_array ( $id_type_regroupement, array (1,2) ) or $police == 1 && $tab_tarif [$i] ["id_plage_tarif"] != 1))) {
+		if ($mode_resa < 3 and ((! in_array ( $id_type_regroupement, array (
+				1,
+				2 
+		) ) and $police != 1)) || ((in_array ( $id_type_regroupement, array (
+				1,
+				2 
+		) ) or $police == 1)) && ($tab_tarif [$i] ["id_plage_tarif"] != 1)) {
 			
 			if (($diff_bornes_fin_fin >= 0) and ($diff_bornes_debut_debut <= 0))
 				$tarif_avec_remise = ($tab_tarif [$i] ["montant_avec_remise"] / 60) * diff_dates_en_minutes ( $date_deb, $horaire_debut, $date_fin, $horaire_fin );
@@ -2140,32 +2152,46 @@ function tarif($date, $horaire_debut, $horaire_fin, $id_type_regroupement, $poli
 			if (($diff_bornes_fin_fin < 0) and ($diff_bornes_debut_debut > 0))
 				$tarif_avec_remise = $tarif_avec_remise + (($tab_tarif [$i] ["montant_avec_remise"] / 60) * diff_dates_en_minutes ( $date_Tab_deb, $tab_tarif [$i] ["heure_debut"], $date_Tab_fin, $tab_tarif [$i] ["heure_fin"] ));
 		}
-		if((in_array ( $id_type_regroupement, array (1,2) ) or $police == 1) && $tab_tarif [$i] ["id_plage_tarif"] == 1) {
+		if ($mode_resa == 3 && $police == 1 && ($tab_tarif [$i] ["id_plage_tarif"] != 1)) {
 			if (($diff_bornes_fin_fin >= 0) and ($diff_bornes_debut_debut <= 0))
-			$tarif_avec_remise = (($tab_tarif [$i] ["montant_horaire"] / 60) * diff_dates_en_minutes ( $date_deb, $horaire_debut, $date_fin, $horaire_fin ))/$remise;
-		
-		if (($diff_bornes_fin_fin >= 0) and ($diff_bornes_debut_debut > 0) and $diff_bornes_fin_debut < 0)
-			$tarif_avec_remise = $tarif_avec_remise + (($tab_tarif [$i] ["montant_horaire"] / 60) * diff_dates_en_minutes ( $date_Tab_deb, $tab_tarif [$i] ["heure_debut"], $date_fin, $horaire_fin ))/$remise;
-		
-		if (($diff_bornes_fin_fin < 0) and ($diff_bornes_debut_debut <= 0) and $diff_bornes_debut_fin > 0)
-			$tarif_avec_remise = $tarif_avec_remise + (($tab_tarif [$i] ["montant_horaire"] / 60) * diff_dates_en_minutes ( $date_deb, $horaire_debut, $date_Tab_fin, $tab_tarif [$i] ["heure_fin"] ))/$remise;
-		
-		if (($diff_bornes_fin_fin < 0) and ($diff_bornes_debut_debut > 0))
-			$tarif_avec_remise = $tarif_avec_remise + (($tab_tarif [$i] ["montant_horaire"] / 60) * diff_dates_en_minutes ( $date_Tab_deb, $tab_tarif [$i] ["heure_debut"], $date_Tab_fin, $tab_tarif [$i] ["heure_fin"] ))/$remise;
+				$tarif_avec_remise = ($tab_tarif [$i] ["montant_horaire"] / 60) * diff_dates_en_minutes ( $date_deb, $horaire_debut, $date_fin, $horaire_fin );
+			
+			if (($diff_bornes_fin_fin >= 0) and ($diff_bornes_debut_debut > 0) and $diff_bornes_fin_debut < 0)
+				$tarif_avec_remise = $tarif_avec_remise + (($tab_tarif [$i] ["montant_horaire"] / 60) * diff_dates_en_minutes ( $date_Tab_deb, $tab_tarif [$i] ["heure_debut"], $date_fin, $horaire_fin ));
+			
+			if (($diff_bornes_fin_fin < 0) and ($diff_bornes_debut_debut <= 0) and $diff_bornes_debut_fin > 0)
+				$tarif_avec_remise = $tarif_avec_remise + (($tab_tarif [$i] ["montant_horaire"] / 60) * diff_dates_en_minutes ( $date_deb, $horaire_debut, $date_Tab_fin, $tab_tarif [$i] ["heure_fin"] ));
+			
+			if (($diff_bornes_fin_fin < 0) and ($diff_bornes_debut_debut > 0))
+				$tarif_avec_remise = $tarif_avec_remise + (($tab_tarif [$i] ["montant_horaire"] / 60) * diff_dates_en_minutes ( $date_Tab_deb, $tab_tarif [$i] ["heure_debut"], $date_Tab_fin, $tab_tarif [$i] ["heure_fin"] ));
+		}
+		if ((in_array ( $id_type_regroupement, array (
+				1,
+				2 
+		) ) or $police == 1) && $tab_tarif [$i] ["id_plage_tarif"] == 1) {
+			if (($diff_bornes_fin_fin >= 0) and ($diff_bornes_debut_debut <= 0))
+				$tarif_avec_remise = (($tab_tarif [$i] ["montant_horaire"] / 60) * diff_dates_en_minutes ( $date_deb, $horaire_debut, $date_fin, $horaire_fin )) / $remise;
+			
+			if (($diff_bornes_fin_fin >= 0) and ($diff_bornes_debut_debut > 0) and $diff_bornes_fin_debut < 0)
+				$tarif_avec_remise = $tarif_avec_remise + (($tab_tarif [$i] ["montant_horaire"] / 60) * diff_dates_en_minutes ( $date_Tab_deb, $tab_tarif [$i] ["heure_debut"], $date_fin, $horaire_fin )) / $remise;
+			
+			if (($diff_bornes_fin_fin < 0) and ($diff_bornes_debut_debut <= 0) and $diff_bornes_debut_fin > 0)
+				$tarif_avec_remise = $tarif_avec_remise + (($tab_tarif [$i] ["montant_horaire"] / 60) * diff_dates_en_minutes ( $date_deb, $horaire_debut, $date_Tab_fin, $tab_tarif [$i] ["heure_fin"] )) / $remise;
+			
+			if (($diff_bornes_fin_fin < 0) and ($diff_bornes_debut_debut > 0))
+				$tarif_avec_remise = $tarif_avec_remise + (($tab_tarif [$i] ["montant_horaire"] / 60) * diff_dates_en_minutes ( $date_Tab_deb, $tab_tarif [$i] ["heure_debut"], $date_Tab_fin, $tab_tarif [$i] ["heure_fin"] )) / $remise;
 		}
 	}
 	
-	
-	if($mode_resa == 3  and $police != 1)
+	if ($mode_resa == 3 and $police != 1)
 		$tarif_avec_remise = $tarif;
 	
-	if($type_terrain_texte=='Loge VIP')
+	if ($type_terrain_texte == 'Loge VIP')
 		$tarif_avec_remise = $tarif;
-
 	
-	$tarifs = array(
+	$tarifs = array (
 			'tarif' => $tarif,
-			'tarif_avec_remise' => $tarif_avec_remise
+			'tarif_avec_remise' => $tarif_avec_remise 
 	);
 	
 	return ($tarifs);
@@ -2460,7 +2486,7 @@ function trouve_dispo($type_terrain, $date_saisie_Min, $horaire_Min, $horaire_Ma
 			// les demies heures sont pleines donc cas id�al
 			if ((! is_array ( $demi_heure_avant )) and (! is_array ( $demi_heure_apres )))
 				$tab_liste_terrains_dispo_sans_trous_demi_heure [] = $le_terrain_dispo; // return($le_terrain_dispo);
-					                                                                     
+					                                                                        
 			// tester 1h avant et apres
 			if (is_array ( $demi_heure_avant ) and is_array ( $demi_heure_apres )) {
 				
@@ -2527,42 +2553,44 @@ function test_limite_nbre_resa_par_caution($date_debut_resa, $id_client) {
 		return (true);
 }
 
-function test_limite_nbre_resa_sans_caution_ni_acompte($date_debut_resa, $id_client,$num_resa) {
-	$db = JFactory::getDbo();
+function test_limite_nbre_resa_sans_caution_ni_acompte($date_debut_resa, $id_client, $num_resa) {
+	$db = JFactory::getDbo ();
 	$limite_par_semaine = 2;
-	$update_resa='';
-	if(isset($num_resa))
-		$update_resa= "and id_resa <>$num_resa ";
-	// Create a new query object.
-	/*$query = $db->getQuery(true);
-	$query->clear();
+	$update_resa = '';
+	if (isset ( $num_resa ))
+		$update_resa = "and id_resa <>$num_resa ";
+		// Create a new query object.
+		/*
+	 * $query = $db->getQuery(true);
+	 * $query->clear();
+	 *
+	 * // Select all records from the user profile table where key begins with "custom.".
+	 * // Order it by the ordering field.
+	 * $query->select('count(id_resa)');
+	 * $query->from($db->quoteName('Reservation'));
+	 * $query->where($db->quoteName('date_debut_resa') . ' >= '. $db->quote('$date_debut_resa'));
+	 *
+	 * // Reset the query using our newly populated query object.
+	 * $db->setQuery($query);
+	 *
+	 * // Load the results as a list of stdClass objects (see later for more options on retrieving data).
+	 * $nbre_resas_semaine = $db->loadResult ();
+	 *
+	 * /*$db = JFactory::getDBO ();
+	 */
+	$db->getQuery ( true )->clear ();
 	
-	// Select all records from the user profile table where key begins with "custom.".
-	// Order it by the ordering field.
-	$query->select('count(id_resa)');
-	$query->from($db->quoteName('Reservation'));
-	$query->where($db->quoteName('date_debut_resa') . ' >= '. $db->quote('$date_debut_resa'));
-	
-	// Reset the query using our newly populated query object.
-	$db->setQuery($query);
-	
-	// Load the results as a list of stdClass objects (see later for more options on retrieving data).
-	$nbre_resas_semaine = $db->loadResult ();
-	
-	/*$db = JFactory::getDBO ();*/
-	$db->getQuery(true)->clear();
-	
-	$requete_test_limite_semaine = "select count(id_resa) from Reservation where date_debut_resa>=\"" . $date_debut_resa . "\" and indic_annul<>1 and id_user=$id_client and id_mode_reservation=3 ".$update_resa;
+	$requete_test_limite_semaine = "select count(id_resa) from Reservation where date_debut_resa>=\"" . $date_debut_resa . "\" and indic_annul<>1 and id_user=$id_client and id_mode_reservation=3 " . $update_resa;
 	$db->setQuery ( $requete_test_limite_semaine );
 	$nbre_resas_semaine = $db->loadResult ();
-
+	
 	if ($nbre_resas_semaine >= $limite_par_semaine)
 		return (true);
 	else
 		return (false);
 }
 
-function recup_resa_si_2_validations($date_debut_resa, $heure_debut_resa, $heure_fin_resa, $terrain_choisit,$mode_resa) {
+function recup_resa_si_2_validations($date_debut_resa, $heure_debut_resa, $heure_fin_resa, $terrain_choisit, $mode_resa) {
 	$db = JFactory::getDBO ();
 	
 	$requete_recup_resa_si_2_validations = "select count(id_resa) from Reservation where ";
@@ -2596,8 +2624,9 @@ function recup_les_terrains($compl = " and is_active=1") {
 function ajout_resa($date_debut_resa, $date_fin_resa, $heure_debut_resa, $heure_fin_resa, $id_client, $terrain_choisit, $montant_total, $duree_resa, $cautionnable, $mode_reservation, $montant_sans_remise) {
 	$db = JFactory::getDBO ();
 	$user = JFactory::getUser ();
-	$a_supprimer=1;
-	if($mode_reservation==3)$a_supprimer=0;
+	$a_supprimer = 1;
+	if ($mode_reservation == 3)
+		$a_supprimer = 0;
 	
 	$requete_ajout_resa = "INSERT INTO `Reservation`(";
 	if ($id_resa != "")
@@ -2613,7 +2642,7 @@ function ajout_resa($date_debut_resa, $date_fin_resa, $heure_debut_resa, $heure_
 	$requete_ajout_resa .= $terrain_choisit . ",\"\",\"" . date ( "Y" ) . "-" . date ( "m" ) . "-" . date ( "d" ) . "\",";
 	$requete_ajout_resa .= " \"" . Ajout_zero_si_absent ( date ( "H" ) . ":" . date ( "i" ) ) . "\",";
 	$requete_ajout_resa .= $montant_total . "," . (($montant_total / duree_en_minutes ( $duree_resa )) * 60) . ",\"\",";
-	$requete_ajout_resa .= " " . $cautionnable . ",(SELECT `accompte_necessaire` FROM `Client` where `id_client`=" . $id_client . " ),$mode_reservation,\"".$montant_sans_remise."\",$a_supprimer)";
+	$requete_ajout_resa .= " " . $cautionnable . ",(SELECT `accompte_necessaire` FROM `Client` where `id_client`=" . $id_client . " ),$mode_reservation,\"" . $montant_sans_remise . "\",$a_supprimer)";
 	// echo "req4: ".$requete_ajout_resa;
 	$db->setQuery ( $requete_ajout_resa );
 	$resultat_ajout_resa = $db->query ();
@@ -2629,23 +2658,23 @@ function maj_match_ledg($id_match, $date_debut_resa, $heure_debut_resa, $terrain
 	$mysql_ledg->close ();
 }
 
-function maj_resa($id_resa, $date_debut_resa, $date_fin_resa, $heure_debut_resa, $heure_fin_resa, $id_client, $terrain_choisit, $montant_total, $duree_resa, $cautionnable,$mode_resa,$montant_sans_remise) {
+function maj_resa($id_resa, $date_debut_resa, $date_fin_resa, $heure_debut_resa, $heure_fin_resa, $id_client, $terrain_choisit, $montant_total, $duree_resa, $cautionnable, $mode_resa, $montant_sans_remise) {
 	$db = JFactory::getDBO ();
 	$user = JFactory::getUser ();
 	
 	if ($id_client != 3586 and $id_client != 1720)
 		$compl_req = "`montant_total`=" . $montant_total . ",`tarif_horaire`=" . (($montant_total / duree_en_minutes ( $duree_resa )) * 60) . ",";
 	
-	$requete_maj_resa = "UPDATE `Reservation` set " . "`date_debut_resa`=\"" . $date_debut_resa . "\", `date_fin_resa`=\"" . $date_fin_resa . "\"," . " `heure_debut_resa`=\"" . Ajout_zero_si_absent ( $heure_debut_resa ) . "\"," . " `heure_fin_resa`=\"" . Ajout_zero_si_absent ( $heure_fin_resa ) . "\", `id_user`=" . $user->id . "," . " id_client=" . $id_client . ", `id_terrain`=" . $terrain_choisit . ", " . " `date_valid`=\"" . date ( "Y-m-d" ) . "\", `heure_valid`=\"" . Ajout_zero_si_absent ( date ( "H:i" ) ) . "\"" . " , " . $compl_req . " cautionnable=" . $cautionnable . ", id_mode_reservation=$mode_resa, montant_sans_remise=\"".$montant_sans_remise."\", notification=0 WHERE id_resa=" . $id_resa;
+	$requete_maj_resa = "UPDATE `Reservation` set " . "`date_debut_resa`=\"" . $date_debut_resa . "\", `date_fin_resa`=\"" . $date_fin_resa . "\"," . " `heure_debut_resa`=\"" . Ajout_zero_si_absent ( $heure_debut_resa ) . "\"," . " `heure_fin_resa`=\"" . Ajout_zero_si_absent ( $heure_fin_resa ) . "\", `id_user`=" . $user->id . "," . " id_client=" . $id_client . ", `id_terrain`=" . $terrain_choisit . ", " . " `date_valid`=\"" . date ( "Y-m-d" ) . "\", `heure_valid`=\"" . Ajout_zero_si_absent ( date ( "H:i" ) ) . "\"" . " , " . $compl_req . " cautionnable=" . $cautionnable . ", id_mode_reservation=$mode_resa, montant_sans_remise=\"" . $montant_sans_remise . "\", notification=0 WHERE id_resa=" . $id_resa;
 	
 	// echo "req4: ".$requete_maj_resa;
 	$db->setQuery ( $requete_maj_resa );
 	$resultat_maj_resa = $db->query ();
 	
-	if($mode_resa==3) {
-		$requete_maj_resa_a_supprimer="UPDATE Reservation SET a_supprimer=0 where id_resa=".$id_resa;
-		$db->setQuery($requete_maj_resa_a_supprimer);
-		$resultat_maj_resa_a_supprimer = $db->query();
+	if ($mode_resa == 3) {
+		$requete_maj_resa_a_supprimer = "UPDATE Reservation SET a_supprimer=0 where id_resa=" . $id_resa;
+		$db->setQuery ( $requete_maj_resa_a_supprimer );
+		$resultat_maj_resa_a_supprimer = $db->query ();
 	}
 	
 	if ($id_client == 3586) {

@@ -67,7 +67,7 @@ $("#formulaire").submit(function(event) {
 				data-parsley-required-message="Veuillez saisir le nom du groupe" value="<?php echo $gts_nom;?>"></span>
 		</div>
 		<div class='panelRow'>
-			<span class='panelTitle'>Tarif heure creuse :</span> <span
+			<span class='panelTitle'>Tarif heure pleine :</span> <span
 				class='panelValue'><input required type="number" name="gts_tarif_hc"
 				data-parsley-required-message="Veuillez saisir un tarif valide (num&eacute;rique)" value="<?php echo $gts_tarif_hc;?>">
 			</span>
