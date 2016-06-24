@@ -639,7 +639,7 @@ function input_cp_ville(&$code_insee, $cp, $ville, &$nbre_cp, &$nbre_villes, &$t
 function recup_recup_client($compl_criteres, $id_client = "") {
 	$db = JFactory::getDBO ();
 	
-	$requete_recup_client = "select c.nom as nom_client, c.*,v.nom_maj_ville,v.code_postal,Ville_facturation," . " Code_postal_facturation, (select u.name from #__users as u where u.id=c.id_user_modif) as name_user_modif," . " (select ugm.group_id from #__user_usergroup_map as ugm where ugm.user_id=c.id_user_modif) as group_user_modif," . " (select u.email from #__users as u where u.id=c.id_user) as courriel FROM Client as c " . " LEFT JOIN Ville as v on c.code_insee=v.code_insee where 1 " . $compl_criteres . " order by c.nom,prenom,c.code_insee";
+	$requete_recup_client = "select c.nom as nom_client, c.newsletter, c.*,v.nom_maj_ville,v.code_postal,Ville_facturation," . " Code_postal_facturation, (select u.name from #__users as u where u.id=c.id_user_modif) as name_user_modif," . " (select ugm.group_id from #__user_usergroup_map as ugm where ugm.user_id=c.id_user_modif) as group_user_modif," . " (select u.email from #__users as u where u.id=c.id_user) as courriel FROM Client as c " . " LEFT JOIN Ville as v on c.code_insee=v.code_insee where 1 " . $compl_criteres . " order by c.nom,prenom,c.code_insee";
 	// echo "<br>".$requete_recup_client;
 	$db->setQuery ( $requete_recup_client );
 	return ($db->loadObject ());

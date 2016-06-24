@@ -37,7 +37,7 @@ if (est_min_agent ( $user )) {
 		$id_client = $_GET ["id_client"];
 } else
 	$id_client = idclient_du_user ();
-
+$newsletter = 0;
 $ctsController = new ClientTarificationSpecialeController ();
 $gtsController = new GroupeTarificationSpecialeController ();
 
@@ -45,7 +45,7 @@ $allGts = $gtsController->GetAllGroupeTarificationSpeciale ();
 
 if (test_non_vide ( $id_client )) {
 	$cts = $ctsController->GetClientTarificationSpecialeByClientId ( $id_client );
-	//if($cts->Getgtsid()==-1)$cts=null;
+	// if($cts->Getgtsid()==-1)$cts=null;
 	if ($cts != null)
 		$gts = $gtsController->GetGroupeTarificationSpecialeById ( $cts->Getgtsid () );
 }
@@ -270,6 +270,8 @@ if ($existe_erreur == 0 and (isset ( $_GET ["modif"] )) and test_non_vide ( $_PO
 		$db->setQuery ( $requete_insert_old_client );
 		$db->query ();
 		
+		$newsletter = isset ( $_POST ["newsletter"] ) ? $_POST ["newsletter"] : 0;
+		
 		$requete_update_client = "UPDATE `Client` SET `id_user_modif`=" . $user->id . ", date_modif=\"" . date ( "Y" ) . "-" . date ( "m" ) . "-" . date ( "d" ) . "\",";
 		if (isset ( $user_id ) and $user_id != "")
 			$requete_update_client .= " `id_user`=" . $user_id . ", ";
@@ -278,6 +280,7 @@ if ($existe_erreur == 0 and (isset ( $_GET ["modif"] )) and test_non_vide ( $_PO
 		for($i = 1; $i < 5; $i ++)
 			$requete_update_client .= " `mobile" . $i . "`=\"" . $_POST ["telmob$i"] . "\",";
 		$requete_update_client .= " `fixe`=\"" . $_POST ["telfixe"] . "\" ";
+		$requete_update_client .= " ,`newsletter`=\"" . $newsletter . "\" ";
 		$requete_update_client .= " ,`code_insee`=\"" . $code_insee . "\", ";
 		$requete_update_client .= " `adresse`=\"" . $_POST ["Adresse"] . "\",`date_naissance`=\"" . inverser_date ( $_POST ["date_nais"] ) . "\"";
 		if (est_min_agent ( $user )) {
@@ -294,6 +297,8 @@ if ($existe_erreur == 0 and (isset ( $_GET ["modif"] )) and test_non_vide ( $_PO
 		
 		$db->setQuery ( $requete_update_client );
 		$res = $db->query ();
+		
+		syncMailchimp ( $mailchimpAPIKey, $_POST ["nom"], $_POST ["prenom"], $_POST ["courriel"], $_POST ["newsletter"], $mailchimpURL, $_POST ["Type_Regroupement"] );
 		
 		// MAJ groupe tarification
 		$gts = $_POST ['gts_id'];
@@ -354,6 +359,8 @@ if ($existe_erreur == 0 and (isset ( $_GET ["modif"] )) and test_non_vide ( $_PO
 		$res = $db->query ();
 		$id_new_client = $db->insertid ();
 		
+		syncMailchimp ( $mailchimpAPIKey, $_POST ["nom"], $_POST ["prenom"], $_POST ["courriel"], $_POST ["newsletter"], $mailchimpURL, $_POST ["Type_Regroupement"] );
+		
 		// ajout groupe tarification
 		$gts = $_POST ['gts_id'];
 		if ($gts != - 1) {
@@ -395,6 +402,17 @@ if ($existe_erreur == 0 and (isset ( $_GET ["modif"] )) and test_non_vide ( $_PO
 		$Raison_Sociale = $recup_client->Raison_Sociale;
 		$Siret = $recup_client->Siret;
 		$Effectif = $recup_client->Effectif;
+		$newsletter = $recup_client->newsletter;
+		
+		// Recupere la valeur courante de l'abonnement newsletter chez MailChimp
+		$newsletter = Update_newsletter_fromMailchimp ( $courriel, $newsletter, $mailchimpAPIKey, $mailchimpURL );
+		
+		// mise à jour de la valeur en bdd
+		if ($newsletter != $recup_client->newsletter) {
+			$requete_update_newsletter = "UPDATE `Client` SET newsletter=" . $newsletter . " WHERE id_client=" . $recup_client->id_client;
+			$db->setQuery ( $requete_update_newsletter );
+			$res = $db->query ();
+		}
 		
 		$Adresse = $recup_client->adresse;
 		$Adresse_facturation = $recup_client->Adresse_facturation;
@@ -437,6 +455,8 @@ if ($existe_erreur == 0 and (isset ( $_GET ["modif"] )) and test_non_vide ( $_PO
 			$Siret = $_POST ["Siret"];
 		if (test_non_vide ( $_POST ["Effectif"] ))
 			$Effectif = $_POST ["Effectif"];
+		if (test_non_vide ( $_POST ["newsletter"] ))
+			$newsletter = isset ( $_POST ["newsletter"] ) ? $_POST ["newsletter"] : 0;
 		if (test_non_vide ( $_POST ["Adresse"] ))
 			$Adresse = $_POST ["Adresse"];
 		if (test_non_vide ( $_POST ["Adresse_facturation"] ))
@@ -567,46 +587,59 @@ if ($existe_erreur == 0 and (isset ( $_GET ["modif"] )) and test_non_vide ( $_PO
 		</tr>
 
 		<tr>
+			<th>Abonn&eacute; newsletter :</th>
+			<td>
+			<?
+	$disabled = "disabled";
+	if (isset ( $_GET ["modif"] ) && est_min_manager ( $user ))
+		$disabled = "";
+	$checked = $newsletter != 0 ? "checked" : "";
+	?>
+	<INPUT type="checkbox" name="newsletter" <?= $disabled." ".$checked?>
+				value=1>
+			</td>
+		</tr>
+
+		<tr>
 			<th>Tarification sp&eacute;cifique :</th>
 			<td>
 			<?
 	
 	if (isset ( $_GET ["modif"] )) {
-		if(est_min_manager ( $user )) {
-		?>
+		if (est_min_manager ( $user )) {
+			?>
 			<select name='gts_id'>
 			<?php
-		if ($cts != null) {
-			echo "<option value='-1'>Aucune</option>";
-		} else {
-			echo "<option value='-1' selected>Aucune</option>";
-		}
-		$gts_selected = '';
-		foreach ( $allGts as $gts ) {
-			if ($cts != null && $cts->Getgtsid () == $gts->Getid ())
-				$gts_selected = ' selected';
-			echo "<option value='" . $gts->Getid () . "'" . $gts_selected . ">" . $gts->Getnom () . "</option>";
-		}
-		
-		?>
+			if ($cts != null) {
+				echo "<option value='-1'>Aucune</option>";
+			} else {
+				echo "<option value='-1' selected>Aucune</option>";
+			}
+			$gts_selected = '';
+			foreach ( $allGts as $gts ) {
+				if ($cts != null && $cts->Getgtsid () == $gts->Getid ())
+					$gts_selected = ' selected';
+				echo "<option value='" . $gts->Getid () . "'" . $gts_selected . ">" . $gts->Getnom () . "</option>";
+			}
+			
+			?>
 			
 			</select>
 		<?php
-		}
-		else {
+		} else {
 			if ($cts != null) {
-				echo "<input type='hidden' name='gts_id' value ='".$gts->Getid()."'>";
-				echo $gts->Getnom();
+				echo "<input type='hidden' name='gts_id' value ='" . $gts->Getid () . "'>";
+				echo $gts->Getnom ();
 			} else {
 				echo "<input type='hidden' name='gts_id' value ='-1'>";
 				echo "Aucune";
 			}
 			?>
 			
-		<?php 
+		<?php
 		}
 	} else {
-		if ($cts != null && $cts->Getgtsid()!=-1) {
+		if ($cts != null && $cts->Getgtsid () != - 1) {
 			echo $gts->Getnom ();
 		} else
 			echo "Aucune";
@@ -965,4 +998,119 @@ if ($existe_erreur == 0 and (isset ( $_GET ["modif"] )) and test_non_vide ( $_PO
 	} else
 		echo "<a href=\"" . $_SERVER ['REQUEST_URI'] . "&hist=1#signet\" />Afficher l'historique</a>";
 }
+
+function Update_newsletter_fromMailchimp($courriel, $newsletter, $mailchimpAPIKey, $mailchimpURL) {
+	$email_md5 = md5 ( $courriel );
+	$requestURL = $mailchimpURL . $email_md5;
+	$auth = base64_encode ( 'user:' . $mailchimpAPIKey );
+	
+	$data = array (
+			'apikey' => $mailchimpAPIKey,
+			'email_address' => $courriel 
+	);
+	$json_data = json_encode ( $data );
+	
+	$ch = curl_init ( $requestURL );
+	curl_setopt ( $ch, CURLOPT_USERPWD, 'user:' . $mailchimpAPIKey );
+	curl_setopt ( $ch, CURLOPT_HTTPHEADER, [ 
+			'Content-Type: application/json' 
+	] );
+	curl_setopt ( $ch, CURLOPT_RETURNTRANSFER, true );
+	curl_setopt ( $ch, CURLOPT_TIMEOUT, 10 );
+	curl_setopt ( $ch, CURLOPT_CUSTOMREQUEST, 'GET' );
+	curl_setopt ( $ch, CURLOPT_SSL_VERIFYPEER, false );
+	curl_setopt ( $ch, CURLOPT_POSTFIELDS, $json_data );
+	$result = curl_exec ( $ch );
+	$httpCode = curl_getinfo ( $ch, CURLINFO_HTTP_CODE );
+	curl_close ( $ch );
+	
+	$json = json_decode ( $result );
+	$news_data = $json->{'status'};
+	$newsletter = $news_data == 'subscribed' ? 1 : 0;
+	return $newsletter;
+}
+
+function syncMailchimp($mailchimpAPIKey, $nom_user, $prenom_user, $email_user, $is_subscribed, $list_url, $type_user) {
+	$email_md5 = md5 ( $email_user );
+	$updateURL = $list_url . $email_md5;
+	
+	if ($is_subscribed)
+		$status = 'subscribed';
+	else
+		$status = 'unsubscribed';
+	
+	$merge_fields = array (
+			'FNAME' => $prenom_user,
+			'LNAME' => $nom_user 
+	);
+	
+	$interest = array ();
+	switch ($type_user) {
+		case 0 :
+			$interest ['bc260d6cbe'] = true;
+			break;
+		case 1 :
+			$interest ['2220d3de32'] = true;
+			break;
+		case 2 :
+			$interest ['2b60d8807d'] = true;
+			break;
+		case 3 :
+			$interest ['63f7bf9cc3'] = true;
+			break;
+		case 10000 :
+			$interest ['2e9911e64c'] = true;
+			break;
+		case 10001 :
+			$interest ['6cbba2117b'] = true;
+			break;
+		default :
+			;
+			break;
+	}
+	$data = array (
+			'email_address' => $email_user,
+			'status' => $status,
+			'interests' => $interest,
+			'merge_fields' => $merge_fields 
+	);
+	
+	$data_json = json_encode ( $data );
+	
+	// Update first
+	$ch = curl_init ( $updateURL );
+	curl_setopt ( $ch, CURLOPT_USERPWD, 'user:' . $mailchimpAPIKey );
+	curl_setopt ( $ch, CURLOPT_HTTPHEADER, [ 
+			'Content-Type: application/json' 
+	] );
+	curl_setopt ( $ch, CURLOPT_RETURNTRANSFER, true );
+	curl_setopt ( $ch, CURLOPT_TIMEOUT, 10 );
+	curl_setopt ( $ch, CURLOPT_CUSTOMREQUEST, 'PUT' );
+	curl_setopt ( $ch, CURLOPT_SSL_VERIFYPEER, false );
+	curl_setopt ( $ch, CURLOPT_POSTFIELDS, $data_json );
+	$result = curl_exec ( $ch );
+	$httpCode = curl_getinfo ( $ch, CURLINFO_HTTP_CODE );
+	curl_close ( $ch );
+	
+	if ($httpCode == 200)
+		return $httpCode;
+		
+		// ajout si update en échec
+	$ch = curl_init ( $list_url );
+	curl_setopt ( $ch, CURLOPT_USERPWD, 'user:' . $mailchimpAPIKey );
+	curl_setopt ( $ch, CURLOPT_HTTPHEADER, [ 
+			'Content-Type: application/json' 
+	] );
+	curl_setopt ( $ch, CURLOPT_RETURNTRANSFER, true );
+	curl_setopt ( $ch, CURLOPT_TIMEOUT, 10 );
+	curl_setopt ( $ch, CURLOPT_CUSTOMREQUEST, 'POST' );
+	curl_setopt ( $ch, CURLOPT_SSL_VERIFYPEER, false );
+	curl_setopt ( $ch, CURLOPT_POSTFIELDS, $data_json );
+	$result = curl_exec ( $ch );
+	$httpCode = curl_getinfo ( $ch, CURLINFO_HTTP_CODE );
+	curl_close ( $ch );
+	
+	return $httpCode;
+}
+
 ?>
