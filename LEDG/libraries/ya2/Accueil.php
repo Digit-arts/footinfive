@@ -6,6 +6,8 @@ require_once ('libraries/ya2/fonctions_ledg.php');
 
 $user =& JFactory::getUser();
 $db = & JFactory::getDBO();
+$config = JFactory::getConfig ();
+$siteURL = $config->get ( 'site_url' );
 
 ?>
 <script type="text/javascript">
@@ -43,7 +45,7 @@ if (isset($_POST["mon_titre"]) and isset($_POST["mon_texte"]) ){
 
 }
 
-$chemin_joomsport="http://www.footinfive.com/LEDG/index.php?option=com_joomsport&view=";
+$chemin_joomsport=$siteURL."/index.php?option=com_joomsport&view=";
 
 $chemin_joomsport_cal=$chemin_joomsport."calendar&sid=".$saison_coupe;
 $chemin_joomsport_1t=$chemin_joomsport."table&gr_id=0&sid=".$saison_coupe;

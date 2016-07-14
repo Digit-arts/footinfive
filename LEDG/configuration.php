@@ -15,7 +15,7 @@ class JConfig {
 	public $host = 'localhost';
 	public $user = 'root';
 	public $password = '';
-	public $db = 'LEDG-2013-2014';
+	public $db = 'LEDG-2016-2017';
 	public $dbprefix = 'vlxhj_';
 	public $live_site = '';
 	public $secret = 'tfRmbysWqYqdYV92';
@@ -66,5 +66,5 @@ class JConfig {
 	public $cookie_path = '';
 	public $root_app_path = '/';
 	public $site_root = 'http://resa.footin5.fr';
-	public $site_url = 'http://resa.footin5.fr';
+	public $site_url = 'http://localhost/footinfive/LEDG';
 }

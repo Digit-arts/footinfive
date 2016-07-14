@@ -7,6 +7,8 @@ require_once ('libraries/ya2/fonctions_ledg.php');
 
 $user =& JFactory::getUser();
 $db = & JFactory::getDBO();
+$config = JFactory::getConfig ();
+$siteURL= $config->get( 'site_url' );
 
 ?>
 <script type="text/javascript">
@@ -48,6 +50,17 @@ if (VerifierNom($_POST["prenom_new_joueur"]) and test_non_vide($_GET["id_equipe"
 				}
 				else echo "<font color=red>Pb insertion du joueur.</font><br><br><br>";
 				header("Location: gestion-des-equipes?id_equipe=".$_GET["id_equipe"]." ");
+}
+
+if (test_non_vide($_GET["id_joueur_supprimer"]) and test_non_vide($_GET["id_equipe"])){
+	$id_joueur_supprimer=$_GET["id_joueur_supprimer"];
+	$id_equipe = $_GET["id_equipe"];
+
+	if (!est_capitaine($id_joueur_supprimer)){
+		retirer_joueur_equipe($id_joueur_supprimer,$id_equipe);
+	}
+	else echo "<font color=red>Le capitaine de l'équipe ne peut etre supprimé.</font><br><br><br>";
+	header("Location: gestion-des-equipes?id_equipe=".$_GET["id_equipe"]." ");
 }
 
 
@@ -201,8 +214,9 @@ foreach (liste_equipes_du_groupe() as $liste_equipes) {
 			."<th align=\"center\">Prenom</th>"
 			."<th align=\"center\">Email</th>"
 			."<th align=\"center\">R&egrave;glements</th>"
-			."<th align=\"center\">FIF</th></tr></thead>";
-	$liste_joueurs = liste_joueurs_d_une_equipe($liste_equipes->id_equipe,1);
+			."<th align=\"center\">FIF</th>"
+			."<th align=\"center\">Supprimer</th></tr></thead>";
+	$liste_joueurs = liste_joueurs_d_une_equipe($liste_equipes->id_equipe,1,1);
 	$total_versement_equipe=0;
 	$nbre_equipes++;
 	$select_capitaine="<select name=\"".$liste_equipes->id_equipe."\" onChange=\"recharger2()\"><option SELECTED></option>";
@@ -229,7 +243,8 @@ foreach (liste_equipes_du_groupe() as $liste_equipes) {
 			$tab_joueurs.=$versements."&euro;";
 		else $tab_joueurs.="<img src=\"images/stories/coin-add-icon.png\" title=\"Ajouter un reglement\">";
 		$tab_joueurs.="</a></td ><td><a href=\"http://footinfive.com/FIF/index.php/component/content/article?id=60&id_client="
-			.recup_id_client_fif($joueur->id)."\" target=_blank><img src=\"images/stories/Fiche-client-icon.png\" title=\"La fiche  de ce client\"></a></td></tr>";
+			.recup_id_client_fif($joueur->id)."\" target=_blank><img src=\"images/stories/Fiche-client-icon.png\" title=\"La fiche  de ce client\"></a></td>";
+		$tab_joueurs .="<td><a href=\"".$siteURL."/index.php/accueil/gestion-des-equipes?id_equipe=".$liste_equipes->id_equipe."&id_joueur_supprimer=".$joueur->id."\"><img src=\"images/stories/supprimer.png\" title=\"Retirer le client de l'équipe\"></a></td></tr>";
 			    
 	}
 	

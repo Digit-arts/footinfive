@@ -202,14 +202,16 @@ function existe_joueur_capitaine($id_user) {
 	if (test_non_vide ( $row [1] ))
 		$retour = "capitaine de l'&eacute;quipe " . $row [1];
 	else if (test_non_vide ( $row [0] )) {
-		$requete_equipe_joueur = "SELECT t_name  FROM `vlxhj_bl_players` as p, vlxhj_bl_teams as t WHERE `team_id`=t.id and p.`id`=" . $id_user;
+		$requete_equipe_joueur = "SELECT t_name  FROM `vlxhj_bl_players` as p, vlxhj_bl_teams as t WHERE `team_id`=t.id and p.is_active=1 and p.`id`=" . $id_user;
 		// echo "req4: ".$requete_equipe_joueur;
 		
 		$resultat2 = $mysql_ledg->query ( $requete_equipe_joueur );
+		if($resultat2!=null){
 		$row2 = $resultat2->fetch_row ();
 		$resultat2->close ();
 		
 		$retour = "joueur de l'&eacute;quipe " . $row2 [0];
+		}
 	}
 	$mysql_ledg->close ();
 	return ($retour);
@@ -793,7 +795,7 @@ function texte_resa($nom_client, $date_debut_resa, $heure_debut_resa, $heure_fin
 		$accent_a = "a";
 	}
 	
-	$corps .= "\n\nVotre r" . $accent_e . "servation est pr" . $accent_e . "vue pour le : " . date_longue ( $date_debut_resa ) . " \nCr" . $accent_e . "neau horaire : " . $heure_debut_resa . "-" . $heure_fin_resa . "\nMontant location : " . $montant_total . " euros \n(ce montant ne tient pas compte des " . $accent_e . "ventuelles r" . $accent_e . "ductions ou versements effectu" . $accent_e . "s) ";
+	$corps .= "\n\nVotre r" . $accent_e . "servation au complexe FOOT IN FIVE est pr" . $accent_e . "vue pour le : " . date_longue ( $date_debut_resa ) . " \nCr" . $accent_e . "neau horaire : " . $heure_debut_resa . "-" . $heure_fin_resa . "\n ";
 	
 	if (test_non_vide ( $pourmail )) {
 		$corps .= "\n\nL'" . $accent_e . "quipe du Foot In Five vous remercie de votre confiance !" . "\n\nA bient&ocirc;t sur nos terrains..." . "\n\nFOOT IN FIVE" . "\nCentre de FOOT en salle 5vs5" . "\n187 Route de Saint-Leu" . "\n93800 Epinay-sur-Seine" . "\nTel : 01 49 51 27 04" . "\nMail : contact@footinfive.com";
@@ -830,7 +832,7 @@ function texte_annul_resa($id_client, $id_resa) {
 	
 	$corps = "Bonjour " . prenom_du_client ( $id_client ) . " " . nom_du_client ( $id_client ) . ","; // (num client :".$id_client.")
 	
-	$corps .= "\n\nVotre r&eacute;servation &eacute;tait pr&eacute;vue pour le : " . date_longue ( $recup_resa->date_debut_resa ) . "\nCreneau horaire : " . $recup_resa->heure_debut_resa . "-" . $recup_resa->heure_fin_resa . "\nMontant location : " . $recup_resa->montant_total . " euros" . "\n\n(ce montant ne tient pas compte des &eacute;ventuelles r&eacute;ductions ou versements effectu&eacute;s)";
+	$corps .= "\n\nVotre r&eacute;servation &eacute;tait pr&eacute;vue pour le : " . date_longue ( $recup_resa->date_debut_resa ) . "\nCreneau horaire : " . $recup_resa->heure_debut_resa . "-" . $recup_resa->heure_fin_resa . "\n";
 	
 	$corps .= "\n\nL'&eacute;quipe du Foot In Five vous remercie de votre confiance !" . "\n\nA bient&ocirc;t sur nos terrains..." . "\n\nFOOT IN FIVE" . "\nCentre de FOOT en salle 5vs5" . "\n187 Route de Saint-Leu" . "\n93800 Epinay-sur-Seine" . "\nTel : 01 49 51 27 04" . "\nMail : contact@footinfive.com";
 	$corps .= "\n<hr>Reservation annulee par " . $user->name . " (id_user:" . $user->id . ") le " . date_longue ( date ( "Y-m-d" ) ) . " a " . date ( "H:i" ) . "";

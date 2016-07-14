@@ -1,0 +1,1 @@
+ALTER TABLE `vlxhj_bl_players` ADD `is_active` bit NOT NULL DEFAULT 1;

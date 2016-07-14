@@ -1,3 +1,5 @@
+
+<script src="libraries/parsley.js/dist/parsley.min.js"></script>
 <?php
 
 defined('_JEXEC') or die( 'Restricted access' );
@@ -8,6 +10,8 @@ $user =& JFactory::getUser();
 $db = & JFactory::getDBO();
 ?>
 <script type="text/javascript">
+
+//$('#formulaire_resa').parsley();
 	
 	function recharger(texte_a_afficher,lien) {
 			if (texte_a_afficher!=''){
@@ -79,7 +83,7 @@ if (test_non_vide($_POST["mobile1_saisie"]) or test_non_vide($_POST["nom_saisie"
 }
 
 if (test_non_vide($_POST["nick"]) or test_non_vide($_POST["prenom"])){
-	maj_joueur($_POST["prenom"],$_POST["nick"],$le_user_id);
+	maj_joueur($_POST["prenom"],$_POST["nick"],$_POST["nom"],$_POST["phone"],$le_user_id);
 	$modif=1;
 }
 
@@ -96,7 +100,7 @@ if (est_agent($le_user_id) and $modif==1)
 // COMPTE
 if (1){//forcer_saisie($le_user_id)){
 $resultat_nbre_photo_user = nbre_photo_user($le_user_id);
-echo "<FORM id=formulaire name=formulaire action=\"ep?id_joueur=".$le_user_id."\" method=post>";
+echo "<FORM id=formulaire name=formulaire action=\"ep?id_joueur=".$le_user_id."\" method=post data-parsley-validate>";
 echo "<table class=\"zebra\">";
 	
 echo "<tr><th>Equipe</th><td>".equipe_du_joueur($le_user_id,0,1)."</td>";
@@ -110,8 +114,24 @@ echo "<tr><th>Pr&eacute;nom</th><td>";
 if (!est_agent($user) and test_non_vide(prenom_user($le_user_id)))
     echo prenom_user($le_user_id);
 else {
-    echo "<input type=\"text\" name=\"prenom\" value=\"".prenom_user($le_user_id)."\">";
+    echo "<input required data-parsley-required-message=\"Le prenom est obligatoire\" type=\"text\" name=\"prenom\" value=\"".prenom_user($le_user_id)."\">";
     $input++;
+}
+"</td></tr>";
+echo "<tr><th>Nom</th><td>";
+if (!est_agent($user) and test_non_vide(nom_user($le_user_id)))
+	echo nom_user($le_user_id);
+else {
+	echo "<input required data-parsley-required-message=\"Le nom est obligatoire\" type=\"text\" name=\"nom\" value=\"".nom_user($le_user_id)."\">";
+	$input++;
+}
+"</td></tr>";
+echo "<tr><th>Telephone</th><td>";
+if (!est_agent($user) and test_non_vide(phone_user($le_user_id)))
+	echo phone_user($le_user_id);
+else {
+	echo "<input required data-parsley-required-message=\"Le telephone est obligatoire\" type=\"text\" name=\"phone\" value=\"".phone_user($le_user_id)."\">";
+	$input++;
 }
 "</td></tr>";
 
@@ -119,7 +139,7 @@ echo "<tr><th>Surnom au dos du maillot</th><td>";
 /*if (!est_agent($user) and test_non_vide(flocage_user($le_user_id)))
     echo flocage_user($le_user_id);
 else {*/
-    echo "<input type=\"text\" name=\"nick\" value=\"".flocage_user($le_user_id)."\">";
+    echo "<input required data-parsley-required-message=\"Le surnom est obligatoire\" type=\"text\" name=\"nick\" value=\"".flocage_user($le_user_id)."\">";
     $input++;
 //}
 echo "</td></tr>";
@@ -143,7 +163,7 @@ else {
 echo "</td></tr>";
 
 if (test_non_vide($_GET["id_joueur"])){
-	echo "<tr><th>Email</th><td><input name=\"email_modif_joueur\" placeholder=\"nouvel email\"  type=\"text\" /></td></tr>";
+	echo "<tr><th>Email</th><td><input required data-parsley-required-message=\"L'email est obligatoire\" name=\"email_modif_joueur\" placeholder=\"nouvel email\"  type=\"text\" /></td></tr>";
 	
 	if (test_non_vide($_POST["email_modif_joueur"]) and $_POST["email_modif_joueur"]<>recup_1_element("email","#__users","id",$le_user_id)){
 		

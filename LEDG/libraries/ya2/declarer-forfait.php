@@ -146,7 +146,7 @@ echo  "<h3>Qui peut d&eacute;clarer forfait ?</h3>N&apos;importe quel joueur des
 
 echo  "<h3>D&eacute;lais</h3>Vous devrez d&eacute;clarer forfait 24h <font color=red><b>(au plus tard)</b></font> avant le d&eacute;but du match.<br />";
 
-echo  "<h3>La p&eacute;nalit&eacute;</h3>Passez ce d&eacute;lais, le point FairPlay ne vous sera pas accord&eacute;.<br>L&apos;heure du mail faisant foi.";
+
 }
 else header("Location: ../ep");
 ?>

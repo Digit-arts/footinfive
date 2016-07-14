@@ -376,7 +376,7 @@ $Itemid = JRequest::getInt('Itemid');
                                         
 					if (($match->nbre_jours)<6 and ($match->nbre_jours)>=0 and $match->m_played == 1 ) {
 
-						?><a href="index.php/ep/point-fairplay"/><img src="images/stories/icon-fairplay.png" title="Accorder le point FairPlay"  /> <img src="images/stories/icon-no-fairplay.png" title="Refuser le point FairPlay" /></a> 
+						?> 
 						<?
 					}
 					if (($match->nbre_jours)>=-7 and ($match->nbre_jours)<0 and $match->m_played == 0) {

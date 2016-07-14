@@ -140,12 +140,7 @@ $match = $this->lists["match"];
 												$icon="icon-fairplay.png";
 											else $icon="icon-no-fairplay.png";
 											
-											echo " <a href=\"".JURI::base()
-											."index.php/ep/inserer-resultats?id_equipe_fairplay="
-											.$match->hm_id."&id_match_fairplay="
-											.$match->id."&fairplay=".(1-$match->bonus1)."\"><img class=\"team-embl\" src=\""
-											.JURI::base()."images/stories/".$icon."\" "
-											."title=\"Modifier le point fairplay\" /></a>";
+											echo " ";
 											
 										}
 									}
@@ -227,12 +222,7 @@ $match = $this->lists["match"];
 												$icon="icon-fairplay.png";
 										else $icon="icon-no-fairplay.png";
 											
-										echo " <a href=\"".JURI::base()
-											."index.php/ep/inserer-resultats?id_equipe_fairplay="
-											.$match->aw_id."&id_match_fairplay="
-											.$match->id."&fairplay=".(1-$match->bonus2)."\"><img class=\"team-embl\" src=\""
-											.JURI::base()."images/stories/".$icon."\" "
-											."title=\"Modifier le point fairplay\" /></a>";
+										echo " ";
 									}
 							
 								}

@@ -32,3 +32,4 @@
 2016-01-31T06:46:33+00:00	INFO ::1	ldapfailure	Impossible de se connecter au serveur LDAP
 2016-04-22T19:17:36+00:00	INFO 127.0.0.1	ldapfailure	LDAP n'accepte pas les mots de passe vides
 2016-06-23T16:58:08+00:00	INFO 127.0.0.1	ldapfailure	LDAP n'accepte pas les mots de passe vides
+2016-06-26T12:29:45+00:00	INFO 127.0.0.1	cookiefailure	Un mot de passe vide n'est pas autorisé

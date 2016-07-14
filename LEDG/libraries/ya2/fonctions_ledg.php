@@ -166,6 +166,28 @@ function prenom_user($id_user){
 	return($db->loadResult());
 }
 
+function nom_user($id_user){
+	
+	$db = & JFactory::getDBO();
+	
+	$query ="SELECT last_name FROM #__bl_players where usr_id=".$id_user;
+		
+	$db->setQuery($query);
+	
+	return($db->loadResult());
+}
+
+function phone_user($id_user){
+	
+	$db = & JFactory::getDBO();
+	
+	$query ="SELECT phone FROM #__bl_players where usr_id=".$id_user;
+		
+	$db->setQuery($query);
+	
+	return($db->loadResult());
+}
+
 function flocage_user($id_user){
 	
 	$db = & JFactory::getDBO();
@@ -278,7 +300,7 @@ function exist_nom_equipe($nom_equipe,$id_equipe){
 
 
 
-function liste_joueurs_d_une_equipe($id_equipe,$sans_saisons=""){
+function liste_joueurs_d_une_equipe($id_equipe,$sans_saisons="", $is_active=0){
 	
 $db = & JFactory::getDBO();
 $user =& JFactory::getUser();
@@ -290,6 +312,10 @@ $user =& JFactory::getUser();
 	else {
 		$compl_table="";
 		$compl_cond=" and t.id=p.team_id  ";
+	}
+	
+	if($is_active==1) {
+		$compl_cond.= " AND p.is_active=1 ";
 	}
 		
 	$query = "SELECT DISTINCT (p.id),u.email, u.lastvisitDate, p.* FROM  #__bl_players as p LEFT OUTER JOIN #__users u ON p.usr_id = u.id, #__bl_teams as t ".$compl_table
@@ -486,7 +512,7 @@ function diff_dates_en_jours($date1="", $date2=""){
 function attribution_terrain_creneau($temp_tab_attribution_terrain_creneau_date,$Equ_A,$Equ_B,$journee,$temp_num_match,&$temp_tab_horaires_pref,$temp_passage,$heure_debut_seule,$heure_fin_seule){
     $nbre_terrains_fif=recup_nbre_terrains_fif();
     switch ($temp_passage){
-        //D'abord faire rencontrer les equipes qui veulent jouer à la meme heure
+        //D'abord faire rencontrer les equipes qui veulent jouer Ã  la meme heure
         case '1' :  for ($heure=$heure_debut_seule;$heure<=$heure_fin_seule;$heure++){
                         for ($terrain=1;$terrain<=$nbre_terrains_fif;$terrain++)
                             if ($temp_tab_attribution_terrain_creneau_date[$journee][$heure][$terrain]==""
@@ -504,7 +530,7 @@ function attribution_terrain_creneau($temp_tab_attribution_terrain_creneau_date,
                     }
                     break;
         
-        //Ensuite attribuer les terrains aux equipes qui ont mentionnées des preferences avec priorité aux 2 equipes n'ayant pas utilisés tout le nbre de creneaux qui leur sont attribués.
+        //Ensuite attribuer les terrains aux equipes qui ont mentionnÃ©es des preferences avec prioritÃ© aux 2 equipes n'ayant pas utilisÃ©s tout le nbre de creneaux qui leur sont attribuÃ©s.
         case '2':for ($heure=$heure_debut_seule;$heure<=$heure_fin_seule;$heure++){
                     for ($terrain=1;$terrain<=$nbre_terrains_fif;$terrain++)
                         if ($temp_tab_attribution_terrain_creneau_date[$journee][$heure][$terrain]=="" and
@@ -522,7 +548,7 @@ function attribution_terrain_creneau($temp_tab_attribution_terrain_creneau_date,
                 }
                 break;
             
-        //Ensuite attribuer les terrains aux equipes qui ont mentionnées des preferences avec priorité à l'une des deux equipes n'ayant pas utilisés tout le nbre de creneaux qui leur sont attribués.
+        //Ensuite attribuer les terrains aux equipes qui ont mentionnÃ©es des preferences avec prioritÃ© Ã  l'une des deux equipes n'ayant pas utilisÃ©s tout le nbre de creneaux qui leur sont attribuÃ©s.
         case '3':for ($heure=$heure_debut_seule;$heure<=$heure_fin_seule;$heure++){
                     for ($terrain=1;$terrain<=$nbre_terrains_fif;$terrain++)
                         if ($temp_tab_attribution_terrain_creneau_date[$journee][$heure][$terrain]=="" and
@@ -690,10 +716,10 @@ function connect_fif(){
 	
 	$mysql_fif->close();*/
 
-	$mysqli = new mysqli("localhost","Cyclople","MixMax123", "MySql_FIF");
+	$mysqli = new mysqli("localhost","Cyclople","MixMax123", "MySql_FIF_j3");
 	//$mysqli = new mysqli("localhost", "Flash", "plouf987", "FIF-test");
 	
-	/* Vérification de la connexion */
+	/* VÃ©rification de la connexion */
 	if (mysqli_connect_errno()) {
 	    printf("Echec de la connexion : %s\n", mysqli_connect_error());
 	    exit();
@@ -764,7 +790,7 @@ function menu_deroulant_des_terrains_avec_dispo_fif($le_terrain,$old_terrain,$la
 	//$le_select_terrain=$la_date.",".$l_heure.",".decaler_heure($l_heure,60);
 	if ($les_terrains_dispos<>"pas de terrains dispo"){
 					    
-		$les_terrains_disposen_tableau=explode(" ",substr($les_terrains_dispos,0,-1));//enleve l'espace à la fin
+		$les_terrains_disposen_tableau=explode(" ",substr($les_terrains_dispos,0,-1));//enleve l'espace Ã  la fin
 					    
 		$le_select_terrain="<select name=\"".$le_terrain."\"  ".$function." >";
 		foreach ($les_terrains_disposen_tableau as $terrain){
@@ -1035,8 +1061,8 @@ $user =& JFactory::getUser();
 }
 
 function sans_accents($string){
-    $a = 'ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞ 
-ßàáâãäåæçèéêëìíîïðñòóôõöøùúûýýþÿŔŕ'; 
+    $a = 'Ã€Ã�Ã‚ÃƒÃ„Ã…Ã†Ã‡ÃˆÃ‰ÃŠÃ‹ÃŒÃ�ÃŽÃ�Ã�Ã‘Ã’Ã“Ã”Ã•Ã–Ã˜Ã™ÃšÃ›ÃœÃ�Ãž 
+ÃŸÃ Ã¡Ã¢Ã£Ã¤Ã¥Ã¦Ã§Ã¨Ã©ÃªÃ«Ã¬Ã­Ã®Ã¯Ã°Ã±Ã²Ã³Ã´ÃµÃ¶Ã¸Ã¹ÃºÃ»Ã½Ã½Ã¾Ã¿Å”Å•'; 
     $b = 'aaaaaaaceeeeiiiidnoooooouuuuy 
 bsaaaaaaaceeeeiiiidnoooooouuuyybyRr'; 
     $string = utf8_decode($string);     
@@ -1045,13 +1071,13 @@ bsaaaaaaaceeeeiiiidnoooooouuuyybyRr';
     return utf8_encode($string); 
 }
 
-function maj_joueur($prenom_joueur,$nick_joueur,$id_user){
+function maj_joueur($prenom_joueur,$nick_joueur,$nom_joueur,$phone_joueur,$id_user){
 
 $db = & JFactory::getDBO();
 $user =& JFactory::getUser();
 
 	if (test_non_vide($prenom_joueur)){
-		$requete_maj_joueur="UPDATE `#__bl_players` SET `first_name`=\"".premiere_lettre_maj($prenom_joueur)."\" where  id=".$id_user;
+		$requete_maj_joueur="UPDATE `#__bl_players` SET `first_name`=\"".premiere_lettre_maj($prenom_joueur)."\", `phone`=\"".$phone_joueur."\", `last_name`=\"".premiere_lettre_maj($nom_joueur)."\" where  id=".$id_user;
 						
 		$db->setQuery($requete_maj_joueur);	
 		$db->query();
@@ -1066,7 +1092,7 @@ $user =& JFactory::getUser();
 		//echo "<br>".$requete_maj_user_fif;				
 		$mysql_fif->query($requete_maj_user_fif);
 			
-		$requete_maj_client_fif="UPDATE `Client` SET `prenom`=\"".premiere_lettre_maj(sans_accents($prenom_joueur))."\" where  id_user=".$id_user;
+		$requete_maj_client_fif="UPDATE `Client` SET `prenom`=\"".premiere_lettre_maj(sans_accents($prenom_joueur))."\", `nom`=\"".premiere_lettre_maj(sans_accents($nom_joueur))."\" where  id_user=".$id_user;
 		//echo "<br>".$requete_maj_client_fif;
 		$mysql_fif->query($requete_maj_client_fif);
 		
@@ -1587,7 +1613,7 @@ function maj_match_knock($id_match,$m_id,$id_team,$k_ordering,$k_stage){
 		
 		if ($db->getNumRows()>0){
 			$query_test_team_dispo = "SELECT IF(team1_id>0,IF(team2_id>0,\"0\",\"team2_id\"),\"team1_id\") FROM #__bl_match where ".$condition;        
-				//echo  "<br>££".$query_test_team_dispo;
+				//echo  "<br>Â£Â£".$query_test_team_dispo;
 				$db->setQuery($query_test_team_dispo);
 				$db->query();
 			$le_retour=$db->loadResult();
@@ -1633,7 +1659,7 @@ function supprimer_joueurs_dans_saisons($id_joueur,$conditions_supp){
 
 function joueurs_des_equipes($liste_equipes){
 	$db = & JFactory::getDBO();
-        //substr : pour enlever la derniere virgule à droite
+        //substr : pour enlever la derniere virgule Ã  droite
         $requete_liste_joueurs="SELECT * FROM `#__bl_players` WHERE team_id in (".$liste_equipes.")";
         $db->setQuery($requete_liste_joueurs);	
         return($db->loadObjectList());
@@ -1930,6 +1956,12 @@ function nbre_reglements_d_une_equipe($id_equipe){
 	
 }
 
+function retirer_joueur_equipe($id_joueur,$id_equipe) {
+	$db = & JFactory::getDBO();
+	$retirer_joueur_equipe="UPDATE `#__bl_players` SET is_active=0 WHERE id=$id_joueur and team_id=$id_equipe";
+	$db->setQuery($retirer_joueur_equipe);
+	$db->query();
+}
 
 function supprimer_equipe($id_equipe){
 	$db = & JFactory::getDBO();
@@ -1961,7 +1993,7 @@ function supprimer_equipe($id_equipe){
 		}
 		else echo "Impossible de supprimer cette equipe car des joueurs ont des reglements<br><br>";
 	}
-	else echo "Impossible de supprimer cette equipe car elle a des matchs de prévus<br><br>";
+	else echo "Impossible de supprimer cette equipe car elle a des matchs de prÃ©vus<br><br>";
 	
 }
 

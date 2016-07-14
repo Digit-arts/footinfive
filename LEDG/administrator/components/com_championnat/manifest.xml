@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<extension type="component" version="2.5.0" method="upgrade">
+<name>com_championnat</name>
+<author>Digitarts</author>
+<version>1.0.0</version>
+<description>Composant de gestion de championnat</description>
+<files folder="components/com_championnat">
+ <filename>championnat.php</filename>
+ <filename>index.html</filename>
+ <filename>controller.php</filename>
+</files>
+<administration>
+<files folder="administrator/components/com_championnat">
+ <filename>championnat.php</filename>
+ <filename>index.html</filename>
+</files>
+</administration>
+</extension>
