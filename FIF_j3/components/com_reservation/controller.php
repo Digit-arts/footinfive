@@ -329,11 +329,7 @@ if ($mode_resa < 3 || ($mode_resa==3 && $recup_client->police==1)) {
 									?>
 									</td>
 									<?php
-									
-if ($mode_resa < 3 and ! in_array ( $recup_client->id_type_regroupement, array (
-											1,
-											2 
-									) ) and $recup_client->police != 1) {
+									if ($mode_resa < 3 || ($mode_resa==3 && $recup_client->police==1)) {
 										echo "<td>" . $montant_total_avec_remise . "€</td>";
 									}
 									

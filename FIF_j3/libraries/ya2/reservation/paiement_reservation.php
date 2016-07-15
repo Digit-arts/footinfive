@@ -108,7 +108,7 @@ else {
 						
 						foreach ( $les_terrains as $le_terrain ) {
 							$temp1 = "terrain_choisit" . coller_jma ( $les_jours_a_tester_debut ) . $le_terrain->nom;
-							$temp2 = "montant_total" . coller_jma ( $les_jours_a_tester_debut );
+							$temp2 = "montant_total_avec_remise" . coller_jma ( $les_jours_a_tester_debut );
 							
 							if ($_POST ["$temp1"] == $le_terrain->id) {
 								$id_resa_new = ajout_resa ( $les_jours_a_tester_debut, $les_jours_a_tester_fin, $_POST ["heure_debut_resa"], $_POST ["heure_fin_resa"], $id_client, $le_terrain->id, $_POST ["$temp2"], $_POST ["duree_resa"], $cautionnable, $mode_resa, $montant_sans_remise );
